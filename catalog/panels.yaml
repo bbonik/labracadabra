@@ -1,0 +1,55 @@
+# Dashboard hierarchy. `id` paths are referenced by tests.yaml `panel:`.
+# icon = short glyph used in the UI (emoji or another unicode glyph).
+- id: blood
+  name: Blood tests
+  icon: "🩸"
+  children:
+    - { id: blood.lipids,       name: Cholesterol & lipids,     icon: "💧" }
+    - { id: blood.glucose,      name: Glucose & diabetes,       icon: "🍬" }
+    - { id: blood.liver,        name: Liver function,           icon: "🫀" }
+    - { id: blood.kidney,       name: Kidney & electrolytes,    icon: "🫘" }
+    - { id: blood.bone,         name: "Bone, minerals & uric acid", icon: "🦴" }
+    - { id: blood.cbc,          name: Full blood count,         icon: "🔬" }
+    - { id: blood.iron,         name: Iron studies,             icon: "⚙" }
+    - { id: blood.thyroid,      name: Thyroid,                  icon: "🦋" }
+    - { id: blood.hormones,     name: Hormones,                 icon: "⚖" }
+    - { id: blood.vitamins,     name: Vitamins,                 icon: "☀" }
+    - { id: blood.inflammation, name: Inflammation & cardiac,   icon: "🔥" }
+    - { id: blood.tumour,       name: Tumour markers,           icon: "🎯" }
+    - { id: blood.coag,         name: Coagulation,              icon: "🧷" }
+    - { id: blood.serology,     name: Infection & immunity,     icon: "🛡" }
+- id: urine
+  name: Urine & stool
+  icon: "🧪"
+  children:
+    - { id: urine.chemistry,  name: Urine chemistry,   icon: "🧪" }
+    - { id: urine.dipstick,   name: Urinalysis,        icon: "📋" }
+    - { id: urine.microscopy, name: Urine microscopy,  icon: "🔬" }
+    - { id: stool,            name: Stool,             icon: "🧻" }
+- id: vitals
+  name: Vitals & body
+  icon: "❤"
+  children:
+    - { id: vitals.body,     name: Body measurements, icon: "📏" }
+    - { id: vitals.bp,       name: Blood pressure & pulse, icon: "❤" }
+- id: cardio
+  name: Heart tests
+  icon: "📈"
+  children:
+    - { id: cardio.ecg,       name: ECG,               icon: "📈" }
+    - { id: cardio.treadmill, name: Treadmill / stress test, icon: "🏃" }
+    - { id: cardio.echo,      name: Echocardiogram,    icon: "🫀" }
+    - { id: cardio.ct,        name: Coronary CT / calcium score, icon: "🩻" }
+- id: imaging
+  name: Imaging & radiology
+  icon: "🩻"
+  children:
+    - { id: imaging.findings, name: Radiology findings, icon: "🩻" }
+    - { id: imaging.bone,     name: Bone density,       icon: "🦴" }
+- id: screening
+  name: Other screening
+  icon: "👁"
+  children:
+    - { id: screening.vision,  name: Vision,  icon: "👁" }
+    - { id: screening.hearing, name: Hearing, icon: "👂" }
+    - { id: screening.lung,    name: Lung function, icon: "🫁" }
