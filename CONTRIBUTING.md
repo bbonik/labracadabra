@@ -18,7 +18,7 @@ New tests, aliases (any language) and unit spellings need no application code. S
 
 ## Development setup
 
-Requirements: Python 3.12 with [uv](https://docs.astral.sh/uv/), Node.js 20+.
+Requirements: Python 3.12 with [uv](https://docs.astral.sh/uv/), Node.js 24+ (npm 11).
 
 ```bash
 # extractor (Python)
