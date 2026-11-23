@@ -1,0 +1,5691 @@
+{
+ "panels": [
+  {
+   "id": "blood",
+   "name": "Blood tests",
+   "icon": "🩸",
+   "children": [
+    {
+     "id": "blood.lipids",
+     "name": "Cholesterol & lipids",
+     "icon": "💧"
+    },
+    {
+     "id": "blood.glucose",
+     "name": "Glucose & diabetes",
+     "icon": "🍬"
+    },
+    {
+     "id": "blood.liver",
+     "name": "Liver function",
+     "icon": "🫀"
+    },
+    {
+     "id": "blood.kidney",
+     "name": "Kidney & electrolytes",
+     "icon": "🫘"
+    },
+    {
+     "id": "blood.bone",
+     "name": "Bone, minerals & uric acid",
+     "icon": "🦴"
+    },
+    {
+     "id": "blood.cbc",
+     "name": "Full blood count",
+     "icon": "🔬"
+    },
+    {
+     "id": "blood.iron",
+     "name": "Iron studies",
+     "icon": "⚙"
+    },
+    {
+     "id": "blood.thyroid",
+     "name": "Thyroid",
+     "icon": "🦋"
+    },
+    {
+     "id": "blood.hormones",
+     "name": "Hormones",
+     "icon": "⚖"
+    },
+    {
+     "id": "blood.vitamins",
+     "name": "Vitamins",
+     "icon": "☀"
+    },
+    {
+     "id": "blood.inflammation",
+     "name": "Inflammation & cardiac",
+     "icon": "🔥"
+    },
+    {
+     "id": "blood.tumour",
+     "name": "Tumour markers",
+     "icon": "🎯"
+    },
+    {
+     "id": "blood.coag",
+     "name": "Coagulation",
+     "icon": "🧷"
+    },
+    {
+     "id": "blood.serology",
+     "name": "Infection & immunity",
+     "icon": "🛡"
+    }
+   ]
+  },
+  {
+   "id": "urine",
+   "name": "Urine & stool",
+   "icon": "🧪",
+   "children": [
+    {
+     "id": "urine.chemistry",
+     "name": "Urine chemistry",
+     "icon": "🧪"
+    },
+    {
+     "id": "urine.dipstick",
+     "name": "Urinalysis",
+     "icon": "📋"
+    },
+    {
+     "id": "urine.microscopy",
+     "name": "Urine microscopy",
+     "icon": "🔬"
+    },
+    {
+     "id": "stool",
+     "name": "Stool",
+     "icon": "🧻"
+    }
+   ]
+  },
+  {
+   "id": "vitals",
+   "name": "Vitals & body",
+   "icon": "❤",
+   "children": [
+    {
+     "id": "vitals.body",
+     "name": "Body measurements",
+     "icon": "📏"
+    },
+    {
+     "id": "vitals.bp",
+     "name": "Blood pressure & pulse",
+     "icon": "❤"
+    }
+   ]
+  },
+  {
+   "id": "cardio",
+   "name": "Heart tests",
+   "icon": "📈",
+   "children": [
+    {
+     "id": "cardio.ecg",
+     "name": "ECG",
+     "icon": "📈"
+    },
+    {
+     "id": "cardio.treadmill",
+     "name": "Treadmill / stress test",
+     "icon": "🏃"
+    },
+    {
+     "id": "cardio.echo",
+     "name": "Echocardiogram",
+     "icon": "🫀"
+    },
+    {
+     "id": "cardio.ct",
+     "name": "Coronary CT / calcium score",
+     "icon": "🩻"
+    }
+   ]
+  },
+  {
+   "id": "imaging",
+   "name": "Imaging & radiology",
+   "icon": "🩻",
+   "children": [
+    {
+     "id": "imaging.findings",
+     "name": "Radiology findings",
+     "icon": "🩻"
+    },
+    {
+     "id": "imaging.bone",
+     "name": "Bone density",
+     "icon": "🦴"
+    }
+   ]
+  },
+  {
+   "id": "screening",
+   "name": "Other screening",
+   "icon": "👁",
+   "children": [
+    {
+     "id": "screening.vision",
+     "name": "Vision",
+     "icon": "👁"
+    },
+    {
+     "id": "screening.hearing",
+     "name": "Hearing",
+     "icon": "👂"
+    },
+    {
+     "id": "screening.lung",
+     "name": "Lung function",
+     "icon": "🫁"
+    }
+   ]
+  }
+ ],
+ "tests": [
+  {
+   "id": "cholesterol_total",
+   "name": "Total cholesterol",
+   "panel": "blood.lipids",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.025863183757920603,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 5.17
+   },
+   "limits": [
+    0.5,
+    25
+   ],
+   "aliases": [
+    "Total Cholesterol",
+    "Cholesterol",
+    "Cholesterol Total",
+    "T. Cholesterol",
+    "TC",
+    "总胆固醇",
+    "Χοληστερίνη",
+    "Χοληστερίνη ολική",
+    "Ολική χοληστερόλη",
+    "Ολική Χοληστερίνη"
+   ]
+  },
+  {
+   "id": "hdl",
+   "name": "HDL cholesterol",
+   "panel": "blood.lipids",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.025863183757920603,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 1.03
+   },
+   "limits": [
+    0.1,
+    6
+   ],
+   "aliases": [
+    "HDL",
+    "HDL Cholesterol",
+    "HDL-C",
+    "HDL-Cholesterol",
+    "高脂蛋白(好)胆固醇",
+    "HDL χοληστερίνη",
+    "HDL Χοληστερόλη"
+   ]
+  },
+  {
+   "id": "ldl",
+   "name": "LDL cholesterol",
+   "panel": "blood.lipids",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.025863183757920603,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 3.36
+   },
+   "limits": [
+    0.1,
+    20
+   ],
+   "aliases": [
+    "LDL",
+    "LDL Cholesterol",
+    "LDL-C",
+    "Direct LDL",
+    "Direct LDL Cholesterol",
+    "LDL (calculated)",
+    "LDL Calculated",
+    "低脂蛋白(坏)胆固醇",
+    "LDL χοληστερίνη",
+    "LDL Χοληστερόλη"
+   ]
+  },
+  {
+   "id": "non_hdl",
+   "name": "Non-HDL cholesterol",
+   "panel": "blood.lipids",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.025863183757920603,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 4.1
+   },
+   "limits": [
+    0.1,
+    22
+   ],
+   "aliases": [
+    "Non-HDL Cholesterol",
+    "Non HDL",
+    "Non-HDL-C"
+   ]
+  },
+  {
+   "id": "vldl",
+   "name": "VLDL cholesterol",
+   "panel": "blood.lipids",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.025863183757920603,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0,
+    10
+   ],
+   "aliases": [
+    "VLDL",
+    "VLDL Cholesterol"
+   ]
+  },
+  {
+   "id": "triglycerides",
+   "name": "Triglycerides",
+   "panel": "blood.lipids",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.011290504685559444,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 1.69
+   },
+   "limits": [
+    0.1,
+    60
+   ],
+   "aliases": [
+    "Triglyceride",
+    "TG",
+    "TRIG",
+    "三酸甘油脂",
+    "Τριγλυκερίδια"
+   ]
+  },
+  {
+   "id": "chol_hdl_ratio",
+   "name": "Total/HDL cholesterol ratio",
+   "panel": "blood.lipids",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 4.6
+   },
+   "limits": [
+    0.5,
+    20
+   ],
+   "aliases": [
+    "T.Chol/HDL Ratio",
+    "Total/HDL Ratio",
+    "Cholesterol/HDL Ratio",
+    "TC/HDL",
+    "总胆固醇/高脂蛋白比率",
+    "Λόγος Χοληστερίνης/HDL"
+   ]
+  },
+  {
+   "id": "apoa1",
+   "name": "Apolipoprotein A1",
+   "panel": "blood.lipids",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.01,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.94,
+    "high": 1.78
+   },
+   "limits": [
+    0.1,
+    5
+   ],
+   "aliases": [
+    "Apolipoprotein A-I",
+    "Apo A1",
+    "ApoA1",
+    "ApoA-I",
+    "载脂蛋白 A-I",
+    "Απολιποπρωτεΐνη Α1"
+   ]
+  },
+  {
+   "id": "apob",
+   "name": "Apolipoprotein B",
+   "panel": "blood.lipids",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.01,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.62,
+    "high": 1.33
+   },
+   "limits": [
+    0.1,
+    5
+   ],
+   "aliases": [
+    "Apo B",
+    "ApoB",
+    "Apo B-100",
+    "载脂蛋白 B",
+    "Απολιποπρωτεΐνη Β"
+   ]
+  },
+  {
+   "id": "apob_apoa1_ratio",
+   "name": "ApoB/ApoA1 ratio",
+   "panel": "blood.lipids",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 0.85
+   },
+   "limits": [
+    0.05,
+    5
+   ],
+   "aliases": [
+    "Apolipoprotein B/A1",
+    "ApoB/ApoA1",
+    "Apo B/A1 Ratio",
+    "载脂蛋白 B/载脂蛋白 A-I"
+   ]
+  },
+  {
+   "id": "lpa",
+   "name": "Lipoprotein(a)",
+   "panel": "blood.lipids",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 75
+   },
+   "limits": [
+    0,
+    1000
+   ],
+   "aliases": [
+    "Lipoprotein (a)",
+    "Lp(a)",
+    "Λιποπρωτεΐνη α"
+   ]
+  },
+  {
+   "id": "apoe_genotype",
+   "name": "ApoE genotype",
+   "panel": "blood.lipids",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "ApoE Genotype",
+    "Apolipoprotein E Genotype",
+    "APOE",
+    "ApoE"
+   ]
+  },
+  {
+   "id": "glucose_fasting",
+   "name": "Glucose (fasting)",
+   "panel": "blood.glucose",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.05550621669626998,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 3.9,
+    "high": 6.0
+   },
+   "limits": [
+    1,
+    40
+   ],
+   "aliases": [
+    "Glucose (Fasting)",
+    "Fasting Glucose",
+    "Fasting Blood Glucose",
+    "FBG",
+    "FPG",
+    "Σάκχαρο νηστείας",
+    "Γλυκόζη νηστείας"
+   ]
+  },
+  {
+   "id": "glucose_random",
+   "name": "Glucose (random)",
+   "panel": "blood.glucose",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.05550621669626998,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 3.9,
+    "high": 7.8
+   },
+   "limits": [
+    1,
+    40
+   ],
+   "aliases": [
+    "Glucose (Random)",
+    "Random Glucose",
+    "Random Blood Glucose",
+    "Glucose",
+    "葡萄糖",
+    "Σάκχαρο",
+    "Γλυκόζη"
+   ]
+  },
+  {
+   "id": "hba1c",
+   "name": "HbA1c",
+   "panel": "blood.glucose",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ],
+    "mmol/mol": [
+     0.09148,
+     2.152
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 6.0
+   },
+   "limits": [
+    3,
+    20
+   ],
+   "aliases": [
+    "HBA1C",
+    "Glycated Haemoglobin",
+    "Glycated Hemoglobin",
+    "Haemoglobin A1c",
+    "A1c",
+    "糖化血红蛋白",
+    "Γλυκοζυλιωμένη αιμοσφαιρίνη",
+    "HbA1c (NGSP)"
+   ]
+  },
+  {
+   "id": "eag",
+   "name": "Estimated average glucose",
+   "panel": "blood.glucose",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.05550621669626998,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    2,
+    30
+   ],
+   "aliases": [
+    "eAG",
+    "eAG (estimated Avg Glucose)",
+    "Estimated Average Glucose",
+    "葡萄糖均值"
+   ]
+  },
+  {
+   "id": "insulin_fasting",
+   "name": "Insulin (fasting)",
+   "panel": "blood.glucose",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "uIU/mL": [
+     6.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 150
+   },
+   "limits": [
+    1,
+    3000
+   ],
+   "aliases": [
+    "Insulin",
+    "Fasting Insulin",
+    "Insulin (Fasting)",
+    "Ινσουλίνη"
+   ]
+  },
+  {
+   "id": "albumin",
+   "name": "Albumin",
+   "panel": "blood.liver",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "g/dL": [
+     10.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 35,
+    "high": 52
+   },
+   "limits": [
+    5,
+    80
+   ],
+   "aliases": [
+    "Serum Albumin",
+    "ALB",
+    "白蛋白",
+    "Λευκωματίνη",
+    "Αλβουμίνη"
+   ]
+  },
+  {
+   "id": "total_protein",
+   "name": "Total protein",
+   "panel": "blood.liver",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "g/dL": [
+     10.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 63,
+    "high": 83
+   },
+   "limits": [
+    20,
+    140
+   ],
+   "aliases": [
+    "Total Protein",
+    "Protein Total",
+    "TP",
+    "总蛋白质",
+    "Ολικά λευκώματα",
+    "Ολικές πρωτεΐνες"
+   ]
+  },
+  {
+   "id": "globulin",
+   "name": "Globulin",
+   "panel": "blood.liver",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "g/dL": [
+     10.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 20,
+    "high": 39
+   },
+   "limits": [
+    5,
+    100
+   ],
+   "aliases": [
+    "球蛋白",
+    "Σφαιρίνες"
+   ]
+  },
+  {
+   "id": "ag_ratio",
+   "name": "Albumin/globulin ratio",
+   "panel": "blood.liver",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 1.2,
+    "high": 2.2
+   },
+   "limits": [
+    0.1,
+    6
+   ],
+   "aliases": [
+    "A/G Ratio",
+    "Albumin/Globulin Ratio",
+    "白蛋白/球蛋白比率",
+    "Λόγος Λευκωματίνης/Σφαιρινών"
+   ]
+  },
+  {
+   "id": "bilirubin_total",
+   "name": "Bilirubin (total)",
+   "panel": "blood.liver",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     17.103957855847845,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 5,
+    "high": 21
+   },
+   "limits": [
+    0.5,
+    800
+   ],
+   "aliases": [
+    "Bilirubin (Total)",
+    "Total Bilirubin",
+    "Bilirubin Total",
+    "TBIL",
+    "总胆红素",
+    "Χολερυθρίνη ολική",
+    "Ολική χολερυθρίνη"
+   ]
+  },
+  {
+   "id": "bilirubin_direct",
+   "name": "Bilirubin (direct)",
+   "panel": "blood.liver",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     17.103957855847845,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 5
+   },
+   "limits": [
+    0,
+    600
+   ],
+   "aliases": [
+    "Direct Bilirubin",
+    "Bilirubin (Direct)",
+    "Conjugated Bilirubin",
+    "DBIL",
+    "直接胆红素",
+    "Χολερυθρίνη άμεση",
+    "Άμεση χολερυθρίνη"
+   ]
+  },
+  {
+   "id": "alp",
+   "name": "Alkaline phosphatase (ALP)",
+   "panel": "blood.liver",
+   "unit": "U/L",
+   "kind": "numeric",
+   "units": {
+    "U/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 30,
+    "high": 110
+   },
+   "limits": [
+    5,
+    3000
+   ],
+   "aliases": [
+    "Alkaline Phosphatase",
+    "ALP",
+    "ALKP",
+    "碱性磷酸酵素",
+    "Αλκαλική φωσφατάση"
+   ]
+  },
+  {
+   "id": "alt",
+   "name": "ALT (SGPT)",
+   "panel": "blood.liver",
+   "unit": "U/L",
+   "kind": "numeric",
+   "units": {
+    "U/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 40
+   },
+   "limits": [
+    1,
+    5000
+   ],
+   "aliases": [
+    "ALT",
+    "ALT/SGPT",
+    "SGPT",
+    "Alanine Aminotransferase",
+    "Alanine Transaminase",
+    "丙胺酸转氨酵素",
+    "Τρανσαμινάση SGPT",
+    "SGPT (ALT)"
+   ]
+  },
+  {
+   "id": "ast",
+   "name": "AST (SGOT)",
+   "panel": "blood.liver",
+   "unit": "U/L",
+   "kind": "numeric",
+   "units": {
+    "U/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 35
+   },
+   "limits": [
+    1,
+    5000
+   ],
+   "aliases": [
+    "AST",
+    "AST/SGOT",
+    "SGOT",
+    "Aspartate Aminotransferase",
+    "Aspartate Transaminase",
+    "天冬胺酸转氨酵素",
+    "Τρανσαμινάση SGOT",
+    "SGOT (AST)"
+   ]
+  },
+  {
+   "id": "ggt",
+   "name": "Gamma GT (GGT)",
+   "panel": "blood.liver",
+   "unit": "U/L",
+   "kind": "numeric",
+   "units": {
+    "U/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 64
+   },
+   "limits": [
+    1,
+    3000
+   ],
+   "aliases": [
+    "Gamma GT",
+    "GGT",
+    "γ-GT",
+    "Gamma-Glutamyl Transferase",
+    "Gamma Glutamyl Transpeptidase",
+    "珈玛-麸胺转酸酵素",
+    "γ-Γλουταμυλτρανσφεράση"
+   ]
+  },
+  {
+   "id": "ldh",
+   "name": "LDH",
+   "panel": "blood.liver",
+   "unit": "U/L",
+   "kind": "numeric",
+   "units": {
+    "U/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 250
+   },
+   "limits": [
+    20,
+    5000
+   ],
+   "aliases": [
+    "Lactate Dehydrogenase",
+    "Γαλακτική αφυδρογονάση"
+   ]
+  },
+  {
+   "id": "sodium",
+   "name": "Sodium",
+   "panel": "blood.kidney",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 134,
+    "high": 146
+   },
+   "limits": [
+    100,
+    190
+   ],
+   "aliases": [
+    "Na",
+    "Na+",
+    "钠",
+    "Νάτριο"
+   ]
+  },
+  {
+   "id": "potassium",
+   "name": "Potassium",
+   "panel": "blood.kidney",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 3.5,
+    "high": 5.2
+   },
+   "limits": [
+    1,
+    10
+   ],
+   "aliases": [
+    "K",
+    "K+",
+    "钾",
+    "Κάλιο"
+   ]
+  },
+  {
+   "id": "chloride",
+   "name": "Chloride",
+   "panel": "blood.kidney",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 98,
+    "high": 110
+   },
+   "limits": [
+    60,
+    150
+   ],
+   "aliases": [
+    "Cl",
+    "Cl-",
+    "氯化物",
+    "Χλώριο"
+   ]
+  },
+  {
+   "id": "bicarbonate",
+   "name": "Bicarbonate (CO₂)",
+   "panel": "blood.kidney",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 19,
+    "high": 28
+   },
+   "limits": [
+    5,
+    60
+   ],
+   "aliases": [
+    "CO2 (Bicarbonate)",
+    "Bicarbonate",
+    "HCO3",
+    "Total CO2",
+    "CO2",
+    "二氧化碳",
+    "Διττανθρακικά"
+   ]
+  },
+  {
+   "id": "urea",
+   "name": "Urea",
+   "panel": "blood.kidney",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.1665001665001665,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 2.8,
+    "high": 7.6
+   },
+   "limits": [
+    0.5,
+    80
+   ],
+   "aliases": [
+    "Urea (BUN)",
+    "Serum Urea",
+    "尿素",
+    "尿素 (尿素氮)",
+    "Ουρία"
+   ]
+  },
+  {
+   "id": "creatinine",
+   "name": "Creatinine",
+   "panel": "blood.kidney",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     88.40169731258841,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 64,
+    "high": 104
+   },
+   "ref_f": {
+    "low": 49,
+    "high": 90
+   },
+   "limits": [
+    10,
+    2000
+   ],
+   "aliases": [
+    "Serum Creatinine",
+    "CREA",
+    "肌酸酐",
+    "Κρεατινίνη"
+   ]
+  },
+  {
+   "id": "egfr",
+   "name": "eGFR",
+   "panel": "blood.kidney",
+   "unit": "mL/min/1.73m2",
+   "kind": "numeric",
+   "units": {
+    "mL/min/1.73m2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 60
+   },
+   "limits": [
+    2,
+    200
+   ],
+   "aliases": [
+    "eGFR (CKD-EPI)",
+    "eGFR (CKD-EPI 2009)",
+    "eGFR (CKD-EPI 2021)",
+    "Estimated GFR",
+    "肾小球滤过率估计值",
+    "Ρυθμός σπειραματικής διήθησης"
+   ]
+  },
+  {
+   "id": "cystatin_c",
+   "name": "Cystatin C",
+   "panel": "blood.kidney",
+   "unit": "mg/L",
+   "kind": "numeric",
+   "units": {
+    "mg/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.6,
+    "high": 1.0
+   },
+   "limits": [
+    0.2,
+    10
+   ],
+   "aliases": [
+    "Κυστατίνη C"
+   ]
+  },
+  {
+   "id": "calcium",
+   "name": "Calcium",
+   "panel": "blood.bone",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.24951344877488896,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 2.1,
+    "high": 2.55
+   },
+   "limits": [
+    1,
+    5
+   ],
+   "aliases": [
+    "Ca",
+    "Total Calcium",
+    "钙",
+    "Ασβέστιο"
+   ]
+  },
+  {
+   "id": "phosphate",
+   "name": "Phosphate",
+   "panel": "blood.bone",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.3228514237747789,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.74,
+    "high": 1.52
+   },
+   "limits": [
+    0.1,
+    5
+   ],
+   "aliases": [
+    "Phosphorus",
+    "Inorganic Phosphate",
+    "PO4",
+    "磷酸盐",
+    "Φώσφορος",
+    "Φωσφόρος"
+   ]
+  },
+  {
+   "id": "magnesium",
+   "name": "Magnesium",
+   "panel": "blood.bone",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.41143797572515944,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.66,
+    "high": 1.07
+   },
+   "limits": [
+    0.1,
+    5
+   ],
+   "aliases": [
+    "Mg",
+    "镁",
+    "Μαγνήσιο"
+   ]
+  },
+  {
+   "id": "blood_group_abo",
+   "name": "Blood group (ABO)",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "ABO Group",
+    "Blood Group",
+    "Blood Grouping ABO GROUP",
+    "Blood Grouping ABO",
+    "ABO",
+    "血型",
+    "Ομάδα αίματος"
+   ]
+  },
+  {
+   "id": "blood_group_rh",
+   "name": "Rhesus (Rh D)",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Rh(D)",
+    "Rh D",
+    "Rhesus",
+    "Rh Factor",
+    "Blood Grouping Rh(D)",
+    "Rhesus Factor",
+    "Rh",
+    "Ρέζους"
+   ]
+  },
+  {
+   "id": "uric_acid",
+   "name": "Uric acid",
+   "panel": "blood.bone",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     59.48486110284932,
+     0.0
+    ],
+    "mmol/L": [
+     1000.0000000000001,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 230,
+    "high": 490
+   },
+   "ref_f": {
+    "low": 150,
+    "high": 360
+   },
+   "limits": [
+    30,
+    1500
+   ],
+   "aliases": [
+    "Uric Acid",
+    "Urate",
+    "尿酸",
+    "Ουρικό οξύ"
+   ]
+  },
+  {
+   "id": "zinc",
+   "name": "Zinc",
+   "panel": "blood.bone",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "ug/dL": [
+     0.15295197308045275,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 10.7,
+    "high": 18.4
+   },
+   "limits": [
+    1,
+    60
+   ],
+   "aliases": [
+    "Zn",
+    "Ψευδάργυρος"
+   ]
+  },
+  {
+   "id": "pth",
+   "name": "Parathyroid hormone (PTH)",
+   "panel": "blood.bone",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "pg/mL": [
+     0.106,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 1.6,
+    "high": 6.9
+   },
+   "limits": [
+    0.1,
+    300
+   ],
+   "aliases": [
+    "PTH",
+    "Parathyroid Hormone",
+    "Intact PTH",
+    "Παραθορμόνη"
+   ]
+  },
+  {
+   "id": "rheumatoid_factor",
+   "name": "Rheumatoid factor",
+   "panel": "blood.serology",
+   "unit": "IU/mL",
+   "kind": "numeric",
+   "units": {
+    "IU/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 29
+   },
+   "limits": [
+    0,
+    5000
+   ],
+   "aliases": [
+    "Rheumatoid Factor",
+    "RF",
+    "RA Factor",
+    "类风湿因子",
+    "Ρευματοειδής παράγοντας"
+   ]
+  },
+  {
+   "id": "hemoglobin",
+   "name": "Haemoglobin",
+   "panel": "blood.cbc",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "g/dL": [
+     10.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 135,
+    "high": 175
+   },
+   "ref_f": {
+    "low": 120,
+    "high": 155
+   },
+   "limits": [
+    30,
+    250
+   ],
+   "aliases": [
+    "Hemoglobin",
+    "Hb",
+    "HGB",
+    "血红素",
+    "Αιμοσφαιρίνη"
+   ]
+  },
+  {
+   "id": "rbc",
+   "name": "Red cell count",
+   "panel": "blood.cbc",
+   "unit": "10^12/L",
+   "kind": "numeric",
+   "units": {
+    "10^12/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref_m": {
+    "low": 4.7,
+    "high": 6.0
+   },
+   "ref_f": {
+    "low": 4.2,
+    "high": 5.4
+   },
+   "limits": [
+    1,
+    9
+   ],
+   "aliases": [
+    "Red Cell Count",
+    "Red Blood Cells",
+    "RBC",
+    "RBC Count",
+    "Erythrocytes",
+    "红血球计数",
+    "Ερυθρά αιμοσφαίρια",
+    "Ερυθρά"
+   ]
+  },
+  {
+   "id": "hematocrit",
+   "name": "Haematocrit",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 41,
+    "high": 53
+   },
+   "ref_f": {
+    "low": 36,
+    "high": 46
+   },
+   "limits": [
+    10,
+    75
+   ],
+   "aliases": [
+    "Hematocrit",
+    "Haematocrit (PCV) %",
+    "PCV",
+    "HCT",
+    "红血球压量 %",
+    "Αιματοκρίτης"
+   ]
+  },
+  {
+   "id": "mcv",
+   "name": "MCV",
+   "panel": "blood.cbc",
+   "unit": "fL",
+   "kind": "numeric",
+   "units": {
+    "fL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 78,
+    "high": 100
+   },
+   "limits": [
+    50,
+    150
+   ],
+   "aliases": [
+    "Mean Cell Volume",
+    "Mean Corpuscular Volume",
+    "红血球平均球容积",
+    "Μέσος όγκος ερυθρών"
+   ]
+  },
+  {
+   "id": "mch",
+   "name": "MCH",
+   "panel": "blood.cbc",
+   "unit": "pg",
+   "kind": "numeric",
+   "units": {
+    "pg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 27,
+    "high": 32
+   },
+   "limits": [
+    10,
+    50
+   ],
+   "aliases": [
+    "Mean Cell Haemoglobin",
+    "Mean Corpuscular Hemoglobin",
+    "红血球平均血红素含量",
+    "Μέση περιεκτικότητα αιμοσφαιρίνης"
+   ]
+  },
+  {
+   "id": "mchc",
+   "name": "MCHC",
+   "panel": "blood.cbc",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "g/dL": [
+     10.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 310,
+    "high": 350
+   },
+   "limits": [
+    200,
+    450
+   ],
+   "aliases": [
+    "Mean Cell Haemoglobin Concentration",
+    "红血球平均血红素浓度",
+    "Μέση συγκέντρωση αιμοσφαιρίνης"
+   ]
+  },
+  {
+   "id": "rdw",
+   "name": "RDW",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 11.5,
+    "high": 14.0
+   },
+   "limits": [
+    5,
+    40
+   ],
+   "aliases": [
+    "RDW-CV",
+    "Red Cell Distribution Width",
+    "红血球分布宽度",
+    "Εύρος κατανομής ερυθρών"
+   ]
+  },
+  {
+   "id": "wbc",
+   "name": "White cell count",
+   "panel": "blood.cbc",
+   "unit": "10^9/L",
+   "kind": "numeric",
+   "units": {
+    "10^9/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 4.0,
+    "high": 11.0
+   },
+   "limits": [
+    0.2,
+    200
+   ],
+   "aliases": [
+    "Total White Cell Count",
+    "White Cell Count",
+    "White Blood Cells",
+    "WBC",
+    "WBC Count",
+    "Leukocytes",
+    "Total Leukocyte Count",
+    "白血球计数",
+    "Λευκά αιμοσφαίρια",
+    "Λευκά"
+   ]
+  },
+  {
+   "id": "platelets",
+   "name": "Platelet count",
+   "panel": "blood.cbc",
+   "unit": "10^9/L",
+   "kind": "numeric",
+   "units": {
+    "10^9/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 150,
+    "high": 450
+   },
+   "limits": [
+    5,
+    2000
+   ],
+   "aliases": [
+    "Platelet Count",
+    "Platelets",
+    "PLT",
+    "血小板计数",
+    "Αιμοπετάλια"
+   ]
+  },
+  {
+   "id": "mpv",
+   "name": "Mean platelet volume",
+   "panel": "blood.cbc",
+   "unit": "fL",
+   "kind": "numeric",
+   "units": {
+    "fL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 5.6,
+    "high": 12.2
+   },
+   "limits": [
+    3,
+    20
+   ],
+   "aliases": [
+    "Mean Platelet Volume",
+    "MPV",
+    "血小板平均体积",
+    "Μέσος όγκος αιμοπεταλίων"
+   ]
+  },
+  {
+   "id": "neutrophils_abs",
+   "name": "Neutrophils (absolute)",
+   "panel": "blood.cbc",
+   "unit": "10^9/L",
+   "kind": "numeric",
+   "units": {
+    "10^9/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 1.8,
+    "high": 7.8
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "Neutrophils",
+    "Neutrophils (abs)",
+    "Absolute Neutrophils",
+    "ANC",
+    "中性白血球",
+    "Ουδετερόφιλα"
+   ]
+  },
+  {
+   "id": "lymphocytes_abs",
+   "name": "Lymphocytes (absolute)",
+   "panel": "blood.cbc",
+   "unit": "10^9/L",
+   "kind": "numeric",
+   "units": {
+    "10^9/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 1.0,
+    "high": 4.8
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "Lymphocytes",
+    "Lymphocytes (abs)",
+    "Absolute Lymphocytes",
+    "淋巴白血球",
+    "Λεμφοκύτταρα"
+   ]
+  },
+  {
+   "id": "monocytes_abs",
+   "name": "Monocytes (absolute)",
+   "panel": "blood.cbc",
+   "unit": "10^9/L",
+   "kind": "numeric",
+   "units": {
+    "10^9/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.0,
+    "high": 0.8
+   },
+   "limits": [
+    0,
+    20
+   ],
+   "aliases": [
+    "Monocytes",
+    "Monocytes (abs)",
+    "单核白血球",
+    "Μονοκύτταρα"
+   ]
+  },
+  {
+   "id": "eosinophils_abs",
+   "name": "Eosinophils (absolute)",
+   "panel": "blood.cbc",
+   "unit": "10^9/L",
+   "kind": "numeric",
+   "units": {
+    "10^9/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.0,
+    "high": 0.45
+   },
+   "limits": [
+    0,
+    20
+   ],
+   "aliases": [
+    "Eosinophils",
+    "Eosinophils (abs)",
+    "嗜酸性白血球",
+    "Ηωσινόφιλα"
+   ]
+  },
+  {
+   "id": "basophils_abs",
+   "name": "Basophils (absolute)",
+   "panel": "blood.cbc",
+   "unit": "10^9/L",
+   "kind": "numeric",
+   "units": {
+    "10^9/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.0,
+    "high": 0.2
+   },
+   "limits": [
+    0,
+    10
+   ],
+   "aliases": [
+    "Basophils",
+    "Basophils (abs)",
+    "嗜碱性白血球",
+    "Βασεόφιλα"
+   ]
+  },
+  {
+   "id": "neutrophils_pct",
+   "name": "Neutrophils (%)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 40,
+    "high": 75
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "Neutrophils %",
+    "Neutrophil %",
+    "Ουδετερόφιλα %"
+   ]
+  },
+  {
+   "id": "lymphocytes_pct",
+   "name": "Lymphocytes (%)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 20,
+    "high": 45
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "Lymphocytes %",
+    "Λεμφοκύτταρα %"
+   ]
+  },
+  {
+   "id": "monocytes_pct",
+   "name": "Monocytes (%)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 2,
+    "high": 10
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "Monocytes %",
+    "Μονοκύτταρα %"
+   ]
+  },
+  {
+   "id": "eosinophils_pct",
+   "name": "Eosinophils (%)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 0,
+    "high": 6
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "Eosinophils %",
+    "Ηωσινόφιλα %"
+   ]
+  },
+  {
+   "id": "basophils_pct",
+   "name": "Basophils (%)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 0,
+    "high": 2
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "Basophils %",
+    "Βασεόφιλα %"
+   ]
+  },
+  {
+   "id": "esr",
+   "name": "ESR",
+   "panel": "blood.inflammation",
+   "unit": "mm/h",
+   "kind": "numeric",
+   "units": {
+    "mm/h": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 20
+   },
+   "limits": [
+    0,
+    150
+   ],
+   "aliases": [
+    "Erythrocyte Sedimentation Rate",
+    "红血球沉降率",
+    "ΤΚΕ",
+    "Ταχύτητα καθίζησης ερυθρών"
+   ]
+  },
+  {
+   "id": "blood_film",
+   "name": "Peripheral blood film",
+   "panel": "blood.cbc",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Peripheral Blood Film",
+    "Blood Film",
+    "Peripheral Smear",
+    "Blood Smear",
+    "Film Comment",
+    "周边血片",
+    "Επίχρισμα περιφερικού αίματος"
+   ]
+  },
+  {
+   "id": "iron",
+   "name": "Iron",
+   "panel": "blood.iron",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "ug/dL": [
+     0.17906706061420002,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 11.6,
+    "high": 31.3
+   },
+   "limits": [
+    1,
+    100
+   ],
+   "aliases": [
+    "Serum Iron",
+    "Fe",
+    "铁",
+    "Σίδηρος",
+    "Σίδηρος ορού"
+   ]
+  },
+  {
+   "id": "ferritin",
+   "name": "Ferritin",
+   "panel": "blood.iron",
+   "unit": "ug/L",
+   "kind": "numeric",
+   "units": {
+    "ug/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 22,
+    "high": 275
+   },
+   "ref_f": {
+    "low": 10,
+    "high": 200
+   },
+   "limits": [
+    1,
+    10000
+   ],
+   "aliases": [
+    "Serum Ferritin",
+    "铁蛋白",
+    "Φερριτίνη",
+    "Φεριτίνη"
+   ]
+  },
+  {
+   "id": "transferrin",
+   "name": "Transferrin",
+   "panel": "blood.iron",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.01,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 1.74,
+    "high": 3.64
+   },
+   "limits": [
+    0.3,
+    8
+   ],
+   "aliases": [
+    "转铁蛋白",
+    "Τρανσφερρίνη"
+   ]
+  },
+  {
+   "id": "tibc",
+   "name": "TIBC",
+   "panel": "blood.iron",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "ug/dL": [
+     0.17906706061420002,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 44,
+    "high": 73
+   },
+   "limits": [
+    10,
+    150
+   ],
+   "aliases": [
+    "Total Iron Binding Capacity",
+    "铁结合力",
+    "Ολική σιδηροδεσμευτική ικανότητα"
+   ]
+  },
+  {
+   "id": "transferrin_saturation",
+   "name": "Transferrin saturation",
+   "panel": "blood.iron",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 16,
+    "high": 55
+   },
+   "limits": [
+    1,
+    100
+   ],
+   "aliases": [
+    "Iron Saturation",
+    "Transferrin Saturation",
+    "TSAT",
+    "% Saturation",
+    "铁饱和度",
+    "Κορεσμός τρανσφερρίνης"
+   ]
+  },
+  {
+   "id": "tsh",
+   "name": "TSH",
+   "panel": "blood.thyroid",
+   "unit": "mIU/L",
+   "kind": "numeric",
+   "units": {
+    "mIU/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.35,
+    "high": 4.94
+   },
+   "log": true,
+   "limits": [
+    0.001,
+    200
+   ],
+   "aliases": [
+    "Thyroid Stimulating Hormone",
+    "Thyrotropin",
+    "促甲状腺激素",
+    "Θυρεοειδοτρόπος ορμόνη",
+    "TSH (3ης γενιάς)"
+   ]
+  },
+  {
+   "id": "ft4",
+   "name": "Free T4",
+   "panel": "blood.thyroid",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/dL": [
+     12.872166514346029,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 9.0,
+    "high": 19.0
+   },
+   "limits": [
+    1,
+    150
+   ],
+   "aliases": [
+    "FT4",
+    "Free Thyroxine",
+    "游离甲状腺素",
+    "Ελεύθερη θυροξίνη"
+   ]
+  },
+  {
+   "id": "ft3",
+   "name": "Free T3",
+   "panel": "blood.thyroid",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "pg/mL": [
+     1.5361691014946925,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 2.6,
+    "high": 5.7
+   },
+   "limits": [
+    0.5,
+    50
+   ],
+   "aliases": [
+    "FT3",
+    "Free Triiodothyronine",
+    "游离三碘甲状腺原氨酸",
+    "Ελεύθερη τριιωδοθυρονίνη"
+   ]
+  },
+  {
+   "id": "t4_total",
+   "name": "Total T4",
+   "panel": "blood.thyroid",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ug/dL": [
+     12.872166514346027,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 58,
+    "high": 140
+   },
+   "limits": [
+    5,
+    400
+   ],
+   "aliases": [
+    "T4",
+    "Thyroxine",
+    "Θυροξίνη"
+   ]
+  },
+  {
+   "id": "t3_total",
+   "name": "Total T3",
+   "panel": "blood.thyroid",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/dL": [
+     0.015361691014946922,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 1.2,
+    "high": 2.8
+   },
+   "limits": [
+    0.2,
+    10
+   ],
+   "aliases": [
+    "T3",
+    "Triiodothyronine",
+    "Τριιωδοθυρονίνη"
+   ]
+  },
+  {
+   "id": "anti_tpo",
+   "name": "Anti-TPO antibodies",
+   "panel": "blood.thyroid",
+   "unit": "IU/mL",
+   "kind": "numeric",
+   "units": {
+    "IU/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 34
+   },
+   "limits": [
+    0,
+    10000
+   ],
+   "aliases": [
+    "Anti-TPO",
+    "Anti TPO",
+    "Thyroid Peroxidase Antibodies",
+    "TPO Ab",
+    "Anti-TPO Αντισώματα"
+   ]
+  },
+  {
+   "id": "testosterone_total",
+   "name": "Testosterone (total)",
+   "panel": "blood.hormones",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/dL": [
+     0.03467165938561819,
+     0.0
+    ],
+    "ng/mL": [
+     3.467165938561819,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref_m": {
+    "low": 8.64,
+    "high": 29.0
+   },
+   "ref_f": {
+    "low": 0.29,
+    "high": 1.67
+   },
+   "limits": [
+    0.05,
+    150
+   ],
+   "aliases": [
+    "Testosterone",
+    "Total Testosterone",
+    "Testosterone Total",
+    "Testosterone (Total)",
+    "睾酮",
+    "Τεστοστερόνη",
+    "Ολική τεστοστερόνη"
+   ]
+  },
+  {
+   "id": "testosterone_free",
+   "name": "Testosterone (free)",
+   "panel": "blood.hormones",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "pg/mL": [
+     3.46716593856182,
+     0.0
+    ],
+    "ng/dL": [
+     34.6716593856182,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 170,
+    "high": 700
+   },
+   "limits": [
+    1,
+    3000
+   ],
+   "aliases": [
+    "Free Testosterone",
+    "Testosterone Free",
+    "Calculated Free Testosterone",
+    "Free Testosterone (calculated)",
+    "Ελεύθερη τεστοστερόνη"
+   ]
+  },
+  {
+   "id": "testosterone_bioavailable",
+   "name": "Testosterone (bioavailable)",
+   "panel": "blood.hormones",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/dL": [
+     0.03467165938561819,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.01,
+    60
+   ],
+   "aliases": [
+    "Bioavailable Testosterone",
+    "Testosterone Bioavailable"
+   ]
+  },
+  {
+   "id": "dht",
+   "name": "Dihydrotestosterone (DHT)",
+   "panel": "blood.hormones",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "pg/mL": [
+     0.0034430519212229724,
+     0.0
+    ],
+    "ng/dL": [
+     0.03443051921222972,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref_m": {
+    "low": 0.38,
+    "high": 2.86
+   },
+   "limits": [
+    0.01,
+    20
+   ],
+   "aliases": [
+    "Dihydrotestosterone",
+    "DHT",
+    "Dihydrotestosterone Serum",
+    "Dihydrotestosterone, S",
+    "Dihydrotestosterone, Serum",
+    "5α-DHT",
+    "Διυδροτεστοστερόνη"
+   ]
+  },
+  {
+   "id": "shbg",
+   "name": "SHBG",
+   "panel": "blood.hormones",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref_m": {
+    "low": 11.2,
+    "high": 78.1
+   },
+   "limits": [
+    1,
+    400
+   ],
+   "aliases": [
+    "Sex Hormone Binding Globulin",
+    "Sex Hormone Binding Glo",
+    "性激素结合球蛋白",
+    "Σφαιρίνη δέσμευσης φυλετικών ορμονών"
+   ]
+  },
+  {
+   "id": "estradiol",
+   "name": "Estradiol (E2)",
+   "panel": "blood.hormones",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "pg/mL": [
+     3.671341508187092,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "high": 191
+   },
+   "limits": [
+    5,
+    20000
+   ],
+   "aliases": [
+    "Estradiol",
+    "Oestradiol",
+    "E2",
+    "雌二醇",
+    "Οιστραδιόλη"
+   ]
+  },
+  {
+   "id": "progesterone",
+   "name": "Progesterone",
+   "panel": "blood.hormones",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     3.180054696940787,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    0.05,
+    1000
+   ],
+   "aliases": [
+    "孕酮",
+    "Προγεστερόνη"
+   ]
+  },
+  {
+   "id": "lh",
+   "name": "Luteinizing hormone (LH)",
+   "panel": "blood.hormones",
+   "unit": "IU/L",
+   "kind": "numeric",
+   "units": {
+    "IU/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref_m": {
+    "low": 1.7,
+    "high": 8.6
+   },
+   "limits": [
+    0.05,
+    300
+   ],
+   "aliases": [
+    "LH",
+    "Luteinizing Hormone",
+    "Luteinising Hormone",
+    "促黄体素",
+    "Ωχρινοτρόπος ορμόνη"
+   ]
+  },
+  {
+   "id": "fsh",
+   "name": "Follicle-stimulating hormone (FSH)",
+   "panel": "blood.hormones",
+   "unit": "IU/L",
+   "kind": "numeric",
+   "units": {
+    "IU/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref_m": {
+    "low": 1.5,
+    "high": 12.4
+   },
+   "limits": [
+    0.05,
+    300
+   ],
+   "aliases": [
+    "FSH",
+    "Follicle Stimulating Hormone",
+    "促卵泡激素",
+    "Ωοθυλακιοτρόπος ορμόνη"
+   ]
+  },
+  {
+   "id": "prolactin",
+   "name": "Prolactin",
+   "panel": "blood.hormones",
+   "unit": "mIU/L",
+   "kind": "numeric",
+   "units": {
+    "mIU/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     21.2,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 73,
+    "high": 407
+   },
+   "ref_f": {
+    "low": 109,
+    "high": 557
+   },
+   "limits": [
+    5,
+    20000
+   ],
+   "aliases": [
+    "PRL",
+    "催乳素",
+    "Προλακτίνη"
+   ]
+  },
+  {
+   "id": "dheas",
+   "name": "DHEA-S",
+   "panel": "blood.hormones",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "ug/dL": [
+     0.027137042062415195,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.1,
+    40
+   ],
+   "aliases": [
+    "DHEAS",
+    "DHEA Sulphate",
+    "DHEA Sulfate",
+    "Dehydroepiandrosterone Sulfate",
+    "Θειική δεϋδροεπιανδροστερόνη"
+   ]
+  },
+  {
+   "id": "cortisol",
+   "name": "Cortisol",
+   "panel": "blood.hormones",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ug/dL": [
+     27.589251227721675,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    5,
+    3000
+   ],
+   "aliases": [
+    "Cortisol (AM)",
+    "Morning Cortisol",
+    "Κορτιζόλη"
+   ]
+  },
+  {
+   "id": "igf1",
+   "name": "IGF-1",
+   "panel": "blood.hormones",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     0.131,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    1,
+    200
+   ],
+   "aliases": [
+    "IGF1",
+    "Insulin-like Growth Factor 1",
+    "Somatomedin C"
+   ]
+  },
+  {
+   "id": "amh",
+   "name": "Anti-Müllerian hormone (AMH)",
+   "panel": "blood.hormones",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     7.14,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    0,
+    300
+   ],
+   "aliases": [
+    "AMH",
+    "Anti-Mullerian Hormone",
+    "Anti-Müllerian Hormone",
+    "Αντιμυλλέριος ορμόνη"
+   ]
+  },
+  {
+   "id": "beta_hcg",
+   "name": "Beta-hCG",
+   "panel": "blood.hormones",
+   "unit": "IU/L",
+   "kind": "numeric",
+   "units": {
+    "IU/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    0,
+    500000
+   ],
+   "aliases": [
+    "Beta HCG",
+    "Beta HCG Total",
+    "Beta HCG Total (M)",
+    "β-hCG",
+    "hCG",
+    "β人绒毛膜促性腺激素",
+    "Χοριακή γοναδοτροπίνη"
+   ]
+  },
+  {
+   "id": "vitamin_d",
+   "name": "Vitamin D (25-OH)",
+   "panel": "blood.vitamins",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     2.496006389776358,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 75,
+    "high": 250
+   },
+   "limits": [
+    2,
+    600
+   ],
+   "aliases": [
+    "Vitamin D Total",
+    "Vitamin D",
+    "25-OH Vitamin D",
+    "25-Hydroxyvitamin D",
+    "25(OH)D",
+    "钙二醇+钙化醇 (维他命D)",
+    "Βιταμίνη D",
+    "25-υδροξυ-βιταμίνη D"
+   ]
+  },
+  {
+   "id": "vitamin_b12",
+   "name": "Vitamin B12",
+   "panel": "blood.vitamins",
+   "unit": "pmol/L",
+   "kind": "numeric",
+   "units": {
+    "pmol/L": [
+     1.0,
+     0.0
+    ],
+    "pg/mL": [
+     0.7378059127765851,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 138,
+    "high": 652
+   },
+   "limits": [
+    20,
+    5000
+   ],
+   "aliases": [
+    "B12",
+    "Cobalamin",
+    "Cyanocobalamin",
+    "钴胺素类 (维他命B12)",
+    "Βιταμίνη B12"
+   ]
+  },
+  {
+   "id": "folate",
+   "name": "Folate",
+   "panel": "blood.vitamins",
+   "unit": "nmol/L",
+   "kind": "numeric",
+   "units": {
+    "nmol/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     2.2655188038060716,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 7.0,
+    "high": 46.4
+   },
+   "limits": [
+    1,
+    200
+   ],
+   "aliases": [
+    "Folic Acid",
+    "Serum Folate",
+    "叶酸",
+    "Φυλλικό οξύ"
+   ]
+  },
+  {
+   "id": "hscrp",
+   "name": "hs-CRP",
+   "panel": "blood.inflammation",
+   "unit": "mg/L",
+   "kind": "numeric",
+   "units": {
+    "mg/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     10.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 3.0
+   },
+   "limits": [
+    0.01,
+    500
+   ],
+   "aliases": [
+    "hsCRP",
+    "High Sensitivity CRP",
+    "CRP (high sensitivity)",
+    "C 反应蛋白",
+    "hs-CRP Υψηλής ευαισθησίας"
+   ]
+  },
+  {
+   "id": "crp",
+   "name": "CRP",
+   "panel": "blood.inflammation",
+   "unit": "mg/L",
+   "kind": "numeric",
+   "units": {
+    "mg/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     10.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 5
+   },
+   "limits": [
+    0.01,
+    600
+   ],
+   "aliases": [
+    "C-Reactive Protein",
+    "C Reactive Protein",
+    "C-αντιδρώσα πρωτεΐνη",
+    "CRP ποσοτική"
+   ]
+  },
+  {
+   "id": "homocysteine",
+   "name": "Homocysteine",
+   "panel": "blood.inflammation",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 5.1,
+    "high": 15.4
+   },
+   "limits": [
+    1,
+    200
+   ],
+   "aliases": [
+    "Hcy",
+    "高半胱氨酸",
+    "Ομοκυστεΐνη"
+   ]
+  },
+  {
+   "id": "nt_probnp",
+   "name": "NT-proBNP",
+   "panel": "blood.inflammation",
+   "unit": "ng/L",
+   "kind": "numeric",
+   "units": {
+    "ng/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 125
+   },
+   "log": true,
+   "limits": [
+    1,
+    100000
+   ],
+   "aliases": [
+    "NT pro BNP",
+    "N-terminal pro-BNP"
+   ]
+  },
+  {
+   "id": "ck",
+   "name": "Creatine kinase (CK)",
+   "panel": "blood.inflammation",
+   "unit": "U/L",
+   "kind": "numeric",
+   "units": {
+    "U/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 200
+   },
+   "limits": [
+    5,
+    100000
+   ],
+   "aliases": [
+    "CK",
+    "CPK",
+    "Creatine Kinase",
+    "Κρεατινοφωσφοκινάση"
+   ]
+  },
+  {
+   "id": "psa_total",
+   "name": "PSA (total)",
+   "panel": "blood.tumour",
+   "unit": "ug/L",
+   "kind": "numeric",
+   "units": {
+    "ug/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "ref_m": {
+    "high": 4.0
+   },
+   "log": true,
+   "limits": [
+    0.001,
+    5000
+   ],
+   "aliases": [
+    "Total PSA",
+    "PSA",
+    "PSA Total",
+    "Prostate Specific Antigen",
+    "前列腺特殊抗原",
+    "Ειδικό προστατικό αντιγόνο",
+    "PSA ολικό"
+   ]
+  },
+  {
+   "id": "psa_free",
+   "name": "PSA (free)",
+   "panel": "blood.tumour",
+   "unit": "ug/L",
+   "kind": "numeric",
+   "units": {
+    "ug/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "limits": [
+    0.001,
+    500
+   ],
+   "aliases": [
+    "Free PSA",
+    "PSA Free",
+    "fPSA",
+    "PSA ελεύθερο"
+   ]
+  },
+  {
+   "id": "psa_free_ratio",
+   "name": "Free/total PSA ratio",
+   "panel": "blood.tumour",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 25
+   },
+   "limits": [
+    1,
+    100
+   ],
+   "aliases": [
+    "Free/Total PSA",
+    "Free PSA %",
+    "% Free PSA",
+    "f/t PSA"
+   ]
+  },
+  {
+   "id": "afp",
+   "name": "Alpha-fetoprotein (AFP)",
+   "panel": "blood.tumour",
+   "unit": "ug/L",
+   "kind": "numeric",
+   "units": {
+    "ug/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 8.8
+   },
+   "log": true,
+   "limits": [
+    0.1,
+    100000
+   ],
+   "aliases": [
+    "Alpha Fetoprotein",
+    "AFP",
+    "Alpha-Fetoprotein",
+    "甲胎蛋白",
+    "Α-εμβρυϊκή σφαιρίνη"
+   ]
+  },
+  {
+   "id": "cea",
+   "name": "CEA",
+   "panel": "blood.tumour",
+   "unit": "ug/L",
+   "kind": "numeric",
+   "units": {
+    "ug/L": [
+     1.0,
+     0.0
+    ],
+    "ng/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 5.0
+   },
+   "log": true,
+   "limits": [
+    0.1,
+    100000
+   ],
+   "aliases": [
+    "Carcinoembryonic Antigen",
+    "癌胚抗原",
+    "Καρκινοεμβρυϊκό αντιγόνο"
+   ]
+  },
+  {
+   "id": "ca199",
+   "name": "CA 19-9",
+   "panel": "blood.tumour",
+   "unit": "U/mL",
+   "kind": "numeric",
+   "units": {
+    "U/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 37
+   },
+   "log": true,
+   "limits": [
+    0,
+    100000
+   ],
+   "aliases": [
+    "CA19-9",
+    "CA 19.9",
+    "CA199",
+    "致癌抗原19.9"
+   ]
+  },
+  {
+   "id": "ca125",
+   "name": "CA 125",
+   "panel": "blood.tumour",
+   "unit": "U/mL",
+   "kind": "numeric",
+   "units": {
+    "U/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 35
+   },
+   "log": true,
+   "limits": [
+    0,
+    100000
+   ],
+   "aliases": [
+    "CA125",
+    "CA-125"
+   ]
+  },
+  {
+   "id": "ca153",
+   "name": "CA 15-3",
+   "panel": "blood.tumour",
+   "unit": "U/mL",
+   "kind": "numeric",
+   "units": {
+    "U/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 31
+   },
+   "log": true,
+   "limits": [
+    0,
+    100000
+   ],
+   "aliases": [
+    "CA15-3",
+    "CA 15.3"
+   ]
+  },
+  {
+   "id": "ebv_ea_iga",
+   "name": "EBV EA IgA",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "EBV Early Antigen IgA",
+    "EBV早期抗原 IgA"
+   ]
+  },
+  {
+   "id": "ebv_vca_iga",
+   "name": "EBV VCA IgA",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "EBV Viral Capsid Antigen IgA"
+   ]
+  },
+  {
+   "id": "inr",
+   "name": "INR",
+   "panel": "blood.coag",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.8,
+    "high": 1.2
+   },
+   "limits": [
+    0.5,
+    15
+   ],
+   "aliases": [
+    "PT INR",
+    "Διεθνής κανονικοποιημένη αναλογία"
+   ]
+  },
+  {
+   "id": "pt",
+   "name": "Prothrombin time",
+   "panel": "blood.coag",
+   "unit": "s",
+   "kind": "numeric",
+   "units": {
+    "s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 10,
+    "high": 13.5
+   },
+   "limits": [
+    5,
+    150
+   ],
+   "aliases": [
+    "Prothrombin Time",
+    "PT",
+    "Χρόνος προθρομβίνης"
+   ]
+  },
+  {
+   "id": "aptt",
+   "name": "APTT",
+   "panel": "blood.coag",
+   "unit": "s",
+   "kind": "numeric",
+   "units": {
+    "s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 25,
+    "high": 37
+   },
+   "limits": [
+    10,
+    200
+   ],
+   "aliases": [
+    "aPTT",
+    "PTT",
+    "Activated Partial Thromboplastin Time",
+    "Χρόνος μερικής θρομβοπλαστίνης"
+   ]
+  },
+  {
+   "id": "fibrinogen",
+   "name": "Fibrinogen",
+   "panel": "blood.coag",
+   "unit": "g/L",
+   "kind": "numeric",
+   "units": {
+    "g/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.01,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 2.0,
+    "high": 4.0
+   },
+   "limits": [
+    0.2,
+    15
+   ],
+   "aliases": [
+    "Ινωδογόνο"
+   ]
+  },
+  {
+   "id": "hbsag",
+   "name": "Hepatitis B surface antigen",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Hepatitis Bs Antigen",
+    "HBsAg",
+    "Hepatitis B Surface Antigen",
+    "乙型肝炎病毒表面 抗原",
+    "Αυστραλιανό αντιγόνο"
+   ]
+  },
+  {
+   "id": "anti_hbs",
+   "name": "Hepatitis B surface antibody",
+   "panel": "blood.serology",
+   "unit": "IU/L",
+   "kind": "numeric",
+   "units": {
+    "IU/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 10
+   },
+   "limits": [
+    0,
+    100000
+   ],
+   "aliases": [
+    "Hepatitis Bs Antibody",
+    "Anti-HBs",
+    "HBsAb",
+    "Hepatitis B Surface Antibody",
+    "乙型肝炎病毒表面 抗体",
+    "Αντισώματα έναντι HBsAg"
+   ]
+  },
+  {
+   "id": "anti_hcv",
+   "name": "Hepatitis C antibody",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Anti-HCV",
+    "HCV Antibody",
+    "Hepatitis C Antibody",
+    "丙型肝炎病毒 抗体",
+    "Αντισώματα HCV"
+   ]
+  },
+  {
+   "id": "anti_hav_igg",
+   "name": "Hepatitis A antibody (IgG / total)",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Anti-HAV IgG",
+    "HAV IgG",
+    "Hepatitis A IgG",
+    "Anti-HAV Total",
+    "Anti-HAV",
+    "HAV Total Antibody",
+    "甲型肝炎病毒 抗体.IgG"
+   ]
+  },
+  {
+   "id": "hiv",
+   "name": "HIV screen",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "HIV",
+    "HIV 1/2 Ag/Ab",
+    "HIV Screen",
+    "HIV Combo"
+   ]
+  },
+  {
+   "id": "syphilis",
+   "name": "Syphilis screen",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "VDRL",
+    "RPR",
+    "TPHA",
+    "Syphilis",
+    "Syphilis Screen"
+   ]
+  },
+  {
+   "id": "h_pylori_igg",
+   "name": "H. pylori IgG",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Helicobacter Pylori IgG",
+    "H pylori Antibody",
+    "幽门螺杆菌 IgG"
+   ]
+  },
+  {
+   "id": "ana",
+   "name": "Antinuclear antibodies (ANA)",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Anti Nuclear Antibodies",
+    "Anti Nuclear Antibodies (IIFT)",
+    "ANA",
+    "Antinuclear Antibodies",
+    "抗核抗体 (IIFT)",
+    "Αντιπυρηνικά αντισώματα"
+   ]
+  },
+  {
+   "id": "ana_titre",
+   "name": "ANA titre",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Anti Nuclear AB Titre",
+    "ANA Titre",
+    "ANA Titer",
+    "抗核抗体滴度"
+   ]
+  },
+  {
+   "id": "ana_pattern",
+   "name": "ANA pattern",
+   "panel": "blood.serology",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Anti Nuclear AB Pattern",
+    "ANA Pattern",
+    "抗核抗体模式"
+   ]
+  },
+  {
+   "id": "anti_dsdna",
+   "name": "Anti-dsDNA",
+   "panel": "blood.serology",
+   "unit": "IU/mL",
+   "kind": "numeric",
+   "units": {
+    "IU/mL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 100
+   },
+   "limits": [
+    0,
+    10000
+   ],
+   "aliases": [
+    "Anti-ds DNA",
+    "dsDNA Antibody",
+    "抗双链DNA"
+   ]
+  },
+  {
+   "id": "urine_creatinine",
+   "name": "Urine creatinine",
+   "panel": "urine.chemistry",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.0884016973125884,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.5,
+    50
+   ],
+   "aliases": [
+    "Urine Creatinine Random",
+    "Urine Creatinine",
+    "尿肌酸酐"
+   ]
+  },
+  {
+   "id": "urine_microalbumin",
+   "name": "Urine microalbumin",
+   "panel": "urine.chemistry",
+   "unit": "mg/L",
+   "kind": "numeric",
+   "units": {
+    "mg/L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    0,
+    5000
+   ],
+   "aliases": [
+    "Urine Microalbumin (Random)",
+    "Urine Microalbumin",
+    "Microalbumin",
+    "尿微量白蛋白",
+    "Μικρολευκωματινουρία"
+   ]
+  },
+  {
+   "id": "urine_acr",
+   "name": "Urine albumin/creatinine ratio",
+   "panel": "urine.chemistry",
+   "unit": "mg/mmol",
+   "kind": "numeric",
+   "units": {
+    "mg/mmol": [
+     1.0,
+     0.0
+    ],
+    "mg/g": [
+     0.1131,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 2.5
+   },
+   "limits": [
+    0,
+    1000
+   ],
+   "aliases": [
+    "Urine µAlb/Creat Ratio",
+    "Urine Albumin/Creatinine Ratio",
+    "ACR",
+    "UACR",
+    "Microalbumin/Creatinine Ratio",
+    "尿微量白蛋白/肌酸酐比值"
+   ]
+  },
+  {
+   "id": "urine_ph",
+   "name": "Urine pH",
+   "panel": "urine.dipstick",
+   "unit": "pH",
+   "kind": "numeric",
+   "units": {
+    "pH": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 5.0,
+    "high": 7.5
+   },
+   "limits": [
+    4,
+    9.5
+   ],
+   "aliases": [
+    "pH",
+    "酸碱值",
+    "pH ούρων"
+   ]
+  },
+  {
+   "id": "urine_sg",
+   "name": "Urine specific gravity",
+   "panel": "urine.dipstick",
+   "unit": "SG",
+   "kind": "numeric",
+   "units": {
+    "SG": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "ref": {
+    "low": 1.003,
+    "high": 1.03
+   },
+   "limits": [
+    1.0,
+    1.06
+   ],
+   "aliases": [
+    "Specific Gravity",
+    "SG",
+    "Urine Specific Gravity",
+    "尿比重",
+    "Ειδικό βάρος"
+   ]
+  },
+  {
+   "id": "urine_colour",
+   "name": "Urine colour",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Urine Colour",
+    "Urine Color",
+    "Colour",
+    "尿液颜色",
+    "Χρώμα"
+   ]
+  },
+  {
+   "id": "urine_clarity",
+   "name": "Urine clarity",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Urine Clarity",
+    "Clarity",
+    "Appearance",
+    "尿液混濁度",
+    "Διαύγεια",
+    "Όψη"
+   ]
+  },
+  {
+   "id": "urine_protein",
+   "name": "Urine protein",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Protein",
+    "Urine Protein",
+    "蛋白质",
+    "Λεύκωμα"
+   ]
+  },
+  {
+   "id": "urine_glucose",
+   "name": "Urine glucose",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Urine Glucose",
+    "尿糖",
+    "Σάκχαρο ούρων"
+   ]
+  },
+  {
+   "id": "urine_ketones",
+   "name": "Urine ketones",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Ketones",
+    "Urine Ketones",
+    "酮",
+    "Κετόνες",
+    "Οξόνη"
+   ]
+  },
+  {
+   "id": "urine_nitrite",
+   "name": "Urine nitrite",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Nitrite",
+    "Nitrites",
+    "亚硝酸盐",
+    "Νιτρώδη"
+   ]
+  },
+  {
+   "id": "urine_urobilinogen",
+   "name": "Urine urobilinogen",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Urobilinogen",
+    "尿胆原",
+    "Ουροχολινογόνο"
+   ]
+  },
+  {
+   "id": "urine_bilirubin",
+   "name": "Urine bilirubin",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Urine Bilirubin",
+    "胆红素",
+    "Χολερυθρίνη ούρων"
+   ]
+  },
+  {
+   "id": "urine_leukocytes",
+   "name": "Urine leukocyte esterase",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Leukocytes",
+    "Leukocyte Esterase",
+    "白血球 (dipstick)",
+    "Λευκοκύτταρα"
+   ]
+  },
+  {
+   "id": "urine_blood",
+   "name": "Urine blood (dipstick)",
+   "panel": "urine.dipstick",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Erythrocytes",
+    "Blood",
+    "Urine Blood",
+    "Haemoglobin (urine)",
+    "红血球 (dipstick)",
+    "Αίμα"
+   ]
+  },
+  {
+   "id": "urine_wbc",
+   "name": "Urine white cells",
+   "panel": "urine.microscopy",
+   "unit": "cells/uL",
+   "kind": "numeric",
+   "units": {
+    "cells/uL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 6
+   },
+   "limits": [
+    0,
+    10000
+   ],
+   "aliases": [
+    "White Blood Cells (urine)",
+    "Urine WBC",
+    "Pus Cells",
+    "Πυοσφαίρια"
+   ]
+  },
+  {
+   "id": "urine_rbc",
+   "name": "Urine red cells",
+   "panel": "urine.microscopy",
+   "unit": "cells/uL",
+   "kind": "numeric",
+   "units": {
+    "cells/uL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 3
+   },
+   "limits": [
+    0,
+    10000
+   ],
+   "aliases": [
+    "Red Blood Cells (urine)",
+    "Urine RBC",
+    "Ερυθρά (ούρα)"
+   ]
+  },
+  {
+   "id": "urine_epithelial",
+   "name": "Urine epithelial cells",
+   "panel": "urine.microscopy",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Epithelial Cells",
+    "上皮细胞",
+    "Επιθήλια"
+   ]
+  },
+  {
+   "id": "urine_casts",
+   "name": "Urine casts",
+   "panel": "urine.microscopy",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Casts",
+    "尿圆柱 / 尿管形",
+    "Κύλινδροι"
+   ]
+  },
+  {
+   "id": "urine_crystals",
+   "name": "Urine crystals",
+   "panel": "urine.microscopy",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Crystals",
+    "晶状体",
+    "Κρύσταλλοι",
+    "Άλατα"
+   ]
+  },
+  {
+   "id": "urine_bacteria",
+   "name": "Urine bacteria",
+   "panel": "urine.microscopy",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Bacteria",
+    "細菌",
+    "Μικρόβια",
+    "Βακτήρια"
+   ]
+  },
+  {
+   "id": "urine_yeasts",
+   "name": "Urine yeasts",
+   "panel": "urine.microscopy",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Yeasts",
+    "酵母菌",
+    "Μύκητες"
+   ]
+  },
+  {
+   "id": "urine_mucus",
+   "name": "Urine mucus threads",
+   "panel": "urine.microscopy",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Mucus Threads",
+    "Mucus",
+    "Mucous Threads",
+    "粘液丝",
+    "Βλέννη"
+   ]
+  },
+  {
+   "id": "stool_occult_blood",
+   "name": "Faecal occult blood",
+   "panel": "stool",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Occult Blood",
+    "Faecal Occult Blood",
+    "FOBT",
+    "FIT",
+    "Stool Occult Blood",
+    "粪便隐血检测",
+    "Αιμοσφαιρίνη κοπράνων"
+   ]
+  },
+  {
+   "id": "urine_magnesium",
+   "name": "Urine magnesium (random)",
+   "panel": "urine.chemistry",
+   "unit": "mmol/L",
+   "kind": "numeric",
+   "units": {
+    "mmol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     0.41143797572515944,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.05,
+    30
+   ],
+   "aliases": [
+    "Urine Magnesium Random",
+    "Urine Magnesium",
+    "Urinary Magnesium"
+   ]
+  },
+  {
+   "id": "weight",
+   "name": "Weight",
+   "panel": "vitals.body",
+   "unit": "kg",
+   "kind": "numeric",
+   "units": {
+    "kg": [
+     1.0,
+     0.0
+    ],
+    "lb": [
+     0.45359237,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    1,
+    400
+   ],
+   "aliases": [
+    "Body Weight",
+    "Βάρος"
+   ]
+  },
+  {
+   "id": "height",
+   "name": "Height",
+   "panel": "vitals.body",
+   "unit": "cm",
+   "kind": "numeric",
+   "units": {
+    "cm": [
+     1.0,
+     0.0
+    ],
+    "in": [
+     2.54,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    30,
+    250
+   ],
+   "aliases": [
+    "Ύψος"
+   ]
+  },
+  {
+   "id": "bmi",
+   "name": "BMI",
+   "panel": "vitals.body",
+   "unit": "kg/m2",
+   "kind": "numeric",
+   "units": {
+    "kg/m2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 18.5,
+    "high": 25
+   },
+   "limits": [
+    8,
+    80
+   ],
+   "aliases": [
+    "Body Mass Index",
+    "Δείκτης μάζας σώματος",
+    "ΔΜΣ"
+   ]
+  },
+  {
+   "id": "waist",
+   "name": "Waist circumference",
+   "panel": "vitals.body",
+   "unit": "cm",
+   "kind": "numeric",
+   "units": {
+    "cm": [
+     1.0,
+     0.0
+    ],
+    "in": [
+     2.54,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    30,
+    250
+   ],
+   "aliases": [
+    "Waist",
+    "Waist Circumference",
+    "Περίμετρος μέσης"
+   ]
+  },
+  {
+   "id": "hip",
+   "name": "Hip circumference",
+   "panel": "vitals.body",
+   "unit": "cm",
+   "kind": "numeric",
+   "units": {
+    "cm": [
+     1.0,
+     0.0
+    ],
+    "in": [
+     2.54,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    30,
+    250
+   ],
+   "aliases": [
+    "Hip",
+    "Hip Circumference",
+    "Περίμετρος ισχίων"
+   ]
+  },
+  {
+   "id": "waist_hip_ratio",
+   "name": "Waist/hip ratio",
+   "panel": "vitals.body",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref_m": {
+    "high": 0.9
+   },
+   "ref_f": {
+    "high": 0.85
+   },
+   "limits": [
+    0.4,
+    2
+   ],
+   "aliases": [
+    "Waist Hip Ratio",
+    "Waist-to-Hip Ratio",
+    "WHR",
+    "Ratio"
+   ]
+  },
+  {
+   "id": "body_fat",
+   "name": "Body fat",
+   "panel": "vitals.body",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    2,
+    70
+   ],
+   "aliases": [
+    "Body Fat",
+    "Body Fat %",
+    "Λίπος σώματος"
+   ]
+  },
+  {
+   "id": "bp_systolic",
+   "name": "Blood pressure (systolic)",
+   "panel": "vitals.bp",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 130
+   },
+   "limits": [
+    50,
+    280
+   ],
+   "aliases": [
+    "Systolic",
+    "Systolic BP",
+    "Systolic Blood Pressure",
+    "Συστολική πίεση"
+   ]
+  },
+  {
+   "id": "bp_diastolic",
+   "name": "Blood pressure (diastolic)",
+   "panel": "vitals.bp",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 85
+   },
+   "limits": [
+    20,
+    180
+   ],
+   "aliases": [
+    "Diastolic",
+    "Diastolic BP",
+    "Diastolic Blood Pressure",
+    "Διαστολική πίεση"
+   ]
+  },
+  {
+   "id": "heart_rate",
+   "name": "Resting heart rate",
+   "panel": "vitals.bp",
+   "unit": "bpm",
+   "kind": "numeric",
+   "units": {
+    "bpm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 50,
+    "high": 100
+   },
+   "limits": [
+    20,
+    250
+   ],
+   "aliases": [
+    "Pulse",
+    "Heart Rate",
+    "Pulse Rate",
+    "HR",
+    "Σφύξεις",
+    "Καρδιακή συχνότητα"
+   ]
+  },
+  {
+   "id": "ecg_pr",
+   "name": "ECG PR interval",
+   "panel": "cardio.ecg",
+   "unit": "ms",
+   "kind": "numeric",
+   "units": {
+    "ms": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 120,
+    "high": 200
+   },
+   "limits": [
+    40,
+    600
+   ],
+   "aliases": [
+    "PR",
+    "PR Interval"
+   ]
+  },
+  {
+   "id": "ecg_qrs",
+   "name": "ECG QRS duration",
+   "panel": "cardio.ecg",
+   "unit": "ms",
+   "kind": "numeric",
+   "units": {
+    "ms": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 120
+   },
+   "limits": [
+    40,
+    300
+   ],
+   "aliases": [
+    "QRS",
+    "QRS Duration"
+   ]
+  },
+  {
+   "id": "ecg_qt",
+   "name": "ECG QT interval",
+   "panel": "cardio.ecg",
+   "unit": "ms",
+   "kind": "numeric",
+   "units": {
+    "ms": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    200,
+    700
+   ],
+   "aliases": [
+    "QT",
+    "QT Interval"
+   ]
+  },
+  {
+   "id": "ecg_qtc",
+   "name": "ECG QTc",
+   "panel": "cardio.ecg",
+   "unit": "ms",
+   "kind": "numeric",
+   "units": {
+    "ms": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "high": 450
+   },
+   "ref_f": {
+    "high": 460
+   },
+   "limits": [
+    200,
+    700
+   ],
+   "aliases": [
+    "QTc",
+    "QTcBaz",
+    "QTc (Bazett)",
+    "Corrected QT"
+   ]
+  },
+  {
+   "id": "ecg_hr",
+   "name": "ECG heart rate",
+   "panel": "cardio.ecg",
+   "unit": "bpm",
+   "kind": "numeric",
+   "units": {
+    "bpm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 50,
+    "high": 100
+   },
+   "limits": [
+    20,
+    250
+   ],
+   "aliases": [
+    "ECG Heart Rate",
+    "Ventricular Rate"
+   ]
+  },
+  {
+   "id": "ecg_interpretation",
+   "name": "ECG interpretation",
+   "panel": "cardio.ecg",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "ECG Interpretation",
+    "ECG Conclusion",
+    "ECG Impression"
+   ]
+  },
+  {
+   "id": "treadmill_duration",
+   "name": "Exercise duration",
+   "panel": "cardio.treadmill",
+   "unit": "min",
+   "kind": "numeric",
+   "units": {
+    "min": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    0.5,
+    40
+   ],
+   "aliases": [
+    "Exercise Duration",
+    "Exercise Time",
+    "Total Exercise Time"
+   ]
+  },
+  {
+   "id": "treadmill_rest_sbp",
+   "name": "Resting systolic BP (stress test)",
+   "panel": "cardio.treadmill",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    50,
+    280
+   ],
+   "aliases": [
+    "Resting Blood Pressure (systolic)",
+    "Resting Systolic BP"
+   ]
+  },
+  {
+   "id": "treadmill_rest_dbp",
+   "name": "Resting diastolic BP (stress test)",
+   "panel": "cardio.treadmill",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    20,
+    180
+   ],
+   "aliases": [
+    "Resting Blood Pressure (diastolic)",
+    "Resting Diastolic BP"
+   ]
+  },
+  {
+   "id": "treadmill_target_hr",
+   "name": "Target heart rate",
+   "panel": "cardio.treadmill",
+   "unit": "bpm",
+   "kind": "numeric",
+   "units": {
+    "bpm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    80,
+    230
+   ],
+   "aliases": [
+    "Target Heart Rate",
+    "Target HR",
+    "Max Predicted HR",
+    "85% Max Predicted HR"
+   ]
+  },
+  {
+   "id": "treadmill_mets",
+   "name": "Peak METs",
+   "panel": "cardio.treadmill",
+   "unit": "METs",
+   "kind": "numeric",
+   "units": {
+    "METs": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    1,
+    25
+   ],
+   "aliases": [
+    "METs",
+    "Max METs"
+   ]
+  },
+  {
+   "id": "treadmill_max_hr",
+   "name": "Peak heart rate",
+   "panel": "cardio.treadmill",
+   "unit": "bpm",
+   "kind": "numeric",
+   "units": {
+    "bpm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    60,
+    230
+   ],
+   "aliases": [
+    "Max HR",
+    "Peak Heart Rate",
+    "Maximum Heart Rate"
+   ]
+  },
+  {
+   "id": "treadmill_pct_target_hr",
+   "name": "% of target heart rate",
+   "panel": "cardio.treadmill",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    30,
+    130
+   ],
+   "aliases": [
+    "% Target HR",
+    "% of Max Predicted HR",
+    "Target HR achieved"
+   ]
+  },
+  {
+   "id": "treadmill_peak_sbp",
+   "name": "Peak systolic BP",
+   "panel": "cardio.treadmill",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "limits": [
+    60,
+    300
+   ],
+   "aliases": [
+    "Peak Systolic BP",
+    "Max BP Systolic"
+   ]
+  },
+  {
+   "id": "treadmill_interpretation",
+   "name": "Stress test conclusion",
+   "panel": "cardio.treadmill",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Treadmill Conclusion",
+    "Stress Test Result",
+    "Exercise Test Conclusion"
+   ]
+  },
+  {
+   "id": "echo_lvef",
+   "name": "LV ejection fraction",
+   "panel": "cardio.echo",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 52
+   },
+   "limits": [
+    5,
+    90
+   ],
+   "aliases": [
+    "LVEF",
+    "EF",
+    "Ejection Fraction",
+    "LV Ejection Fraction",
+    "Κλάσμα εξώθησης"
+   ]
+  },
+  {
+   "id": "echo_fs",
+   "name": "LV fractional shortening",
+   "panel": "cardio.echo",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 25,
+    "high": 45
+   },
+   "limits": [
+    5,
+    70
+   ],
+   "aliases": [
+    "Fractional Shortening",
+    "FS",
+    "LV Fractional Shortening"
+   ]
+  },
+  {
+   "id": "echo_lv_mass",
+   "name": "LV mass",
+   "panel": "cardio.echo",
+   "unit": "g",
+   "kind": "numeric",
+   "units": {
+    "g": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 88,
+    "high": 224
+   },
+   "ref_f": {
+    "low": 67,
+    "high": 162
+   },
+   "limits": [
+    30,
+    600
+   ],
+   "aliases": [
+    "LV Mass",
+    "Left Ventricular Mass"
+   ]
+  },
+  {
+   "id": "echo_lvidd",
+   "name": "LV diastolic dimension",
+   "panel": "cardio.echo",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 42,
+    "high": 58
+   },
+   "ref_f": {
+    "low": 38,
+    "high": 52
+   },
+   "limits": [
+    20,
+    90
+   ],
+   "aliases": [
+    "LV Diastolic Dimension",
+    "LVIDd",
+    "LVEDD",
+    "LV End-Diastolic Dimension"
+   ]
+  },
+  {
+   "id": "echo_lvids",
+   "name": "LV systolic dimension",
+   "panel": "cardio.echo",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 25,
+    "high": 40
+   },
+   "ref_f": {
+    "low": 22,
+    "high": 35
+   },
+   "limits": [
+    10,
+    80
+   ],
+   "aliases": [
+    "LV Systolic Dimension",
+    "LVIDs",
+    "LVESD",
+    "LV End-Systolic Dimension"
+   ]
+  },
+  {
+   "id": "echo_la",
+   "name": "Left atrial dimension",
+   "panel": "cardio.echo",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 30,
+    "high": 40
+   },
+   "ref_f": {
+    "low": 27,
+    "high": 38
+   },
+   "limits": [
+    15,
+    90
+   ],
+   "aliases": [
+    "LA Dimension",
+    "LA Diameter",
+    "Left Atrium",
+    "LA Size"
+   ]
+  },
+  {
+   "id": "echo_e_eprime",
+   "name": "E/e' ratio",
+   "panel": "cardio.echo",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 14
+   },
+   "limits": [
+    1,
+    40
+   ],
+   "aliases": [
+    "E/e'",
+    "E/E'",
+    "Average E/e'",
+    "E/e prime"
+   ]
+  },
+  {
+   "id": "echo_mitral_ea",
+   "name": "Mitral E/A ratio",
+   "panel": "cardio.echo",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    0.2,
+    5
+   ],
+   "aliases": [
+    "E/A Ratio",
+    "E/A",
+    "MV E/A"
+   ]
+  },
+  {
+   "id": "echo_rvsp",
+   "name": "RV systolic pressure",
+   "panel": "cardio.echo",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 35
+   },
+   "limits": [
+    5,
+    120
+   ],
+   "aliases": [
+    "RVSP",
+    "RV Systolic Pressure",
+    "PASP",
+    "Pulmonary Artery Systolic Pressure"
+   ]
+  },
+  {
+   "id": "cac_score",
+   "name": "Coronary calcium score (Agatston)",
+   "panel": "cardio.ct",
+   "unit": "",
+   "kind": "numeric",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 0
+   },
+   "limits": [
+    0,
+    10000
+   ],
+   "aliases": [
+    "Agatston Score",
+    "Total Calcium Score",
+    "Calcium Score",
+    "Coronary Artery Calcium Score",
+    "CAC Score",
+    "Total Agatston Score"
+   ]
+  },
+  {
+   "id": "cad_rads",
+   "name": "CAD-RADS category",
+   "panel": "cardio.ct",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "CAD-RADS",
+    "CAD RADS",
+    "CADRADS"
+   ]
+  },
+  {
+   "id": "bmd_tscore_spine",
+   "name": "Bone density T-score (spine)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -1.0
+   },
+   "limits": [
+    -7,
+    5
+   ],
+   "aliases": [
+    "T-score Lumbar Spine",
+    "Spine T-score",
+    "L1-L4 T-score"
+   ]
+  },
+  {
+   "id": "bmd_tscore_hip",
+   "name": "Bone density T-score (hip)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -1.0
+   },
+   "limits": [
+    -7,
+    5
+   ],
+   "aliases": [
+    "T-score Hip",
+    "Femoral Neck T-score",
+    "Total Hip T-score"
+   ]
+  },
+  {
+   "id": "visual_acuity_l",
+   "name": "Visual acuity (left)",
+   "panel": "screening.vision",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Visual Acuity Left",
+    "Visual Acuity (Left)",
+    "Left Visual Acuity",
+    "VA Left",
+    "Visual Acuity L",
+    "Left Eye",
+    "左眼视力",
+    "Οπτική οξύτητα αριστερού"
+   ]
+  },
+  {
+   "id": "visual_acuity_r",
+   "name": "Visual acuity (right)",
+   "panel": "screening.vision",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Visual Acuity Right",
+    "Visual Acuity (Right)",
+    "Right Visual Acuity",
+    "VA Right",
+    "Visual Acuity R",
+    "Right Eye",
+    "右眼视力",
+    "Οπτική οξύτητα δεξιού"
+   ]
+  },
+  {
+   "id": "colour_vision",
+   "name": "Colour vision",
+   "panel": "screening.vision",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Red Green Colour Vision",
+    "Colour Vision",
+    "Color Vision",
+    "Ishihara"
+   ]
+  },
+  {
+   "id": "eye_pressure_l",
+   "name": "Eye pressure (left)",
+   "panel": "screening.vision",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 21
+   },
+   "limits": [
+    3,
+    70
+   ],
+   "aliases": [
+    "Intraocular Pressure Left",
+    "IOP Left",
+    "Tonometry Left"
+   ]
+  },
+  {
+   "id": "eye_pressure_r",
+   "name": "Eye pressure (right)",
+   "panel": "screening.vision",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 21
+   },
+   "limits": [
+    3,
+    70
+   ],
+   "aliases": [
+    "Intraocular Pressure Right",
+    "IOP Right",
+    "Tonometry Right"
+   ]
+  },
+  {
+   "id": "hearing",
+   "name": "Hearing test",
+   "panel": "screening.hearing",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Audiometry",
+    "Hearing",
+    "Hearing Test"
+   ]
+  },
+  {
+   "id": "fev1",
+   "name": "FEV1",
+   "panel": "screening.lung",
+   "unit": "L",
+   "kind": "numeric",
+   "units": {
+    "L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.2,
+    8
+   ]
+  },
+  {
+   "id": "fvc",
+   "name": "FVC",
+   "panel": "screening.lung",
+   "unit": "L",
+   "kind": "numeric",
+   "units": {
+    "L": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.2,
+    10
+   ]
+  },
+  {
+   "id": "fev1_fvc",
+   "name": "FEV1/FVC",
+   "panel": "screening.lung",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 70
+   },
+   "limits": [
+    20,
+    100
+   ],
+   "aliases": [
+    "FEV1/FVC Ratio"
+   ]
+  },
+  {
+   "id": "pef",
+   "name": "Peak expiratory flow (PEF)",
+   "panel": "screening.lung",
+   "unit": "L/s",
+   "kind": "numeric",
+   "units": {
+    "L/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.5,
+    20
+   ],
+   "aliases": [
+    "PEF",
+    "Peak Expiratory Flow",
+    "PEFR"
+   ]
+  },
+  {
+   "id": "fef25_75",
+   "name": "FEF25–75%",
+   "panel": "screening.lung",
+   "unit": "L/s",
+   "kind": "numeric",
+   "units": {
+    "L/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.1,
+    12
+   ],
+   "aliases": [
+    "FEF25%-75%",
+    "FEF25-75",
+    "FEF 25-75%",
+    "MMEF",
+    "MEF25-75"
+   ]
+  },
+  {
+   "id": "fef50",
+   "name": "FEF50%",
+   "panel": "screening.lung",
+   "unit": "L/s",
+   "kind": "numeric",
+   "units": {
+    "L/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.1,
+    15
+   ],
+   "aliases": [
+    "FEF50",
+    "MEF50"
+   ]
+  },
+  {
+   "id": "fef75",
+   "name": "FEF75%",
+   "panel": "screening.lung",
+   "unit": "L/s",
+   "kind": "numeric",
+   "units": {
+    "L/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.05,
+    10
+   ],
+   "aliases": [
+    "FEF75",
+    "MEF25"
+   ]
+  },
+  {
+   "id": "spirometry_interpretation",
+   "name": "Spirometry interpretation",
+   "panel": "screening.lung",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Interpretation: ATS/ERS",
+    "Spirometry Interpretation",
+    "Spirometry Conclusion",
+    "ATS/ERS Interpretation"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+name: Catalog addition
+description: A test, alias or unit the catalog doesn't know yet
+labels: [catalog]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Test name as printed (and language)
+    validations:
+      required: true
+  - type: input
+    id: unit
+    attributes:
+      label: Unit(s) as printed
+  - type: textarea
+    id: details
+    attributes:
+      label: Conversion factor or molar mass, with a source

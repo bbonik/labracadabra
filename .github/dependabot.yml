@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /web
+    schedule: { interval: monthly }
+    groups: { web: { patterns: ["*"] } }
+  - package-ecosystem: npm
+    directory: /infra
+    schedule: { interval: monthly }
+    groups: { infra: { patterns: ["*"] } }
+  - package-ecosystem: pip
+    directory: /extractor
+    schedule: { interval: monthly }
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }

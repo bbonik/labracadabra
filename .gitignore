@@ -1,0 +1,33 @@
+# --- PRIVATE MEDICAL DATA: never commit ---
+example-medical-reports/
+medical-tests/
+local-data/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.heic
+!docs/**/*.png
+!web/public/**/*.png
+!web/src/assets/**/*.png
+!fixtures/**/*.pdf
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# build / tooling
+node_modules/
+dist/
+cdk.out/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+coverage/
+infra/build/
+
+# personal deploy settings (emails, account id)
+scripts/settings.env

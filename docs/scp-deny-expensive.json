@@ -1,0 +1,78 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyOutsideHomeRegions",
+      "Effect": "Deny",
+      "NotAction": [
+        "iam:*", "sts:*", "organizations:*", "account:*", "budgets:*", "ce:*", "cur:*", "billing:*",
+        "cloudfront:*", "route53:*", "support:*", "health:*", "sso:*", "identitystore:*", "pricing:*",
+        "trustedadvisor:*", "waf:*", "wafv2:*", "acm:*", "s3:GetBucketLocation", "s3:ListAllMyBuckets",
+        "s3:GetAccountPublicAccessBlock", "s3:PutAccountPublicAccessBlock", "notifications:*"
+      ],
+      "Resource": "*",
+      "Condition": { "StringNotEquals": { "aws:RequestedRegion": ["eu-west-1", "us-east-1"] } }
+    },
+    {
+      "Sid": "DenyComputeAndAIThatCanRunUpABill",
+      "Effect": "Deny",
+      "Action": [
+        "ec2:RunInstances", "ec2:StartInstances", "ec2:RequestSpotInstances", "ec2:RequestSpotFleet",
+        "ec2:CreateFleet", "ec2:PurchaseReservedInstancesOffering", "ec2:PurchaseHostReservation",
+        "ec2:AllocateHosts", "ec2:CreateCapacityReservation",
+        "autoscaling:*", "ecs:*", "eks:*", "batch:*", "lightsail:*", "gamelift:*", "apprunner:*",
+        "sagemaker:*", "bedrock:*", "elasticmapreduce:*", "emr-serverless:*", "glue:*",
+        "redshift:*", "redshift-serverless:*", "rds:CreateDBInstance", "rds:CreateDBCluster",
+        "elasticache:*", "es:*", "aoss:*", "kafka:*", "mq:*", "workspaces:*", "appstream:*", "braket:*",
+        "groundstation:*", "outposts:*", "snowball:*", "aws-marketplace:Subscribe", "savingsplans:*",
+        "route53domains:RegisterDomain", "route53domains:TransferDomain"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "OnlyAdminOrCdkMayCreateOrChangeLambdas",
+      "Effect": "Deny",
+      "Action": [
+        "lambda:CreateFunction", "lambda:UpdateFunctionCode", "lambda:UpdateFunctionConfiguration",
+        "lambda:CreateFunctionUrlConfig", "lambda:UpdateFunctionUrlConfig", "lambda:PublishLayerVersion",
+        "lambda:CreateEventSourceMapping", "lambda:PutFunctionConcurrency", "lambda:DeleteFunctionConcurrency"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*AWSReservedSSO_AdministratorAccess_*",
+            "arn:aws:iam::*:role/cdk-*-cfn-exec-role-*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "DenyLongLivedCredentialsAndLeavingOrg",
+      "Effect": "Deny",
+      "Action": [
+        "iam:CreateUser", "iam:CreateAccessKey", "iam:CreateLoginProfile",
+        "organizations:LeaveOrganization", "account:CloseAccount"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ProtectGuardrails",
+      "Effect": "Deny",
+      "Action": [
+        "cloudtrail:StopLogging", "cloudtrail:DeleteTrail", "cloudtrail:UpdateTrail",
+        "guardduty:DeleteDetector", "guardduty:DisassociateFromMasterAccount",
+        "budgets:ModifyBudget", "budgets:DeleteBudgetAction", "budgets:UpdateBudgetAction", "s3:PutAccountPublicAccessBlock"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalArn": [
+            "arn:aws:iam::*:role/aws-reserved/sso.amazonaws.com/*AWSReservedSSO_AdministratorAccess_*",
+            "arn:aws:iam::*:role/cdk-*-cfn-exec-role-*"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not attach real medical documents, screenshots with real values, or personal data.**
+        If the bug depends on a report's layout, describe it or retype a few lines with made-up values.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      options: [Local mode, AWS deployment, Extractor CLI, Deploy / scripts]
+  - type: input
+    id: version
+    attributes:
+      label: Commit or version
