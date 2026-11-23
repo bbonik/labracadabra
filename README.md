@@ -4,7 +4,8 @@
 
 <p align="center">
   <b>All your lab results in one place.</b><br>
-  Messy PDFs and phone photos in, one clean, searchable health history out. Self-hosted on your own AWS account.
+  Messy PDFs and phone photos in, one clean, searchable health history out.<br>
+  Self-hosted on your own AWS account, powered by your own Claude API key.
 </p>
 
 <p align="center">
@@ -39,6 +40,12 @@ into **one standardised history per person**, so questions like these take one c
 Every value links back to **the exact page of the original report**, with the number highlighted, so anything that
 looks off can be checked in seconds.
 
+> [!NOTE]
+> **Bring your own Claude API key.** The intelligence layer, reading each report page and transcribing its values,
+> is Claude, called with **your own Anthropic API key** ([console.anthropic.com](https://console.anthropic.com)).
+> You pay Anthropic directly, per use (about $0.02 per page with the default model); there is no subscription and
+> no middleman. Amazon Bedrock works as an alternative. Browsing the demo needs no key at all.
+
 > [!IMPORTANT]
 > **Not a medical device.** Labracadabra organises numbers from your own reports. It does not diagnose, and its
 > pattern labels (trend, step, outlier) are statistical descriptions, not medical advice. Values are transcribed by
@@ -55,7 +62,7 @@ looks off can be checked in seconds.
 | 📈 **Analysis that respects the data** | Reference bands per lab, trends (Mann–Kendall + Theil–Sen), step changes (Pettitt), robust outliers, velocity and doubling time, panel heatmaps, X-vs-Y correlation. |
 | 👨‍👩‍👧 **For a family** | Private spaces per login, several profiles per login, and **circles** with edit or view-only members, enforced by AWS IAM rather than app code. |
 | 🩺 **Doctor-ready output** | Print-optimised "Save as PDF" pages and a CSV export (SI or your units, ranges, flags, source page, conversion notes). |
-| 💸 **Costs cents** | About $0–2/month for AWS plus ~$0.02 per page for extraction. No database, no servers, no subscription. |
+| 💸 **Costs cents** | About $0–2/month for AWS plus ~$0.02 per page for extraction, paid with your own Claude API key. No database, no servers, no subscription. |
 
 ## Screenshots
 
@@ -158,6 +165,9 @@ every result with the value *as printed* and a link to its source page.
 
 ### Design principles
 
+- **Low cost by design.** Pay-per-use serverless only: no always-on servers, no database, no API gateway, no WAF.
+  The model is called only to transcribe new pages, duplicates are detected *before* any call, and re-processing
+  stored transcriptions costs nothing. A family's history runs on about $0–2/month of AWS plus a few cents per report.
 - **The model transcribes, code computes.** Names, units, ranges, de-duplication and statistics are deterministic
   code with tests. Re-running the normalisation over stored transcriptions is free.
 - **IAM is the access control.** Isolation between people and circles is enforced by AWS, not by application logic.
@@ -175,12 +185,14 @@ cd labracadabra/web && npm install && npm run dev
 # open http://localhost:5173/?profile=demo
 ```
 
-To process **your own reports** locally, set up the extractor (Python 3.12, [uv](https://docs.astral.sh/uv/)):
+To process **your own reports** locally you need your own Claude API key (create one in the
+[Anthropic Console](https://console.anthropic.com) and set a monthly spend limit there), plus the extractor
+(Python 3.12, [uv](https://docs.astral.sh/uv/)):
 
 ```bash
 cd extractor && uv venv --python 3.12 && uv pip install -e '.[dev]'
 .venv/bin/pytest                                     # unit tests
-export ANTHROPIC_API_KEY=sk-ant-...                  # set a spend limit in the Anthropic Console first
+export ANTHROPIC_API_KEY=sk-ant-...                  # your own Claude API key
 .venv/bin/pmt ingest ~/Documents/my-reports --data ../local-data/me
 .venv/bin/pmt summary --data ../local-data/me        # quality report: flagged values, unmapped names
 ```
@@ -207,6 +219,7 @@ The dev server and `scripts/set-api-key.sh` read this entry automatically when `
 2. **Configure and bootstrap** (once):
    ```bash
    cp scripts/settings.example.env scripts/settings.env   # profile, region, account, login prefix, email, circles
+   # your own Claude API key, stored encrypted in your account (the extractor reads it at run time)
    aws ssm put-parameter --name /pmt/anthropic-api-key --type SecureString --value 'sk-ant-…'
    cd infra && npm install && npx cdk bootstrap && cd ..
    ```
