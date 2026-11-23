@@ -8,7 +8,7 @@ Everyday operations, made hard to get wrong. Every script:
   email typed again;
 - asks for anything you leave out, so running it with no arguments always works.
 
-**Requirements:** bash, AWS CLI v2 (logged in through IAM Identity Center), Node.js 20+ and
+**Requirements:** bash, AWS CLI v2 (logged in through IAM Identity Center), Node.js 24+ (npm 11) and
 [uv](https://docs.astral.sh/uv/). `backup.sh` (encrypted disk image) and the Keychain option of `set-api-key.sh` are
 macOS-only; `status.sh` uses BSD `date` and also needs adjusting on Linux. Contributions for Linux are welcome.
 
