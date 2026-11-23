@@ -55,6 +55,9 @@ security impact in the pull request.
 The README diagram is generated: edit [`docs/architecture/build_diagram.py`](docs/architecture/build_diagram.py)
 and run `python3 docs/architecture/build_diagram.py`.
 
+Screenshots come from the synthetic demo profile; see [`docs/screenshots/tools/capture.mjs`](docs/screenshots/tools/capture.mjs)
+to regenerate them after UI changes.
+
 ## Reporting security issues
 
 Please don't open public issues for vulnerabilities; see [SECURITY.md](SECURITY.md).

@@ -24,7 +24,7 @@
   <a href="CONTRIBUTING.md">Contributing</a>
 </p>
 
-<p align="center"><img src="docs/screenshots/overview.png" width="900" alt="Labracadabra overview dashboard"></p>
+<p align="center"><img src="docs/screenshots/tour.webp" width="900" alt="A tour of Labracadabra: overview, all blood panels, a lipid panel side by side, LDL in depth, correlation, heatmap and trends"></p>
 
 ---
 
@@ -57,21 +57,84 @@ looks off can be checked in seconds.
 | 🩺 **Doctor-ready output** | Print-optimised "Save as PDF" pages and a CSV export (SI or your units, ranges, flags, source page, conversion notes). |
 | 💸 **Costs cents** | About $0–2/month for AWS plus ~$0.02 per page for extraction. No database, no servers, no subscription. |
 
-<details>
-<summary><b>More screenshots</b></summary>
+## Screenshots
+
+*Click a section to expand it. Everything shown uses the synthetic demo profile from [`fixtures/`](fixtures); no
+real patient data is in this repository.*
+
+<details open>
+<summary><b>📊 Dashboards: the bird's-eye view</b></summary>
 <br>
 
-| Test detail (velocity, doubling time) | Explore: a panel side by side |
-|---|---|
-| ![test detail](docs/screenshots/test-detail.png) | ![side by side](docs/screenshots/explore-side-by-side.png) |
-| **Explore: panel heatmap (dark theme)** | **Blood tests by panel** |
-| ![heatmap](docs/screenshots/explore-heatmap.png) | ![blood](docs/screenshots/blood.png) |
-| **LDL with trend and step change** | **Units & reference ranges** |
-| ![dark](docs/screenshots/dark-ldl.png) | ![settings](docs/screenshots/settings.png) |
-| **Usage & cost** | **Sign-in (invitation only)** |
-| ![usage](docs/screenshots/usage.png) | ![sign-in](docs/screenshots/signin.png) |
+Every blood panel on one page: each card shows the latest value, its flag, a sparkline against the reference band
+and any detected pattern. Light and navy themes.
 
-*All screenshots use the synthetic demo profile from [`fixtures/`](fixtures). No real patient data is in this repository.*
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/blood-panels.webp" alt="All blood panels, light theme"></td>
+<td width="50%"><img src="docs/screenshots/blood-panels-dark.webp" alt="All blood panels, navy theme"></td>
+</tr>
+</table>
+
+| Overview: what's out of range, what's trending | Vitals & body (paper theme) |
+|---|---|
+| ![overview](docs/screenshots/overview.webp) | ![vitals](docs/screenshots/vitals.webp) |
+</details>
+
+<details>
+<summary><b>📈 Explore & compare: graphs across tests</b></summary>
+<br>
+
+| A whole panel side by side, each with its own reference band | The same in the graphite theme |
+|---|---|
+| ![side by side](docs/screenshots/explore-side-by-side.webp) | ![side by side, dark](docs/screenshots/explore-side-by-side-dark.webp) |
+| **Several tests on one time axis** | **X vs Y with correlation (r = 0.95)** |
+| ![over time](docs/screenshots/explore-over-time.webp) | ![scatter](docs/screenshots/explore-scatter.webp) |
+| **Panel heatmap: in range vs out, visit by visit** | **Velocity: change per year between results** |
+| ![heatmap](docs/screenshots/explore-heatmap.webp) | ![velocity](docs/screenshots/explore-velocity.webp) |
+</details>
+
+<details>
+<summary><b>🔬 One test in depth</b></summary>
+<br>
+
+Latest value, change, velocity (Theil–Sen), doubling time, detected patterns, the ranges each lab printed, and
+every result with the value *as printed* and a link to its source page.
+
+| PSA: rising trend, doubling time | LDL: step down after a change, out-of-range points in amber |
+|---|---|
+| ![PSA](docs/screenshots/test-psa.webp) | ![LDL](docs/screenshots/test-ldl-dark.webp) |
+</details>
+
+<details>
+<summary><b>✅ Verification & documents</b></summary>
+<br>
+
+| Review inbox: values the pipeline was unsure about | Documents: every report, its lab, pages, values and AI cost |
+|---|---|
+| ![inbox](docs/screenshots/inbox.webp) | ![documents](docs/screenshots/documents.webp) |
+</details>
+
+<details>
+<summary><b>⚙️ Settings, cost & sign-in</b></summary>
+<br>
+
+| Units and reference-range source per test | Usage & cost per run and per month |
+|---|---|
+| ![settings](docs/screenshots/settings.webp) | ![usage](docs/screenshots/usage.webp) |
+| **Invitation-only sign-in** | **Overview, navy theme** |
+| ![sign-in](docs/screenshots/signin.png) | ![overview dark](docs/screenshots/overview-dark.webp) |
+</details>
+
+<details>
+<summary><b>📱 On your phone</b></summary>
+<br>
+
+<p align="center">
+  <img src="docs/screenshots/phone-overview.webp" width="260" alt="Overview on a phone">&nbsp;&nbsp;
+  <img src="docs/screenshots/phone-blood.webp" width="260" alt="Blood tests on a phone">&nbsp;&nbsp;
+  <img src="docs/screenshots/phone-test.webp" width="260" alt="LDL detail on a phone, navy theme">
+</p>
 </details>
 
 ## How it works
