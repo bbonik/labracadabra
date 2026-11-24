@@ -10,6 +10,7 @@ Thanks for helping! Bug reports, catalog additions, fixes and features are all w
 - **The model transcribes, code computes.** Anything that can be done deterministically (unit conversion, name
   mapping, de-duplication, statistics) belongs in tested code, not in the prompt.
 - Keep changes focused, and explain the *why* in the pull request.
+- Be kind: this project follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Easiest first contribution: the catalog
 
@@ -56,7 +57,8 @@ The README diagram is generated: edit [`docs/architecture/build_diagram.py`](doc
 and run `python3 docs/architecture/build_diagram.py`.
 
 Screenshots come from the synthetic demo profile; see [`docs/screenshots/tools/capture.mjs`](docs/screenshots/tools/capture.mjs)
-to regenerate them after UI changes.
+to regenerate them after UI changes. The image shown when the repository link is shared comes from
+[`docs/screenshots/tools/social-preview.html`](docs/screenshots/tools/social-preview.html) (`node social-preview.mjs`).
 
 ## Reporting security issues
 
