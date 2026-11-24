@@ -5,6 +5,7 @@
   icon: "🩸"
   children:
     - { id: blood.lipids,       name: Cholesterol & lipids,     icon: "💧" }
+    - { id: blood.fatty_acids,  name: Omega-3 & fatty acids,    icon: "🐟" }
     - { id: blood.glucose,      name: Glucose & diabetes,       icon: "🍬" }
     - { id: blood.liver,        name: Liver function,           icon: "🫀" }
     - { id: blood.kidney,       name: Kidney & electrolytes,    icon: "🫘" }
@@ -40,6 +41,7 @@
     - { id: cardio.treadmill, name: Treadmill / stress test, icon: "🏃" }
     - { id: cardio.echo,      name: Echocardiogram,    icon: "🫀" }
     - { id: cardio.ct,        name: Coronary CT / calcium score, icon: "🩻" }
+    - { id: cardio.vascular,  name: Carotid ultrasound, icon: "🩺" }
 - id: imaging
   name: Imaging & radiology
   icon: "🩻"
@@ -53,3 +55,4 @@
     - { id: screening.vision,  name: Vision,  icon: "👁" }
     - { id: screening.hearing, name: Hearing, icon: "👂" }
     - { id: screening.lung,    name: Lung function, icon: "🫁" }
+    - { id: screening.colon,   name: Colonoscopy,   icon: "🔎" }

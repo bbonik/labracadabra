@@ -18,6 +18,11 @@
 #   decimals  display precision in canonical unit
 #   log       true ⇒ growth is multiplicative (show doubling time), e.g. PSA
 #   on_page   {page_type: other_id}: store under other_id when printed on that page type (stress-test BP ≠ clinic BP)
+#   by_unit   {unit: other_id}: store under other_id when printed in that unit (free testosterone in % ≠ in pmol/L)
+#   rescale_above  [threshold, factor]: printed values above threshold are multiplied by factor (SG 1015 → 1.015)
+#   supersedes  [ids]: coarser tests the model may have suggested before this one existed; an exact name match wins
+#   section_aliases  {keyword: [names]}: names that mean this test only inside a report section whose title contains
+#             the keyword (case-insensitive), e.g. "Z score" under "LEFT HIP (NECK)"; this beats the model's suggestion
 #   merge_into  after conversion, store results under this id instead (same quantity, different name)
 #   aliases   names seen on reports (any language); matching is case/space/punctuation-insensitive
 #
@@ -137,11 +142,21 @@
   name: Lipoprotein(a)
   panel: blood.lipids
   unit: nmol/L
-  # mg/dL ⇄ nmol/L depends on apo(a) isoform size; no reliable factor ⇒ values in mg/dL are flagged.
+  # mg/dL ⇄ nmol/L depends on apo(a) isoform size: there is no reliable factor, so mass results are their own test
   ref: { high: 75 }
   limits: [0, 1000]
   decimals: 0
+  by_unit: { mg/dL: lpa_mass, mg/L: lpa_mass, g/L: lpa_mass }
   aliases: [Lipoprotein (a), Lipoprotein(a), Lp(a), Λιποπρωτεΐνη α]
+
+- id: lpa_mass
+  name: Lipoprotein(a) (mass, mg/dL)
+  panel: blood.lipids
+  unit: mg/dL
+  ref: { high: 30 }
+  limits: [0, 500]
+  decimals: 1
+  aliases: [Lp(a) mass, Lipoprotein (a) mass]
 
 - id: apoe_genotype
   name: ApoE genotype
@@ -149,6 +164,45 @@
   unit: ""
   kind: text
   aliases: [ApoE Genotype, Apolipoprotein E Genotype, APOE, ApoE]
+
+# ───────────────────────────── OMEGA-3 & FATTY ACIDS ─────────────────────────────
+# Red-blood-cell fatty-acid tests (e.g. OmegaQuant "Omega-3 Index Plus"). Labs print population ranges; the defaults
+# below are the commonly cited desirable targets (Harris & von Schacky 2004; OmegaQuant report targets).
+- id: omega3_index
+  name: Omega-3 Index
+  panel: blood.fatty_acids
+  unit: "%"
+  ref: { low: 8 }
+  limits: [1, 20]
+  decimals: 2
+  aliases: [Omega-3 Index, Omega 3 Index, O3 Index, "Omega-3 Index (EPA+DHA)", RBC Omega-3 Index, Δείκτης Ωμέγα-3, Ωμέγα-3 Δείκτης, 欧米伽3指数]
+
+- id: omega6_omega3_ratio
+  name: Omega-6 / Omega-3 ratio
+  panel: blood.fatty_acids
+  unit: ratio
+  ref: { high: 5 }
+  limits: [0.5, 60]
+  decimals: 1
+  aliases: ["Omega-6:Omega-3", "Omega-6:Omega-3 Ratio", Omega-6/Omega-3, Omega 6/3 Ratio, "n-6:n-3", n-6/n-3 Ratio, Λόγος Ωμέγα-6/Ωμέγα-3]
+
+- id: aa_epa_ratio
+  name: AA / EPA ratio
+  panel: blood.fatty_acids
+  unit: ratio
+  ref: { low: 2.5, high: 11 }
+  limits: [0.2, 200]
+  decimals: 1
+  aliases: ["AA:EPA", "AA:EPA Ratio", AA/EPA, AA/EPA Ratio, Arachidonic acid/EPA ratio, Λόγος AA/EPA]
+
+- id: trans_fat_index
+  name: Trans Fat Index
+  panel: blood.fatty_acids
+  unit: "%"
+  ref: { high: 1 }
+  limits: [0.05, 10]
+  decimals: 2
+  aliases: [Trans Fat Index, Trans Fatty Acid Index, RBC Trans Fat, Δείκτης Trans λιπαρών]
 
 # ───────────────────────────── GLUCOSE ─────────────────────────────
 - id: glucose_fasting
@@ -267,6 +321,17 @@
   limits: [0, 600]
   decimals: 1
   aliases: [Direct Bilirubin, Bilirubin (Direct), Conjugated Bilirubin, DBIL, 直接胆红素, Χολερυθρίνη άμεση, Άμεση χολερυθρίνη]
+
+- id: bilirubin_indirect
+  name: Indirect bilirubin
+  panel: blood.liver
+  unit: umol/L
+  mw: 584.66
+  alt_units: [mg/dL]
+  ref: { high: 17 }
+  limits: [0, 500]
+  decimals: 1
+  aliases: [Indirect Bilirubin, "Bilirubin, indirect", Bilirubin (Indirect), Unconjugated Bilirubin, IBIL, 间接胆红素, Χολερυθρίνη έμμεση, Χολερυθρίνη Εμμεση, Έμμεση χολερυθρίνη]
 
 - id: alp
   name: Alkaline phosphatase (ALP)
@@ -482,6 +547,18 @@
   limits: [1, 60]
   decimals: 1
   aliases: [Zinc, Zn, Ψευδάργυρος]
+
+- id: copper
+  name: Copper
+  panel: blood.bone
+  unit: umol/L
+  mw: 63.546
+  alt_units: [ug/dL]
+  ref: { low: 11, high: 22 }
+  ref_f: { low: 12.6, high: 24.4 }
+  limits: [1, 80]
+  decimals: 1
+  aliases: [Copper, Copper Serum, Serum Copper, "Copper, Serum", Cu, Χαλκός, 铜]
 
 - id: pth
   name: Parathyroid hormone (PTH)
@@ -707,6 +784,49 @@
   kind: text
   aliases: [Peripheral Blood Film, Blood Film, Peripheral Smear, Blood Smear, Film Comment, 周边血片, Επίχρισμα περιφερικού αίματος]
 
+# Haemoglobin analysis (electrophoresis / HPLC): thalassaemia and haemoglobin-variant screening
+- id: hb_a
+  name: Haemoglobin A (HbA)
+  panel: blood.cbc
+  unit: "%"
+  ref: { low: 95, high: 98 }
+  limits: [0, 100]
+  decimals: 1
+  aliases: [HbA, Hb A, Haemoglobin A, Hemoglobin A, HbA0, Αιμοσφαιρίνη Α]
+
+- id: hb_a2
+  name: Haemoglobin A2 (HbA2)
+  panel: blood.cbc
+  unit: "%"
+  ref: { low: 2.0, high: 3.3 }
+  limits: [0, 20]
+  decimals: 1
+  aliases: [HbA2, Hb A2, Haemoglobin A2, Hemoglobin A2, Αιμοσφαιρίνη Α2]
+
+- id: hb_f
+  name: Fetal haemoglobin (HbF)
+  panel: blood.cbc
+  unit: "%"
+  ref: { high: 1 }
+  limits: [0, 100]
+  decimals: 1
+  aliases: [HbF, Hb F, Haemoglobin F, Hemoglobin F, Fetal Haemoglobin, Fetal Hemoglobin, Εμβρυϊκή αιμοσφαιρίνη]
+
+- id: hbh_inclusions
+  name: HbH inclusion bodies
+  panel: blood.cbc
+  unit: ""
+  kind: qualitative
+  aliases: [Hb-H inc bodies, HbH inclusion bodies, Hb H inclusions, HbH inclusions, HbH bodies, Hb-H inclusion bodies]
+
+- id: hb_analysis_comment
+  name: Haemoglobin analysis comment
+  panel: blood.cbc
+  unit: ""
+  kind: text
+  aliases: [Hb Electrophoresis Comment, Haemoglobin Analysis Comment, Hb Analysis Interpretation]
+  section_aliases: { "special haem": [Comments, Comment, Remarks], electrophoresis: [Comments, Comment, Interpretation], "hb analysis": [Comments, Comment, Interpretation] }
+
 # ───────────────────────────── IRON ─────────────────────────────
 - id: iron
   name: Iron
@@ -848,7 +968,16 @@
   ref_m: { low: 170, high: 700 }
   limits: [1, 3000]
   decimals: 0
+  by_unit: { "%": testosterone_free_pct }
   aliases: [Free Testosterone, Testosterone Free, Calculated Free Testosterone, Free Testosterone (calculated), Ελεύθερη τεστοστερόνη]
+
+- id: testosterone_free_pct
+  name: Testosterone (free, % of total)
+  panel: blood.hormones
+  unit: "%"
+  limits: [0.05, 10]
+  decimals: 2
+  aliases: [Percent Free Testosterone, Free Testosterone Percent, Free Testosterone Percentage]
 
 - id: testosterone_bioavailable
   name: Testosterone (bioavailable)
@@ -858,7 +987,16 @@
   alt_units: [ng/dL]
   limits: [0.01, 60]
   decimals: 2
+  by_unit: { "%": testosterone_bioavailable_pct }
   aliases: [Bioavailable Testosterone, Testosterone Bioavailable]
+
+- id: testosterone_bioavailable_pct
+  name: Testosterone (bioavailable, % of total)
+  panel: blood.hormones
+  unit: "%"
+  limits: [1, 100]
+  decimals: 1
+  aliases: [Percent Bioavailable Testosterone, Bioavailable Testosterone Percent, Bioavailable Testosterone Percentage]
 
 - id: dht
   name: Dihydrotestosterone (DHT)
@@ -879,6 +1017,16 @@
   limits: [1, 400]
   decimals: 1
   aliases: [SHBG, Sex Hormone Binding Globulin, Sex Hormone Binding Glo, 性激素结合球蛋白, Σφαιρίνη δέσμευσης φυλετικών ορμονών]
+
+- id: free_androgen_index
+  name: Free Androgen Index
+  panel: blood.hormones
+  unit: "%"
+  ref_m: { low: 30, high: 150 }
+  ref_f: { high: 5 }
+  limits: [0.05, 400]
+  decimals: 1
+  aliases: [Free Androgen Index, FAI, Free Androgen Index (FAI), Δείκτης ελεύθερων ανδρογόνων]
 
 - id: estradiol
   name: Estradiol (E2)
@@ -1336,6 +1484,7 @@
   ref: { low: 1.003, high: 1.030 }
   limits: [1.000, 1.060]
   decimals: 3
+  rescale_above: [100, 0.001]
   aliases: [Specific Gravity, SG, Urine Specific Gravity, 尿比重, Ειδικό βάρος]
 
 - { id: urine_colour,     name: Urine colour,    panel: urine.dipstick, unit: "", kind: text,        aliases: [Urine Colour, Urine Color, Colour, 尿液颜色, Χρώμα] }
@@ -1370,6 +1519,7 @@
 - { id: urine_epithelial, name: Urine epithelial cells, panel: urine.microscopy, unit: "", kind: qualitative, aliases: [Epithelial Cells, 上皮细胞, Επιθήλια] }
 - { id: urine_casts,      name: Urine casts,     panel: urine.microscopy, unit: "", kind: qualitative, aliases: [Casts, 尿圆柱 / 尿管形, Κύλινδροι] }
 - { id: urine_crystals,   name: Urine crystals,  panel: urine.microscopy, unit: "", kind: qualitative, aliases: [Crystals, 晶状体, Κρύσταλλοι, Άλατα] }
+- { id: urine_amorphous,  name: Urine amorphous salts, panel: urine.microscopy, unit: "", kind: qualitative, aliases: [Amorphous, Amorphous salts, Amorphous Phosphates, Amorphous Urates, Amorphous material, Άμορφα άλατα, Αμορφα αλατα] }
 - { id: urine_bacteria,   name: Urine bacteria,  panel: urine.microscopy, unit: "", kind: qualitative, aliases: [Bacteria, 細菌, Μικρόβια, Βακτήρια] }
 - { id: urine_yeasts,     name: Urine yeasts,    panel: urine.microscopy, unit: "", kind: qualitative, aliases: [Yeasts, 酵母菌, Μύκητες] }
 - { id: urine_mucus,      name: Urine mucus threads, panel: urine.microscopy, unit: "", kind: qualitative, aliases: [Mucus Threads, Mucus, Mucous Threads, 粘液丝, Βλέννη] }
@@ -1496,19 +1646,56 @@
 - { id: echo_lvef, name: LV ejection fraction, panel: cardio.echo, unit: "%", ref: { low: 52 }, limits: [5, 90], decimals: 0, aliases: [LVEF, EF, Ejection Fraction, LV Ejection Fraction, Κλάσμα εξώθησης] }
 - { id: echo_fs,     name: LV fractional shortening, panel: cardio.echo, unit: "%", ref: { low: 25, high: 45 }, limits: [5, 70], decimals: 0, aliases: [Fractional Shortening, FS, LV Fractional Shortening] }
 - { id: echo_lv_mass, name: LV mass,              panel: cardio.echo, unit: g, ref_m: { low: 88, high: 224 }, ref_f: { low: 67, high: 162 }, limits: [30, 600], decimals: 0, aliases: [LV Mass, Left Ventricular Mass] }
-- { id: echo_lvidd,  name: LV diastolic dimension, panel: cardio.echo, unit: mm, ref_m: { low: 42, high: 58 }, ref_f: { low: 38, high: 52 }, limits: [20, 90], decimals: 0, aliases: [LV Diastolic Dimension, LVIDd, LVEDD, LV End-Diastolic Dimension] }
-- { id: echo_lvids,  name: LV systolic dimension,  panel: cardio.echo, unit: mm, ref_m: { low: 25, high: 40 }, ref_f: { low: 22, high: 35 }, limits: [10, 80], decimals: 0, aliases: [LV Systolic Dimension, LVIDs, LVESD, LV End-Systolic Dimension] }
-- { id: echo_la,     name: Left atrial dimension,  panel: cardio.echo, unit: mm, ref_m: { low: 30, high: 40 }, ref_f: { low: 27, high: 38 }, limits: [15, 90], decimals: 0, aliases: [LA Dimension, LA Diameter, Left Atrium, LA Size] }
+- { id: echo_lvidd,  name: LV diastolic dimension, panel: cardio.echo, unit: mm, factors: { cm: 10 }, ref_m: { low: 42, high: 58 }, ref_f: { low: 38, high: 52 }, limits: [20, 90], decimals: 0, aliases: [LV Diastolic Dimension, LVIDd, LVEDD, LV End-Diastolic Dimension] }
+- { id: echo_lvids,  name: LV systolic dimension,  panel: cardio.echo, unit: mm, factors: { cm: 10 }, ref_m: { low: 25, high: 40 }, ref_f: { low: 22, high: 35 }, limits: [10, 80], decimals: 0, aliases: [LV Systolic Dimension, LVIDs, LVESD, LV End-Systolic Dimension] }
+- { id: echo_la,     name: Left atrial dimension,  panel: cardio.echo, unit: mm, factors: { cm: 10 }, ref_m: { low: 30, high: 40 }, ref_f: { low: 27, high: 38 }, limits: [15, 90], decimals: 0, aliases: [LA Dimension, LA Diameter, Left Atrium, LA Size] }
 - { id: echo_e_eprime, name: E/e' ratio,           panel: cardio.echo, unit: ratio, ref: { high: 14 }, limits: [1, 40], decimals: 1, aliases: ["E/e'", "E/E'", "Average E/e'", E/e prime] }
 - { id: echo_mitral_ea, name: Mitral E/A ratio,   panel: cardio.echo, unit: ratio, limits: [0.2, 5], decimals: 1, aliases: [Mitral E/A ratio, E/A Ratio, E/A, MV E/A] }
 - { id: echo_rvsp,   name: RV systolic pressure,   panel: cardio.echo, unit: mmHg, ref: { high: 35 }, limits: [5, 120], decimals: 0, aliases: [RVSP, RV Systolic Pressure, PASP, Pulmonary Artery Systolic Pressure] }
+- { id: echo_lvef_teich, name: LV ejection fraction (Teichholz), panel: cardio.echo, unit: "%", ref: { low: 52 }, limits: [5, 95], decimals: 0, aliases: ["EF(Teich)", EF Teich, EF (Teichholz), Teichholz EF, LVEF Teichholz], supersedes: [echo_lvef] }
+- { id: echo_lvef_a4c, name: LV ejection fraction (4-chamber), panel: cardio.echo, unit: "%", ref: { low: 52 }, limits: [5, 95], decimals: 0, aliases: [LVEF_4Ch_Q, LVEF 4Ch, LVEF A4C, EF A4C, LVEF (A4C)], supersedes: [echo_lvef] }
+- { id: echo_lvef_a2c, name: LV ejection fraction (2-chamber), panel: cardio.echo, unit: "%", ref: { low: 52 }, limits: [5, 95], decimals: 0, aliases: [LVEF_2Ch_Q, LVEF 2Ch, LVEF A2C, EF A2C, LVEF (A2C)], supersedes: [echo_lvef] }
+- { id: echo_ivsd, name: Septal wall thickness (IVSd), panel: cardio.echo, unit: mm, factors: { cm: 10 }, ref_m: { low: 6, high: 10 }, ref_f: { low: 6, high: 9 }, limits: [3, 30], decimals: 0, aliases: [IVSd, IVS, IVSd (diastole), Interventricular Septum, Interventricular septal thickness, Septal thickness] }
+- { id: echo_lvpwd, name: Posterior wall thickness (LVPWd), panel: cardio.echo, unit: mm, factors: { cm: 10 }, ref_m: { low: 6, high: 10 }, ref_f: { low: 6, high: 9 }, limits: [3, 30], decimals: 0, aliases: [LVPWd, LVPW, PWd, Posterior Wall Thickness, LV Posterior Wall] }
+- { id: echo_rwt, name: Relative wall thickness, panel: cardio.echo, unit: ratio, ref: { high: 0.42 }, limits: [0.1, 1.2], decimals: 2, aliases: [RWT, Relative Wall Thickness] }
+- { id: echo_ao_root, name: Aortic root diameter, panel: cardio.echo, unit: mm, factors: { cm: 10 }, ref: { high: 40 }, limits: [10, 80], decimals: 0, aliases: [Ao Diam, Ao Root, Aortic Root, Aortic Root Diameter, Ao Root Diam, Aorta] }
+- { id: echo_tapse, name: TAPSE (right ventricle function), panel: cardio.echo, unit: mm, factors: { cm: 10 }, ref: { low: 17 }, limits: [3, 45], decimals: 0, aliases: [TAPSE, Tricuspid Annular Plane Systolic Excursion] }
+- { id: echo_lavi, name: Left atrial volume index, panel: cardio.echo, unit: mL/m2, ref: { high: 34 }, limits: [5, 120], decimals: 0, aliases: [LAVI, LA Volume Index, LAVi, "LAEDV Index (A-L)", LAESV Index, LA Vol Index] }
+- { id: echo_av_vmax, name: Aortic valve peak velocity, panel: cardio.echo, unit: m/s, factors: { cm/s: 0.01 }, ref: { high: 2.5 }, limits: [0.3, 7], decimals: 2, aliases: [AV Vmax, AV Peak Velocity, Aortic Valve Vmax, AoV Vmax, AV Vel] }
+- { id: echo_tr_vmax, name: Tricuspid regurgitation peak velocity, panel: cardio.echo, unit: m/s, factors: { cm/s: 0.01 }, ref: { high: 2.8 }, limits: [0.5, 6], decimals: 2, aliases: [TR Vmax, TR Peak Velocity, TR Vel, Tricuspid Regurgitation Velocity] }
+- { id: echo_tr_pg, name: Tricuspid regurgitation peak gradient, panel: cardio.echo, unit: mmHg, ref: { high: 31 }, limits: [2, 120], decimals: 0, aliases: [TR maxPG, TR Max PG, TR Peak Gradient, TR PG, TRPG] }
+- { id: echo_mv_e, name: Mitral E velocity, panel: cardio.echo, unit: m/s, factors: { cm/s: 0.01 }, limits: [0.2, 2.5], decimals: 2, aliases: [MV E Vel, MV E Velocity, Mitral E Velocity, E Velocity, MV E Peak, E wave] }
+- { id: echo_mv_dect, name: Mitral deceleration time, panel: cardio.echo, unit: ms, ref: { low: 160, high: 240 }, limits: [50, 500], decimals: 0, aliases: [MV DecT, MV Dec Time, Deceleration Time, DT, E wave deceleration time] }
+- { id: echo_eprime_septal, name: Septal e' velocity, panel: cardio.echo, unit: m/s, factors: { cm/s: 0.01 }, ref: { low: 0.07 }, limits: [0.02, 0.3], decimals: 2, aliases: ["SEP E'", "Septal e'", "e' septal", "Septal E'", "MV Sept e'"] }
+- { id: echo_eprime_lateral, name: Lateral e' velocity, panel: cardio.echo, unit: m/s, factors: { cm/s: 0.01 }, ref: { low: 0.10 }, limits: [0.02, 0.35], decimals: 2, aliases: ["LAT E'", "Lateral e'", "e' lateral", "Lateral E'", "MV Lat e'"] }
+
+# Carotid ultrasound: intima-media thickness of the common carotid artery
+- { id: cimt_left,  name: Carotid wall thickness (left),  panel: cardio.vascular, unit: mm, factors: { cm: 10 }, ref: { high: 0.9 }, limits: [0.2, 3], decimals: 2, aliases: [Left mean CIMT, Left CIMT, CIMT Left, "Left mean CIMT (distal CCA far wall)", Left carotid IMT, Left IMT, Left CCA IMT] }
+- { id: cimt_right, name: Carotid wall thickness (right), panel: cardio.vascular, unit: mm, factors: { cm: 10 }, ref: { high: 0.9 }, limits: [0.2, 3], decimals: 2, aliases: [Right mean CIMT, Right CIMT, CIMT Right, "Right mean CIMT (distal CCA far wall)", Right carotid IMT, Right IMT, Right CCA IMT] }
 
 - { id: cac_score,   name: Coronary calcium score (Agatston), panel: cardio.ct, unit: "", ref: { high: 0 }, limits: [0, 10000], decimals: 0, aliases: [Agatston Score, Total Calcium Score, Calcium Score, Coronary Artery Calcium Score, CAC Score, Total Agatston Score] }
 - { id: cad_rads,    name: CAD-RADS category,      panel: cardio.ct, unit: "", kind: text, aliases: [CAD-RADS, CAD RADS, CADRADS] }
 
 # ───────────────────────────── IMAGING / SCREENING ─────────────────────────────
-- { id: bmd_tscore_spine, name: Bone density T-score (spine), panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 5], decimals: 1, aliases: [T-score Lumbar Spine, Spine T-score, L1-L4 T-score] }
-- { id: bmd_tscore_hip,   name: Bone density T-score (hip),   panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 5], decimals: 1, aliases: [T-score Hip, Femoral Neck T-score, Total Hip T-score] }
+# Bone density (DXA): one test per measured site; T-score compares with young adults, Z-score with your age group
+- { id: bmd_spine, name: "Bone density BMD (lumbar spine)", panel: imaging.bone, unit: g/cm2, limits: [0.2, 2.5], decimals: 3, aliases: ["Lumbar Spine BMD", "Spine BMD", "L1-L4 BMD", "BMD L1-L4"], section_aliases: { "lumbar": ["BMD", "BMD (bone mineral density)", "Bone Mineral Density", "Bone density"], "spine": ["BMD", "BMD (bone mineral density)", "Bone Mineral Density", "Bone density"], "l1": ["BMD", "BMD (bone mineral density)", "Bone Mineral Density", "Bone density"] } }
+- { id: bmd_tscore_spine, name: "Bone density T-score (lumbar spine)", panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 6], decimals: 1, aliases: ["T-score Lumbar Spine", "Spine T-score", "L1-L4 T-score", "Lumbar Spine T-score"], section_aliases: { "lumbar": ["T score", "T-score", "T-Score"], "spine": ["T score", "T-score", "T-Score"], "l1": ["T score", "T-score", "T-Score"] } }
+- { id: bmd_zscore_spine, name: "Bone density Z-score (lumbar spine)", panel: imaging.bone, unit: SD, ref: { low: -2.0 }, limits: [-7, 6], decimals: 1, aliases: ["Z-score Lumbar Spine", "Spine Z-score", "L1-L4 Z-score", "Lumbar Spine Z-score"], section_aliases: { "lumbar": ["Z score", "Z-score", "Z-Score"], "spine": ["Z score", "Z-score", "Z-Score"], "l1": ["Z score", "Z-score", "Z-Score"] } }
+- { id: bmd_neck, name: "Bone density BMD (femoral neck)", panel: imaging.bone, unit: g/cm2, limits: [0.2, 2.5], decimals: 3, aliases: ["Neck BMD", "Femoral Neck BMD", "BMD Femoral Neck"], section_aliases: { "neck": ["BMD", "BMD (bone mineral density)", "Bone Mineral Density", "Bone density"] } }
+- { id: bmd_tscore_neck, name: "Bone density T-score (femoral neck)", panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 6], decimals: 1, aliases: ["Neck T-score", "Femoral Neck T-score", "T-score Femoral Neck"], section_aliases: { "neck": ["T score", "T-score", "T-Score"] }, supersedes: [bmd_tscore_hip] }
+- { id: bmd_zscore_neck, name: "Bone density Z-score (femoral neck)", panel: imaging.bone, unit: SD, ref: { low: -2.0 }, limits: [-7, 6], decimals: 1, aliases: ["Neck Z-score", "Femoral Neck Z-score", "Z-score Femoral Neck"], section_aliases: { "neck": ["Z score", "Z-score", "Z-Score"] } }
+- { id: bmd_total_hip, name: "Bone density BMD (total hip)", panel: imaging.bone, unit: g/cm2, limits: [0.2, 2.5], decimals: 3, aliases: ["Total BMD", "Total Hip BMD", "Hip BMD", "BMD Total Hip"], section_aliases: { "total hip": ["BMD", "BMD (bone mineral density)", "Bone Mineral Density", "Bone density"], "(total)": ["BMD", "BMD (bone mineral density)", "Bone Mineral Density", "Bone density"] } }
+- { id: bmd_tscore_hip, name: "Bone density T-score (total hip)", panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 6], decimals: 1, aliases: ["Total T-score", "Total Hip T-score", "T-score Hip", "Hip T-score"], section_aliases: { "total hip": ["T score", "T-score", "T-Score"], "(total)": ["T score", "T-score", "T-Score"] } }
+- { id: bmd_zscore_total_hip, name: "Bone density Z-score (total hip)", panel: imaging.bone, unit: SD, ref: { low: -2.0 }, limits: [-7, 6], decimals: 1, aliases: ["Total Z-score", "Total Hip Z-score", "Hip Z-score"], section_aliases: { "total hip": ["Z score", "Z-score", "Z-Score"], "(total)": ["Z score", "Z-score", "Z-Score"] } }
+- { id: bmd_troch, name: "Bone density BMD (trochanter)", panel: imaging.bone, unit: g/cm2, limits: [0.2, 2.5], decimals: 3, aliases: ["Troch BMD", "Trochanter BMD", "Greater Trochanter BMD"] }
+- { id: bmd_tscore_troch, name: "Bone density T-score (trochanter)", panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 6], decimals: 1, aliases: ["Troch T-score", "Trochanter T-score"], supersedes: [bmd_tscore_hip] }
+- { id: bmd_zscore_troch, name: "Bone density Z-score (trochanter)", panel: imaging.bone, unit: SD, ref: { low: -2.0 }, limits: [-7, 6], decimals: 1, aliases: ["Troch Z-score", "Trochanter Z-score"] }
+- { id: bmd_inter, name: "Bone density BMD (intertrochanteric)", panel: imaging.bone, unit: g/cm2, limits: [0.2, 2.5], decimals: 3, aliases: ["Inter BMD", "Intertrochanteric BMD", "Intertrochanter BMD"] }
+- { id: bmd_tscore_inter, name: "Bone density T-score (intertrochanteric)", panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 6], decimals: 1, aliases: ["Inter T-score", "Intertrochanteric T-score"], supersedes: [bmd_tscore_hip] }
+- { id: bmd_zscore_inter, name: "Bone density Z-score (intertrochanteric)", panel: imaging.bone, unit: SD, ref: { low: -2.0 }, limits: [-7, 6], decimals: 1, aliases: ["Inter Z-score", "Intertrochanteric Z-score"] }
+- { id: bmd_wards, name: "Bone density BMD (Ward's triangle)", panel: imaging.bone, unit: g/cm2, limits: [0.2, 2.5], decimals: 3, aliases: ["Ward's BMD", "Wards BMD", "Ward's Triangle BMD"] }
+- { id: bmd_tscore_wards, name: "Bone density T-score (Ward's triangle)", panel: imaging.bone, unit: SD, ref: { low: -1.0 }, limits: [-7, 6], decimals: 1, aliases: ["Ward's T-score", "Wards T-score"], supersedes: [bmd_tscore_hip] }
+- { id: bmd_zscore_wards, name: "Bone density Z-score (Ward's triangle)", panel: imaging.bone, unit: SD, ref: { low: -2.0 }, limits: [-7, 6], decimals: 1, aliases: ["Ward's Z-score", "Wards Z-score"] }
 
 - { id: visual_acuity_l, name: Visual acuity (left),  panel: screening.vision, unit: "", kind: text, aliases: [Visual Acuity Left, Visual Acuity (Left), Left Visual Acuity, VA Left, Visual Acuity L, Left Eye, 左眼视力, Οπτική οξύτητα αριστερού] }
 - { id: visual_acuity_r, name: Visual acuity (right), panel: screening.vision, unit: "", kind: text, aliases: [Visual Acuity Right, Visual Acuity (Right), Right Visual Acuity, VA Right, Visual Acuity R, Right Eye, 右眼视力, Οπτική οξύτητα δεξιού] }
@@ -1523,4 +1710,5 @@
 - { id: fef25_75,       name: FEF25–75%,         panel: screening.lung,    unit: L/s, limits: [0.1, 12], decimals: 2, aliases: [FEF25%-75%, FEF25-75, FEF 25-75%, MMEF, MEF25-75] }
 - { id: fef50,          name: FEF50%,            panel: screening.lung,    unit: L/s, limits: [0.1, 15], decimals: 2, aliases: [FEF50%, FEF50, MEF50] }
 - { id: fef75,          name: FEF75%,            panel: screening.lung,    unit: L/s, limits: [0.05, 10], decimals: 2, aliases: [FEF75%, FEF75, MEF25] }
-- { id: spirometry_interpretation, name: Spirometry interpretation, panel: screening.lung, unit: "", kind: text, aliases: ["Interpretation: ATS/ERS", Spirometry Interpretation, Spirometry Conclusion, ATS/ERS Interpretation] }
+- { id: spirometry_interpretation, name: Spirometry interpretation, panel: screening.lung, unit: "", kind: text, aliases: ["Interpretation: ATS/ERS", Spirometry Interpretation, Spirometry Conclusion, ATS/ERS Interpretation], section_aliases: { fvc: [Interpretation, Conclusion], spirom: [Interpretation, Conclusion], "lung function": [Interpretation, Conclusion] } }
+- { id: colonoscopy_bbps, name: Bowel preparation score (Boston), panel: screening.colon, unit: "", ref: { low: 6 }, limits: [0, 9], decimals: 0, aliases: [Boston Bowel Preparation Scale, BBPS, "Boston Bowel Preparation Scale (BBPS) Total Score", BBPS Total Score, BBPS Total, Boston Bowel Preparation Score] }

@@ -39,6 +39,8 @@ class Catalog:
     panels: list[dict]
     synonyms: dict[str, str]
     alias_index: dict[str, list[str]] = field(default_factory=dict)
+    # names that only mean this test inside a report section containing a keyword ("T score" under "LEFT HIP (NECK)")
+    section_index: dict[str, list[tuple[str, str]]] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         units.set_synonyms(self.synonyms)
@@ -47,6 +49,9 @@ class Catalog:
                 k = norm_name(str(name))
                 if k and t["id"] not in self.alias_index.setdefault(k, []):
                     self.alias_index[k].append(t["id"])
+            for keyword, names in (t.get("section_aliases") or {}).items():
+                for name in names:
+                    self.section_index.setdefault(norm_name(str(name)), []).append((str(keyword).lower(), t["id"]))
 
     def get(self, test_id: str | None) -> dict | None:
         return self.tests.get(test_id) if test_id else None
@@ -54,17 +59,27 @@ class Catalog:
     def match(self, raw_name: str, section: str | None = None) -> tuple[str | None, bool]:
         """Return (test_id, ambiguous). Uses the report section (e.g. 'URINALYSIS') to break ties."""
         cands = self.alias_index.get(norm_name(raw_name), [])
-        if len(cands) == 1:
-            return cands[0], False
         if not cands:
             return None, False
+        s = (section or "").lower()
+        urine = any(w in norm_name(s) for w in ("urin", "ουρ", "尿"))
+        if len(cands) == 1:
+            # a blood-test name inside a urine section ("red blood cells" under urine microscopy) isn't certain
+            return cands[0], urine and not self.tests[cands[0]]["panel"].startswith("urine")
         if section:
-            s = section.lower()
-            urine = any(w in s for w in ("urin", "ούρ", "尿"))
             pref = [c for c in cands if self.tests[c]["panel"].startswith("urine") == urine]
             if len(pref) == 1:
                 return pref[0], False
         return cands[0], True
+
+    def match_in_section(self, raw_name: str, section: str | None) -> str | None:
+        """The test a generic name ("Z score", "Interpretation", "Comments") means in this report section, if the
+        catalog says so unambiguously; this context beats the model's own suggestion."""
+        if not section:
+            return None
+        s = section.lower()
+        ids = {tid for kw, tid in self.section_index.get(norm_name(raw_name), []) if kw in s}
+        return ids.pop() if len(ids) == 1 else None
 
     def prompt_index(self) -> str:
         """Compact catalog listing given to the LLM so it can suggest catalog ids."""

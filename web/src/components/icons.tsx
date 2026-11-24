@@ -7,7 +7,7 @@ import {
   Activity, Atom, Bean, Bone, ChartLine, CircleDollarSign, ClipboardList, Droplet, Droplets, Ear, Eye, FileText,
   FlaskConical, FlaskRound, Flame, Footprints, Gauge, HeartPulse, Inbox, Layers, Link, Microscope, Ruler, Scale,
   ScanHeart, ScanLine, Settings, ShieldCheck, Sun, Target, TestTube, Waves, Wind, Candy, Magnet, Radio, Circle,
-  Scan, LayoutGrid,
+  Scan, LayoutGrid, Fish,
 } from "lucide-preact";
 
 type Icon = ComponentType<{ size?: number | string; strokeWidth?: number | string; class?: string; "aria-hidden"?: boolean }>;
@@ -15,6 +15,7 @@ type Icon = ComponentType<{ size?: number | string; strokeWidth?: number | strin
 const PANEL: Record<string, Icon> = {
   blood: Droplet,
   "blood.lipids": Droplets,
+  "blood.fatty_acids": Fish,
   "blood.glucose": Candy,
   "blood.liver": FlaskRound,
   "blood.kidney": Bean,
@@ -41,6 +42,7 @@ const PANEL: Record<string, Icon> = {
   "cardio.treadmill": Footprints,
   "cardio.echo": ScanHeart,
   "cardio.ct": ScanLine,
+  "cardio.vascular": HeartPulse,
   imaging: ScanLine,
   "imaging.findings": ScanLine,
   "imaging.bone": Bone,
@@ -48,6 +50,7 @@ const PANEL: Record<string, Icon> = {
   "screening.vision": Eye,
   "screening.hearing": Ear,
   "screening.lung": Wind,
+  "screening.colon": Scan,
 };
 
 const PAGE: Record<string, Icon> = {

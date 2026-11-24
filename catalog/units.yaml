@@ -56,6 +56,13 @@ synonyms:
   "k/ul": 10^9/L
   "k/µl": 10^9/L
   "/nl": 10^9/L
+  "1000/mm**3": 10^9/L
+  "1000/mm3": 10^9/L
+  "10^3/mm3": 10^9/L
+  "x10^3/mm3": 10^9/L
+  "ths/ul": 10^9/L
+  "thou/ul": 10^9/L
+  "thousand/ul": 10^9/L
   "x10^12/l": 10^12/L
   "10^12/l": 10^12/L
   "×10¹²/l": 10^12/L
@@ -67,6 +74,12 @@ synonyms:
   "m/ul": 10^12/L
   "m/µl": 10^12/L
   "/pl": 10^12/L
+  "1000000/mm**3": 10^12/L
+  "1000000/mm3": 10^12/L
+  "10^6/mm3": 10^12/L
+  "x10^6/mm3": 10^12/L
+  "mil/ul": 10^12/L
+  "million/ul": 10^12/L
   "cells/µl": cells/uL
   "cells/ul": cells/uL
   "/µl": cells/uL
@@ -74,13 +87,29 @@ synonyms:
   "/hpf": /HPF
   # misc
   "fl": fL
+  "µm**3": fL
+  "um**3": fL
+  "µm3": fL
+  "um3": fL
+  "µm³": fL
   "pg": pg
   "%": "%"
+  # imaging
+  "g/cm2": g/cm2
+  "g/cm²": g/cm2
+  "ml/m2": mL/m2
+  "ml/m²": mL/m2
+  "m/s": m/s
+  "cm/s": cm/s
+  "mm": mm
   "l/l": L/L
   "mm/hr": mm/h
   "mm/h": mm/h
   "mm/1sthr": mm/h
   "ml/min/1.73m2": mL/min/1.73m2
+  "ml/min/1.73squaremetres": mL/min/1.73m2
+  "ml/min/1.73squaremeters": mL/min/1.73m2
+  "ml/min/1.73sqm": mL/min/1.73m2
   "ml/min/1.73m²": mL/min/1.73m2
   "ml/min/1.73 m2": mL/min/1.73m2
   "kg/m2": kg/m2

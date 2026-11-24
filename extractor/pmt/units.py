@@ -89,7 +89,7 @@ def to_canonical(value: float, unit: str, test: dict) -> float:
     canonical = test["unit"]
     unit = canon_unit(unit)
     mw = test.get("mw")
-    if unit == canonical or (not unit and canonical in ("", "ratio", "pH", "SG")):
+    if unit == canonical or (not unit and canonical in ("", "ratio", "pH", "SG", "SD")):
         return value
     affine = test.get("affine") or {}
     if unit in affine:

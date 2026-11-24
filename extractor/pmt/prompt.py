@@ -32,7 +32,7 @@ For every page, emit an entry in `pages` with its type:
 abnormal qualitative results; otherwise null. Never infer a flag yourself.
 - date: the collection date for THIS value as YYYY-MM-DD. Cumulative reports show earlier results in extra \
 date columns or under the current value (e.g. "11-Nov-2024  195 mg/dL"): emit each earlier value as its own \
-entry with its own date and is_historical=true. Dates on reports from outside the US (Europe, Asia, Australia…) are usually day-first.
+entry with its own date and is_historical=true. Summary or comparison tables (columns such as "Previous", "Last visit", "2023 / 2024", "Trend") repeat earlier results: use the date of THAT column, never the current report's date; if a repeated value's date isn't printed, set date=null and is_historical=true. Never give two different values of one test the same date unless the report really prints both for that date. Dates on reports from outside the US (Europe, Asia, Australia…) are usually day-first.
 - source_text: a short verbatim snippet from the page that contains the value (≤ 80 chars), used to \
 highlight it later.
 - catalog_id: the best matching id from the catalog below, or null if none fits. Respect specimen \

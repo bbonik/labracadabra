@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
 from .catalog import Catalog
 from .schema import Document, Finding, Result
@@ -75,6 +75,107 @@ def _newer(a: Document, b: Document) -> tuple[Document, Document]:
     return (a, b) if ka >= kb else (b, a)
 
 
+# how far back an earlier result may be to count as "repeated on a later report" (reports compare with 1-3 years)
+CARRY_MAX_DAYS = 3 * 366
+SUMMARY_COPY = "the same report's lab page gives a different value (summary-page value hidden)"
+# measured several times a day as a matter of course (check-up, echo, ECG): different values aren't a conflict
+MULTI_READING_PANELS = ("vitals.bp",)
+UNDATED_COPY = "earlier result printed without its date"
+
+
+def _days(a: str, b: str) -> int:
+    try:
+        return (date.fromisoformat(b[:10]) - date.fromisoformat(a[:10])).days
+    except ValueError:
+        return -1
+
+
+def _comparable(r: Result) -> bool:
+    return bool(r.test_id and r.date and r.kind != "text" and r.status not in ("ignored", "superseded"))
+
+
+def _redate_carried_copies(results: list[Result], superseded: dict, catalog: Catalog) -> None:
+    """Reports often repeat the previous one or two results next to the new one ("2023: 127  2024: 154"). When the
+    model dates such a value with the new report's date, the day shows two different values. If one of them equals an
+    earlier result of the same test (within CARRY_MAX_DAYS), it is that earlier result printed again: move it to the
+    earlier date (it then merges there as another source) instead of asking the user. Values the user confirmed or
+    edited are never moved, and at least one value always stays on the day."""
+    by_test: dict[str, list[Result]] = defaultdict(list)
+    for r in results:
+        if _comparable(r) and r.doc_id not in superseded:
+            by_test[r.test_id].append(r)
+    for test_id, rs in by_test.items():
+        decimals = (catalog.get(test_id) or {}).get("decimals")
+        by_day: dict[str, list[Result]] = defaultdict(list)
+        for r in rs:
+            by_day[r.date].append(r)
+        for day in sorted(by_day):
+            earlier = [e for e in rs if e.date < day and 0 < _days(e.date, day) <= CARRY_MAX_DAYS
+                       and e.date_on_report is None]
+            # an "earlier result" dated on the very day its own report gives a current value: its real date wasn't
+            # printed (summary pages) and the model used the report's date. Move it to the earlier result it
+            # equals, otherwise hide it (restorable).
+            for r in by_day[day]:
+                if not r.is_historical or r.date_on_report or r.status == "user_corrected":
+                    continue
+                current = [o for o in by_day[day] if o.doc_id == r.doc_id and not o.is_historical]
+                if not current or any(_same_value(o, r, decimals) for o in current):
+                    continue
+                hits = [e.date for e in earlier if _same_value(e, r, decimals)]
+                if hits:
+                    r.date_on_report, r.date = r.date, max(hits)
+                else:
+                    r.status, r.issues = "duplicate", [UNDATED_COPY]
+            today = [r for r in by_day[day] if not r.is_historical]
+            # distinct values reported for this day
+            values: list[list[Result]] = []
+            for r in today:
+                for v in values:
+                    if _same_value(v[0], r, decimals):
+                        v.append(r)
+                        break
+                else:
+                    values.append([r])
+            if len(values) < 2:
+                continue
+            match: dict[int, str] = {}  # index in values → the earlier date it repeats
+            for i, v in enumerate(values):
+                if any(r.status == "user_corrected" for r in v):
+                    continue
+                hits = [e.date for e in earlier if _same_value(e, v[0], decimals)]
+                if hits:
+                    match[i] = max(hits)
+            if not match:
+                continue
+            if len(match) == len(values):
+                # every value equals some earlier result: keep the one the report's own lab page gives for this day
+                keep = [i for i, v in enumerate(values) if any(r.page_type == "lab_results" for r in v)]
+                if len(keep) != 1:
+                    continue  # can't tell which one is new: leave it to the user
+                match.pop(keep[0])
+            for i, earlier_day in match.items():
+                for r in values[i]:
+                    r.date_on_report, r.date, r.is_historical = r.date, earlier_day, True
+
+
+def _hide_summary_copies(clusters: list[list[Result]]) -> None:
+    """A report giving one value on its lab-results page and a different one only on a summary or narrative page
+    (an earlier result printed for comparison, a typo in the summary, the doctor's "Negative" for a measured 0.49):
+    keep the lab page's value and hide the other (restorable) instead of asking."""
+    live = [cl for cl in clusters if not cl[0].is_historical and cl[0].kind != "text"]
+    if len(live) < 2 or any(r.status == "user_corrected" for cl in live for r in cl):
+        return
+    lab = [cl for cl in live if any(r.page_type == "lab_results" for r in cl)]
+    if len(lab) != 1:
+        return
+    lab_docs = {r.doc_id for r in lab[0] if r.page_type == "lab_results"}
+    for cl in live:
+        # (copies of it that other reports print as earlier results don't count)
+        if cl is not lab[0] and all(r.doc_id in lab_docs for r in cl if not r.is_historical):
+            for r in cl:
+                r.status, r.issues = "duplicate", [SUMMARY_COPY]
+
+
 def merge(
     docs: list[Document],
     per_doc_results: list[list[Result]],
@@ -89,6 +190,7 @@ def merge(
         d.superseded_by = superseded.get(d.id)
     all_results = [r for rs in per_doc_results for r in rs]
     all_results = apply_corrections(all_results, corrections, catalog)
+    _redate_carried_copies(all_results, superseded, catalog)
 
     groups: dict[tuple, list[Result]] = defaultdict(list)
     final: list[Result] = []
@@ -113,13 +215,15 @@ def merge(
                     break
             else:
                 clusters.append([r])
+        _hide_summary_copies(clusters)
         for cl in clusters:
             for r in cl:
                 cluster_of[r.id] = cl
             primary = cl[0]
             for dup in cl[1:]:
                 primary.also_in.append({"doc_id": dup.doc_id, "page": dup.page, "value_raw": dup.value_raw,
-                                        "unit_raw": dup.unit_raw, "result_id": dup.id})
+                                        "unit_raw": dup.unit_raw, "result_id": dup.id,
+                                        **({"date_on_report": dup.date_on_report} if dup.date_on_report else {})})
                 # a confident lab-page copy confirms a low-confidence summary copy
                 if dup.status == "user_corrected":
                     primary.status = "user_corrected"
@@ -129,8 +233,10 @@ def merge(
             final.append(primary)
         # free-text results (ECG/stress-test conclusions…) are often worded differently on different pages: keep
         # them all without calling it a conflict. A pending "corrected version?" question also isn't a conflict yet.
-        non_hist = [cl[0] for cl in clusters if not cl[0].is_historical and cl[0].kind != "text"]
-        if len(non_hist) > 1:
+        non_hist = [cl[0] for cl in clusters if not cl[0].is_historical and cl[0].kind != "text"
+                    and cl[0].status != "duplicate"]
+        panel = (catalog.get(test_id) or {}).get("panel", "")
+        if len(non_hist) > 1 and not panel.startswith(MULTI_READING_PANELS):
             for p in non_hist:
                 if p.status != "user_corrected":
                     p.issues.append("different values reported for the same day")

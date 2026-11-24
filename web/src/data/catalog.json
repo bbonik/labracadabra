@@ -11,6 +11,11 @@
      "icon": "💧"
     },
     {
+     "id": "blood.fatty_acids",
+     "name": "Omega-3 & fatty acids",
+     "icon": "🐟"
+    },
+    {
      "id": "blood.glucose",
      "name": "Glucose & diabetes",
      "icon": "🍬"
@@ -145,6 +150,11 @@
      "id": "cardio.ct",
      "name": "Coronary CT / calcium score",
      "icon": "🩻"
+    },
+    {
+     "id": "cardio.vascular",
+     "name": "Carotid ultrasound",
+     "icon": "🩺"
     }
    ]
   },
@@ -184,6 +194,11 @@
      "id": "screening.lung",
      "name": "Lung function",
      "icon": "🫁"
+    },
+    {
+     "id": "screening.colon",
+     "name": "Colonoscopy",
+     "icon": "🔎"
     }
    ]
   }
@@ -535,6 +550,31 @@
    ]
   },
   {
+   "id": "lpa_mass",
+   "name": "Lipoprotein(a) (mass, mg/dL)",
+   "panel": "blood.lipids",
+   "unit": "mg/dL",
+   "kind": "numeric",
+   "units": {
+    "mg/dL": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 30
+   },
+   "limits": [
+    0,
+    500
+   ],
+   "aliases": [
+    "Lp(a) mass",
+    "Lipoprotein (a) mass"
+   ]
+  },
+  {
    "id": "apoe_genotype",
    "name": "ApoE genotype",
    "panel": "blood.lipids",
@@ -551,6 +591,122 @@
     "Apolipoprotein E Genotype",
     "APOE",
     "ApoE"
+   ]
+  },
+  {
+   "id": "omega3_index",
+   "name": "Omega-3 Index",
+   "panel": "blood.fatty_acids",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 8
+   },
+   "limits": [
+    1,
+    20
+   ],
+   "aliases": [
+    "Omega 3 Index",
+    "O3 Index",
+    "Omega-3 Index (EPA+DHA)",
+    "RBC Omega-3 Index",
+    "Δείκτης Ωμέγα-3",
+    "Ωμέγα-3 Δείκτης",
+    "欧米伽3指数"
+   ]
+  },
+  {
+   "id": "omega6_omega3_ratio",
+   "name": "Omega-6 / Omega-3 ratio",
+   "panel": "blood.fatty_acids",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 5
+   },
+   "limits": [
+    0.5,
+    60
+   ],
+   "aliases": [
+    "Omega-6:Omega-3",
+    "Omega-6:Omega-3 Ratio",
+    "Omega-6/Omega-3",
+    "Omega 6/3 Ratio",
+    "n-6:n-3",
+    "n-6/n-3 Ratio",
+    "Λόγος Ωμέγα-6/Ωμέγα-3"
+   ]
+  },
+  {
+   "id": "aa_epa_ratio",
+   "name": "AA / EPA ratio",
+   "panel": "blood.fatty_acids",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 2.5,
+    "high": 11
+   },
+   "limits": [
+    0.2,
+    200
+   ],
+   "aliases": [
+    "AA:EPA",
+    "AA:EPA Ratio",
+    "AA/EPA",
+    "AA/EPA Ratio",
+    "Arachidonic acid/EPA ratio",
+    "Λόγος AA/EPA"
+   ]
+  },
+  {
+   "id": "trans_fat_index",
+   "name": "Trans Fat Index",
+   "panel": "blood.fatty_acids",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 1
+   },
+   "limits": [
+    0.05,
+    10
+   ],
+   "aliases": [
+    "Trans Fatty Acid Index",
+    "RBC Trans Fat",
+    "Δείκτης Trans λιπαρών"
    ]
   },
   {
@@ -909,6 +1065,42 @@
     "直接胆红素",
     "Χολερυθρίνη άμεση",
     "Άμεση χολερυθρίνη"
+   ]
+  },
+  {
+   "id": "bilirubin_indirect",
+   "name": "Indirect bilirubin",
+   "panel": "blood.liver",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "mg/dL": [
+     17.103957855847845,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 17
+   },
+   "limits": [
+    0,
+    500
+   ],
+   "aliases": [
+    "Indirect Bilirubin",
+    "Bilirubin, indirect",
+    "Bilirubin (Indirect)",
+    "Unconjugated Bilirubin",
+    "IBIL",
+    "间接胆红素",
+    "Χολερυθρίνη έμμεση",
+    "Χολερυθρίνη Εμμεση",
+    "Έμμεση χολερυθρίνη"
    ]
   },
   {
@@ -1505,6 +1697,44 @@
    "aliases": [
     "Zn",
     "Ψευδάργυρος"
+   ]
+  },
+  {
+   "id": "copper",
+   "name": "Copper",
+   "panel": "blood.bone",
+   "unit": "umol/L",
+   "kind": "numeric",
+   "units": {
+    "umol/L": [
+     1.0,
+     0.0
+    ],
+    "ug/dL": [
+     0.15736631731344222,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 11,
+    "high": 22
+   },
+   "ref_f": {
+    "low": 12.6,
+    "high": 24.4
+   },
+   "limits": [
+    1,
+    80
+   ],
+   "aliases": [
+    "Copper Serum",
+    "Serum Copper",
+    "Copper, Serum",
+    "Cu",
+    "Χαλκός",
+    "铜"
    ]
   },
   {
@@ -2204,6 +2434,133 @@
    ]
   },
   {
+   "id": "hb_a",
+   "name": "Haemoglobin A (HbA)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 95,
+    "high": 98
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "HbA",
+    "Hb A",
+    "Haemoglobin A",
+    "Hemoglobin A",
+    "HbA0",
+    "Αιμοσφαιρίνη Α"
+   ]
+  },
+  {
+   "id": "hb_a2",
+   "name": "Haemoglobin A2 (HbA2)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": 2.0,
+    "high": 3.3
+   },
+   "limits": [
+    0,
+    20
+   ],
+   "aliases": [
+    "HbA2",
+    "Hb A2",
+    "Haemoglobin A2",
+    "Hemoglobin A2",
+    "Αιμοσφαιρίνη Α2"
+   ]
+  },
+  {
+   "id": "hb_f",
+   "name": "Fetal haemoglobin (HbF)",
+   "panel": "blood.cbc",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "high": 1
+   },
+   "limits": [
+    0,
+    100
+   ],
+   "aliases": [
+    "HbF",
+    "Hb F",
+    "Haemoglobin F",
+    "Hemoglobin F",
+    "Fetal Haemoglobin",
+    "Fetal Hemoglobin",
+    "Εμβρυϊκή αιμοσφαιρίνη"
+   ]
+  },
+  {
+   "id": "hbh_inclusions",
+   "name": "HbH inclusion bodies",
+   "panel": "blood.cbc",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Hb-H inc bodies",
+    "Hb H inclusions",
+    "HbH inclusions",
+    "HbH bodies",
+    "Hb-H inclusion bodies"
+   ]
+  },
+  {
+   "id": "hb_analysis_comment",
+   "name": "Haemoglobin analysis comment",
+   "panel": "blood.cbc",
+   "unit": "",
+   "kind": "text",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Hb Electrophoresis Comment",
+    "Haemoglobin Analysis Comment",
+    "Hb Analysis Interpretation"
+   ]
+  },
+  {
    "id": "iron",
    "name": "Iron",
    "panel": "blood.iron",
@@ -2628,6 +2985,29 @@
    ]
   },
   {
+   "id": "testosterone_free_pct",
+   "name": "Testosterone (free, % of total)",
+   "panel": "blood.hormones",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.05,
+    10
+   ],
+   "aliases": [
+    "Percent Free Testosterone",
+    "Free Testosterone Percent",
+    "Free Testosterone Percentage"
+   ]
+  },
+  {
    "id": "testosterone_bioavailable",
    "name": "Testosterone (bioavailable)",
    "panel": "blood.hormones",
@@ -2651,6 +3031,29 @@
    "aliases": [
     "Bioavailable Testosterone",
     "Testosterone Bioavailable"
+   ]
+  },
+  {
+   "id": "testosterone_bioavailable_pct",
+   "name": "Testosterone (bioavailable, % of total)",
+   "panel": "blood.hormones",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "limits": [
+    1,
+    100
+   ],
+   "aliases": [
+    "Percent Bioavailable Testosterone",
+    "Bioavailable Testosterone Percent",
+    "Bioavailable Testosterone Percentage"
    ]
   },
   {
@@ -2718,6 +3121,36 @@
     "Sex Hormone Binding Glo",
     "性激素结合球蛋白",
     "Σφαιρίνη δέσμευσης φυλετικών ορμονών"
+   ]
+  },
+  {
+   "id": "free_androgen_index",
+   "name": "Free Androgen Index",
+   "panel": "blood.hormones",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref_m": {
+    "low": 30,
+    "high": 150
+   },
+   "ref_f": {
+    "high": 5
+   },
+   "limits": [
+    0.05,
+    400
+   ],
+   "aliases": [
+    "FAI",
+    "Free Androgen Index (FAI)",
+    "Δείκτης ελεύθερων ανδρογόνων"
    ]
   },
   {
@@ -4304,6 +4737,28 @@
    ]
   },
   {
+   "id": "urine_amorphous",
+   "name": "Urine amorphous salts",
+   "panel": "urine.microscopy",
+   "unit": "",
+   "kind": "qualitative",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "aliases": [
+    "Amorphous",
+    "Amorphous salts",
+    "Amorphous Phosphates",
+    "Amorphous Urates",
+    "Amorphous material",
+    "Άμορφα άλατα",
+    "Αμορφα αλατα"
+   ]
+  },
+  {
    "id": "urine_bacteria",
    "name": "Urine bacteria",
    "panel": "urine.microscopy",
@@ -5283,6 +5738,519 @@
    ]
   },
   {
+   "id": "echo_lvef_teich",
+   "name": "LV ejection fraction (Teichholz)",
+   "panel": "cardio.echo",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 52
+   },
+   "limits": [
+    5,
+    95
+   ],
+   "aliases": [
+    "EF(Teich)",
+    "EF Teich",
+    "EF (Teichholz)",
+    "Teichholz EF",
+    "LVEF Teichholz"
+   ]
+  },
+  {
+   "id": "echo_lvef_a4c",
+   "name": "LV ejection fraction (4-chamber)",
+   "panel": "cardio.echo",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 52
+   },
+   "limits": [
+    5,
+    95
+   ],
+   "aliases": [
+    "LVEF_4Ch_Q",
+    "LVEF 4Ch",
+    "LVEF A4C",
+    "EF A4C",
+    "LVEF (A4C)"
+   ]
+  },
+  {
+   "id": "echo_lvef_a2c",
+   "name": "LV ejection fraction (2-chamber)",
+   "panel": "cardio.echo",
+   "unit": "%",
+   "kind": "numeric",
+   "units": {
+    "%": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 52
+   },
+   "limits": [
+    5,
+    95
+   ],
+   "aliases": [
+    "LVEF_2Ch_Q",
+    "LVEF 2Ch",
+    "LVEF A2C",
+    "EF A2C",
+    "LVEF (A2C)"
+   ]
+  },
+  {
+   "id": "echo_ivsd",
+   "name": "Septal wall thickness (IVSd)",
+   "panel": "cardio.echo",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 6,
+    "high": 10
+   },
+   "ref_f": {
+    "low": 6,
+    "high": 9
+   },
+   "limits": [
+    3,
+    30
+   ],
+   "aliases": [
+    "IVSd",
+    "IVS",
+    "IVSd (diastole)",
+    "Interventricular Septum",
+    "Interventricular septal thickness",
+    "Septal thickness"
+   ]
+  },
+  {
+   "id": "echo_lvpwd",
+   "name": "Posterior wall thickness (LVPWd)",
+   "panel": "cardio.echo",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref_m": {
+    "low": 6,
+    "high": 10
+   },
+   "ref_f": {
+    "low": 6,
+    "high": 9
+   },
+   "limits": [
+    3,
+    30
+   ],
+   "aliases": [
+    "LVPWd",
+    "LVPW",
+    "PWd",
+    "Posterior Wall Thickness",
+    "LV Posterior Wall"
+   ]
+  },
+  {
+   "id": "echo_rwt",
+   "name": "Relative wall thickness",
+   "panel": "cardio.echo",
+   "unit": "ratio",
+   "kind": "numeric",
+   "units": {
+    "ratio": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 0.42
+   },
+   "limits": [
+    0.1,
+    1.2
+   ],
+   "aliases": [
+    "RWT",
+    "Relative Wall Thickness"
+   ]
+  },
+  {
+   "id": "echo_ao_root",
+   "name": "Aortic root diameter",
+   "panel": "cardio.echo",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 40
+   },
+   "limits": [
+    10,
+    80
+   ],
+   "aliases": [
+    "Ao Diam",
+    "Ao Root",
+    "Aortic Root",
+    "Aortic Root Diameter",
+    "Ao Root Diam",
+    "Aorta"
+   ]
+  },
+  {
+   "id": "echo_tapse",
+   "name": "TAPSE (right ventricle function)",
+   "panel": "cardio.echo",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 17
+   },
+   "limits": [
+    3,
+    45
+   ],
+   "aliases": [
+    "TAPSE",
+    "Tricuspid Annular Plane Systolic Excursion"
+   ]
+  },
+  {
+   "id": "echo_lavi",
+   "name": "Left atrial volume index",
+   "panel": "cardio.echo",
+   "unit": "mL/m2",
+   "kind": "numeric",
+   "units": {
+    "mL/m2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 34
+   },
+   "limits": [
+    5,
+    120
+   ],
+   "aliases": [
+    "LAVI",
+    "LA Volume Index",
+    "LAVi",
+    "LAEDV Index (A-L)",
+    "LAESV Index",
+    "LA Vol Index"
+   ]
+  },
+  {
+   "id": "echo_av_vmax",
+   "name": "Aortic valve peak velocity",
+   "panel": "cardio.echo",
+   "unit": "m/s",
+   "kind": "numeric",
+   "units": {
+    "m/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 2.5
+   },
+   "limits": [
+    0.3,
+    7
+   ],
+   "aliases": [
+    "AV Vmax",
+    "AV Peak Velocity",
+    "Aortic Valve Vmax",
+    "AoV Vmax",
+    "AV Vel"
+   ]
+  },
+  {
+   "id": "echo_tr_vmax",
+   "name": "Tricuspid regurgitation peak velocity",
+   "panel": "cardio.echo",
+   "unit": "m/s",
+   "kind": "numeric",
+   "units": {
+    "m/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 2.8
+   },
+   "limits": [
+    0.5,
+    6
+   ],
+   "aliases": [
+    "TR Vmax",
+    "TR Peak Velocity",
+    "TR Vel",
+    "Tricuspid Regurgitation Velocity"
+   ]
+  },
+  {
+   "id": "echo_tr_pg",
+   "name": "Tricuspid regurgitation peak gradient",
+   "panel": "cardio.echo",
+   "unit": "mmHg",
+   "kind": "numeric",
+   "units": {
+    "mmHg": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "high": 31
+   },
+   "limits": [
+    2,
+    120
+   ],
+   "aliases": [
+    "TR maxPG",
+    "TR Max PG",
+    "TR Peak Gradient",
+    "TR PG",
+    "TRPG"
+   ]
+  },
+  {
+   "id": "echo_mv_e",
+   "name": "Mitral E velocity",
+   "panel": "cardio.echo",
+   "unit": "m/s",
+   "kind": "numeric",
+   "units": {
+    "m/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "limits": [
+    0.2,
+    2.5
+   ],
+   "aliases": [
+    "MV E Vel",
+    "MV E Velocity",
+    "Mitral E Velocity",
+    "E Velocity",
+    "MV E Peak",
+    "E wave"
+   ]
+  },
+  {
+   "id": "echo_mv_dect",
+   "name": "Mitral deceleration time",
+   "panel": "cardio.echo",
+   "unit": "ms",
+   "kind": "numeric",
+   "units": {
+    "ms": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 160,
+    "high": 240
+   },
+   "limits": [
+    50,
+    500
+   ],
+   "aliases": [
+    "MV DecT",
+    "MV Dec Time",
+    "Deceleration Time",
+    "DT",
+    "E wave deceleration time"
+   ]
+  },
+  {
+   "id": "echo_eprime_septal",
+   "name": "Septal e' velocity",
+   "panel": "cardio.echo",
+   "unit": "m/s",
+   "kind": "numeric",
+   "units": {
+    "m/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.07
+   },
+   "limits": [
+    0.02,
+    0.3
+   ],
+   "aliases": [
+    "SEP E'",
+    "Septal e'",
+    "e' septal",
+    "Septal E'",
+    "MV Sept e'"
+   ]
+  },
+  {
+   "id": "echo_eprime_lateral",
+   "name": "Lateral e' velocity",
+   "panel": "cardio.echo",
+   "unit": "m/s",
+   "kind": "numeric",
+   "units": {
+    "m/s": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "low": 0.1
+   },
+   "limits": [
+    0.02,
+    0.35
+   ],
+   "aliases": [
+    "LAT E'",
+    "Lateral e'",
+    "e' lateral",
+    "Lateral E'",
+    "MV Lat e'"
+   ]
+  },
+  {
+   "id": "cimt_left",
+   "name": "Carotid wall thickness (left)",
+   "panel": "cardio.vascular",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 0.9
+   },
+   "limits": [
+    0.2,
+    3
+   ],
+   "aliases": [
+    "Left mean CIMT",
+    "Left CIMT",
+    "CIMT Left",
+    "Left mean CIMT (distal CCA far wall)",
+    "Left carotid IMT",
+    "Left IMT",
+    "Left CCA IMT"
+   ]
+  },
+  {
+   "id": "cimt_right",
+   "name": "Carotid wall thickness (right)",
+   "panel": "cardio.vascular",
+   "unit": "mm",
+   "kind": "numeric",
+   "units": {
+    "mm": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 2,
+   "ref": {
+    "high": 0.9
+   },
+   "limits": [
+    0.2,
+    3
+   ],
+   "aliases": [
+    "Right mean CIMT",
+    "Right CIMT",
+    "CIMT Right",
+    "Right mean CIMT (distal CCA far wall)",
+    "Right carotid IMT",
+    "Right IMT",
+    "Right CCA IMT"
+   ]
+  },
+  {
    "id": "cac_score",
    "name": "Coronary calcium score (Agatston)",
    "panel": "cardio.ct",
@@ -5330,8 +6298,32 @@
    ]
   },
   {
+   "id": "bmd_spine",
+   "name": "Bone density BMD (lumbar spine)",
+   "panel": "imaging.bone",
+   "unit": "g/cm2",
+   "kind": "numeric",
+   "units": {
+    "g/cm2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "limits": [
+    0.2,
+    2.5
+   ],
+   "aliases": [
+    "Lumbar Spine BMD",
+    "Spine BMD",
+    "L1-L4 BMD",
+    "BMD L1-L4"
+   ]
+  },
+  {
    "id": "bmd_tscore_spine",
-   "name": "Bone density T-score (spine)",
+   "name": "Bone density T-score (lumbar spine)",
    "panel": "imaging.bone",
    "unit": "SD",
    "kind": "numeric",
@@ -5347,17 +6339,68 @@
    },
    "limits": [
     -7,
-    5
+    6
    ],
    "aliases": [
     "T-score Lumbar Spine",
     "Spine T-score",
-    "L1-L4 T-score"
+    "L1-L4 T-score",
+    "Lumbar Spine T-score"
    ]
   },
   {
-   "id": "bmd_tscore_hip",
-   "name": "Bone density T-score (hip)",
+   "id": "bmd_zscore_spine",
+   "name": "Bone density Z-score (lumbar spine)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -2.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Z-score Lumbar Spine",
+    "Spine Z-score",
+    "L1-L4 Z-score",
+    "Lumbar Spine Z-score"
+   ]
+  },
+  {
+   "id": "bmd_neck",
+   "name": "Bone density BMD (femoral neck)",
+   "panel": "imaging.bone",
+   "unit": "g/cm2",
+   "kind": "numeric",
+   "units": {
+    "g/cm2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "limits": [
+    0.2,
+    2.5
+   ],
+   "aliases": [
+    "Neck BMD",
+    "Femoral Neck BMD",
+    "BMD Femoral Neck"
+   ]
+  },
+  {
+   "id": "bmd_tscore_neck",
+   "name": "Bone density T-score (femoral neck)",
    "panel": "imaging.bone",
    "unit": "SD",
    "kind": "numeric",
@@ -5373,12 +6416,334 @@
    },
    "limits": [
     -7,
-    5
+    6
    ],
    "aliases": [
-    "T-score Hip",
+    "Neck T-score",
     "Femoral Neck T-score",
-    "Total Hip T-score"
+    "T-score Femoral Neck"
+   ]
+  },
+  {
+   "id": "bmd_zscore_neck",
+   "name": "Bone density Z-score (femoral neck)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -2.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Neck Z-score",
+    "Femoral Neck Z-score",
+    "Z-score Femoral Neck"
+   ]
+  },
+  {
+   "id": "bmd_total_hip",
+   "name": "Bone density BMD (total hip)",
+   "panel": "imaging.bone",
+   "unit": "g/cm2",
+   "kind": "numeric",
+   "units": {
+    "g/cm2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "limits": [
+    0.2,
+    2.5
+   ],
+   "aliases": [
+    "Total BMD",
+    "Total Hip BMD",
+    "Hip BMD",
+    "BMD Total Hip"
+   ]
+  },
+  {
+   "id": "bmd_tscore_hip",
+   "name": "Bone density T-score (total hip)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -1.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Total T-score",
+    "Total Hip T-score",
+    "T-score Hip",
+    "Hip T-score"
+   ]
+  },
+  {
+   "id": "bmd_zscore_total_hip",
+   "name": "Bone density Z-score (total hip)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -2.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Total Z-score",
+    "Total Hip Z-score",
+    "Hip Z-score"
+   ]
+  },
+  {
+   "id": "bmd_troch",
+   "name": "Bone density BMD (trochanter)",
+   "panel": "imaging.bone",
+   "unit": "g/cm2",
+   "kind": "numeric",
+   "units": {
+    "g/cm2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "limits": [
+    0.2,
+    2.5
+   ],
+   "aliases": [
+    "Troch BMD",
+    "Trochanter BMD",
+    "Greater Trochanter BMD"
+   ]
+  },
+  {
+   "id": "bmd_tscore_troch",
+   "name": "Bone density T-score (trochanter)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -1.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Troch T-score",
+    "Trochanter T-score"
+   ]
+  },
+  {
+   "id": "bmd_zscore_troch",
+   "name": "Bone density Z-score (trochanter)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -2.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Troch Z-score",
+    "Trochanter Z-score"
+   ]
+  },
+  {
+   "id": "bmd_inter",
+   "name": "Bone density BMD (intertrochanteric)",
+   "panel": "imaging.bone",
+   "unit": "g/cm2",
+   "kind": "numeric",
+   "units": {
+    "g/cm2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "limits": [
+    0.2,
+    2.5
+   ],
+   "aliases": [
+    "Inter BMD",
+    "Intertrochanteric BMD",
+    "Intertrochanter BMD"
+   ]
+  },
+  {
+   "id": "bmd_tscore_inter",
+   "name": "Bone density T-score (intertrochanteric)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -1.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Inter T-score",
+    "Intertrochanteric T-score"
+   ]
+  },
+  {
+   "id": "bmd_zscore_inter",
+   "name": "Bone density Z-score (intertrochanteric)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -2.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Inter Z-score",
+    "Intertrochanteric Z-score"
+   ]
+  },
+  {
+   "id": "bmd_wards",
+   "name": "Bone density BMD (Ward's triangle)",
+   "panel": "imaging.bone",
+   "unit": "g/cm2",
+   "kind": "numeric",
+   "units": {
+    "g/cm2": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 3,
+   "limits": [
+    0.2,
+    2.5
+   ],
+   "aliases": [
+    "Ward's BMD",
+    "Wards BMD",
+    "Ward's Triangle BMD"
+   ]
+  },
+  {
+   "id": "bmd_tscore_wards",
+   "name": "Bone density T-score (Ward's triangle)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -1.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Ward's T-score",
+    "Wards T-score"
+   ]
+  },
+  {
+   "id": "bmd_zscore_wards",
+   "name": "Bone density Z-score (Ward's triangle)",
+   "panel": "imaging.bone",
+   "unit": "SD",
+   "kind": "numeric",
+   "units": {
+    "SD": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 1,
+   "ref": {
+    "low": -2.0
+   },
+   "limits": [
+    -7,
+    6
+   ],
+   "aliases": [
+    "Ward's Z-score",
+    "Wards Z-score"
    ]
   },
   {
@@ -5685,6 +7050,35 @@
     "Spirometry Interpretation",
     "Spirometry Conclusion",
     "ATS/ERS Interpretation"
+   ]
+  },
+  {
+   "id": "colonoscopy_bbps",
+   "name": "Bowel preparation score (Boston)",
+   "panel": "screening.colon",
+   "unit": "",
+   "kind": "numeric",
+   "units": {
+    "": [
+     1.0,
+     0.0
+    ]
+   },
+   "decimals": 0,
+   "ref": {
+    "low": 6
+   },
+   "limits": [
+    0,
+    9
+   ],
+   "aliases": [
+    "Boston Bowel Preparation Scale",
+    "BBPS",
+    "Boston Bowel Preparation Scale (BBPS) Total Score",
+    "BBPS Total Score",
+    "BBPS Total",
+    "Boston Bowel Preparation Score"
    ]
   }
  ]

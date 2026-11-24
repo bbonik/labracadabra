@@ -10,11 +10,20 @@ from .catalog import Catalog, norm_name
 from .schema import Finding, RawExtraction, Result
 from .units import UnitError, canon_unit, to_canonical
 
+_RATIO_RE = re.compile(r"^(\d+(?:[.,]\d+)?):1(?:\.0+)?$")
 _NUM_RE = re.compile(r"^(<=|>=|≤|≥|<|>)?\s*([-+]?\d+(?:[.,]\d+)?)\s*$")
 _CENSOR = {"≤": "<=", "≥": ">=", "<": "<", ">": ">", "<=": "<=", ">=": ">="}
 
-NEGATIVE = {"negative", "neg", "nonreactive", "notdetected", "nil", "absent", "none", "normal", "notseen"}
+NEGATIVE = {"negative", "neg", "nonreactive", "notdetected", "nil", "absent", "none", "normal", "notseen",
+            "nonreac", "notreactive", "undetectable", "undetected", "notdetectable"}
+NO_RESULT = {"pending", "tofollow", "tobefollowed", "awaited", "cancelled", "canceled", "haemolysed", "hemolysed",
+             "insufficient", "insufficientsample", "qns", "notdone", "seenote", "seecomment", "clotted", "notreported"}
+NO_RESULT_ISSUE = "no result (pending, cancelled or unusable sample)"
+_RANGE_RE = re.compile(r"^(\d{1,3})\s*[-–]\s*(\d{1,3})$")
 POSITIVE = {"positive", "pos", "reactive", "detected", "present", "seen"}
+# words a lab may print instead of a number for a numeric test ("" = a word in another script, e.g. Greek "ΟΞΙΝΗ");
+# "normal" is not one of them: a numeric test reading "NORMAL" usually means the line was mapped to the wrong test
+LAB_WORDS = (NEGATIVE | POSITIVE | {""}) - {"normal"}
 _ORD = {"trace": 0.5, "1+": 1, "2+": 2, "3+": 3, "4+": 4, "+": 1, "++": 2, "+++": 3, "++++": 4}
 
 LOW_CONFIDENCE = 0.8
@@ -39,7 +48,8 @@ def parse_number(s: str) -> tuple[float | None, str | None]:
         s = s.replace(",", "")
     m = _NUM_RE.match(s)
     if not m:
-        return None, None
+        r = _RATIO_RE.match(s)  # "4.5:1" (omega-6:omega-3, AA:EPA…) → 4.5
+        return (float(r.group(1).replace(",", ".")), None) if r else (None, None)
     return float(m.group(2).replace(",", ".")), _CENSOR.get(m.group(1) or "")
 
 
@@ -156,11 +166,18 @@ def normalize_document(
                 continue
             issues: list[str] = []
             # ── map to catalog ──
-            test_id = aliases.get(norm_name(raw.raw_name))
+            # order: the user's own rule → a name the catalog defines for this report section → the model's
+            # suggestion (it sees the page: fasting vs random glucose, ECG vs clinic heart rate) → the catalog name
+            test_id = aliases.get(norm_name(raw.raw_name)) or catalog.match_in_section(raw.raw_name, raw.section)
+            exact, ambiguous = catalog.match(raw.raw_name, raw.section)
             if not test_id and raw.catalog_id and catalog.get(raw.catalog_id):
                 test_id = raw.catalog_id
+                # …unless the name exactly matches a finer test added since, which replaces the suggested one
+                # (the femoral-neck T-score was suggested as "T-score (hip)" before it had its own test)
+                if exact and not ambiguous and test_id in (catalog.get(exact) or {}).get("supersedes", []):
+                    test_id = exact
             if not test_id:
-                test_id, ambiguous = catalog.match(raw.raw_name, raw.section)
+                test_id = exact
                 if ambiguous:
                     issues.append("ambiguous test name")
             test = catalog.get(test_id)
@@ -168,9 +185,16 @@ def normalize_document(
             alt = (test or {}).get("on_page", {}).get(page_types.get(str(raw.page), ""))
             if alt and catalog.get(alt):
                 test_id, test = alt, catalog.get(alt)
+            # same name, different quantity depending on the unit (free testosterone in pmol/L vs % of total)
+            by_unit = {canon_unit(k): v for k, v in (test or {}).get("by_unit", {}).items()}
+            alt = by_unit.get(canon_unit(raw.unit)) if raw.unit else None
+            if alt and catalog.get(alt):
+                test_id, test = alt, catalog.get(alt)
             if not test:
                 issues.append("not in catalog")
 
+            if raw.is_historical and not parse_date(raw.date):
+                continue  # an earlier result whose date isn't printed: the report's date would be wrong, so drop it
             when = parse_date(raw.date) or default_date
             if not when:
                 issues.append("no date")
@@ -213,7 +237,7 @@ def normalize_document(
             if raw.confidence < LOW_CONFIDENCE:
                 issues.append(f"low confidence ({raw.confidence:.2f})")
             rec.issues = issues
-            rec.status = "flagged" if issues else "ok"
+            rec.status = "ignored" if NO_RESULT_ISSUE in issues else "flagged" if issues else "ok"
             results.append(rec)
 
     findings = [
@@ -262,11 +286,22 @@ def _fill_value(rec: Result, raw, test: dict, catalog: Catalog, sex: str | None,
         if num is not None:
             raw = raw.model_copy(update={"unit": "min"})
     if num is None:
+        rng = _RANGE_RE.match(raw.value.strip())
+        if rng and float(rng.group(1)) < float(rng.group(2)):  # urine microscopy "2-4" (per field): at most 4
+            num, censor = float(rng.group(2)), "<="
+    if num is None:
         rec.value_text = raw.value
         rec.kind = "text"
-        issues.append("expected a number")
         rec.flag = raw.lab_flag
+        if _qual_norm(raw.value) in NO_RESULT:
+            issues.append(NO_RESULT_ISSUE)  # "Pending", "Haemolysed"…: nothing to record
+        elif _qual_norm(raw.value) not in LAB_WORDS:
+            issues.append("expected a number")
+        # else the lab's own result wording ("Non-reactive", "Negative", "ΟΞΙΝΗ"): kept as text, nothing to review
         return
+    rescale = target.get("rescale_above")  # e.g. urine SG printed as 1015 for 1.015
+    if rescale and num > rescale[0]:
+        num *= rescale[1]
     unit = canon_unit(raw.unit)
     if not unit and test["unit"] not in DIMENSIONLESS:
         unit, note = _infer_unit(num, raw, test, target)

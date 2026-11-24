@@ -131,3 +131,83 @@ def test_stress_test_page_bp_and_duration_merge():
     ids = sorted(x["test_id"] for x in out)
     assert ids == ["bp_diastolic", "ecg_interpretation", "ecg_interpretation", "treadmill_duration", "treadmill_rest_dbp"]
     assert all(x["status"] == "ok" for x in out), [(x["test_id"], x["issues"]) for x in out]
+
+
+def test_omega3_panel_and_copper_are_recognised():
+    ch = raw([r(1, "Omega-3 Index", "7.9", "%", ref_low=3.0, ref_high=14.1),
+              r(1, "Omega-6:Omega-3", "5.6:1", None),
+              r(1, "AA:EPA", "6.3:1", None),
+              r(1, "Trans Fat Index", "0.52", "%"),
+              r(2, "Copper Serum", "16.2", "umol/L", ref_low=11.0, ref_high=25.0)],
+             [{"page": 1, "type": "lab_results"}, {"page": 2, "type": "lab_results"}])
+    results, _, _ = normalize_document("d9", [ch], cat)
+    by = {x.raw_name: x for x in results}
+    assert {n: (x.test_id, x.value, x.status) for n, x in by.items()} == {
+        "Omega-3 Index": ("omega3_index", 7.9, "ok"),
+        "Omega-6:Omega-3": ("omega6_omega3_ratio", 5.6, "ok"),
+        "AA:EPA": ("aa_epa_ratio", 6.3, "ok"),
+        "Trans Fat Index": ("trans_fat_index", 0.52, "ok"),
+        "Copper Serum": ("copper", 16.2, "ok"),
+    }
+    assert parse_number("6,3:1") == (6.3, None) and parse_number("12:30") == (None, None)
+
+
+def test_free_testosterone_in_percent_is_its_own_test():
+    ch = raw([r(2, "Free Testosterone", "0.29", "nmol/L", section="Calculated"),
+              r(2, "Free Testosterone", "1.55", "%", section="Calculated"),
+              r(2, "Bioavailable Testosterone", "41.2", "%", section="Calculated")],
+             [{"page": 2, "type": "lab_results"}])
+    results, findings, _ = normalize_document("d10", [ch], cat)
+    assert sorted((x.test_id, x.status) for x in results) == [
+        ("testosterone_bioavailable_pct", "ok"), ("testosterone_free", "ok"), ("testosterone_free_pct", "ok")]
+    doc = Document(id="d10", filename="x.pdf", sha256="x", pages=2, media_type="application/pdf", uploaded_at="now")
+    out = merge([doc], [results], [findings], cat)
+    assert not [x for x in out["results"] if x["status"] == "flagged"]
+
+
+def test_bone_density_sites_echo_and_section_specific_names():
+    ch = raw([r(1, "BMD (bone mineral density)", "0.874", "g/cm²", section="LEFT HIP (NECK)"),
+              r(1, "T score", "0.6", None, section="LEFT HIP (NECK)", catalog_id="bmd_tscore_hip"),
+              r(1, "Z score", "1.2", None, section="LUMBAR VERTEBRAE (L1 to L4)"),
+              r(1, "Total BMD", "0.986", "g/cm²", section="DXA Results Summary"),
+              r(2, "LVIDd", "4.5", "cm", catalog_id="echo_lvidd"),
+              r(2, "TAPSE", "2.1", "cm"),
+              r(2, "SEP E'", "0.10", "m/s"),
+              r(2, "LAVI", "27", "ml/m2"),
+              r(3, "Interpretation", "NORMAL", None, section="FVC REPORT", catalog_id="ldl")],
+             [{"page": 1, "type": "imaging"}, {"page": 2, "type": "imaging"}, {"page": 3, "type": "other"}])
+    results, _, _ = normalize_document("d11", [ch], cat)
+    got = {(x.raw_name, x.section): (x.test_id, x.value if x.kind != "text" else x.value_text, x.status) for x in results}
+    assert got == {
+        ("BMD (bone mineral density)", "LEFT HIP (NECK)"): ("bmd_neck", 0.874, "ok"),
+        ("T score", "LEFT HIP (NECK)"): ("bmd_tscore_neck", 0.6, "ok"),  # section beats the model's suggestion
+        ("Z score", "LUMBAR VERTEBRAE (L1 to L4)"): ("bmd_zscore_spine", 1.2, "ok"),
+        ("Total BMD", "DXA Results Summary"): ("bmd_total_hip", 0.986, "ok"),
+        ("LVIDd", None): ("echo_lvidd", 45.0, "ok"),  # cm → mm
+        ("TAPSE", None): ("echo_tapse", 21.0, "ok"),
+        ("SEP E'", None): ("echo_eprime_septal", 0.1, "ok"),
+        ("LAVI", None): ("echo_lavi", 27.0, "ok"),
+        ("Interpretation", "FVC REPORT"): ("spirometry_interpretation", "NORMAL", "ok"),  # was filed under LDL
+    }
+
+
+def test_exact_name_beats_model_suggestion_and_lab_wording_is_accepted():
+    ch = raw([r(1, "Neck T-score", "0.6", None, catalog_id="bmd_tscore_hip"),
+              r(2, "Ερυθρα αιμοσφαιρια", "0-1", None, section="ΜΙΚΡΟΣΚΟΠΙΚΗ ΕΞΕΤΑΣΗ ΟΥΡΩΝ", catalog_id="urine_rbc"),
+              r(2, "Hepatitis Bs Antibody", "Non-Reactive", "mIU/mL", catalog_id="anti_hbs"),
+              r(2, "Anti-ds DNA", "Pending", None, catalog_id="anti_dsdna"),
+              r(2, "Ειδικό Βάρος", "1015", None, catalog_id="urine_sg"),
+              r(2, "WBC ΑΡΙΘΜΟΣ ΛΕΥΚΩΝ", "6.2", "1000/mm**3", catalog_id="wbc"),
+              r(2, "MCV Μέσος Ογκος Ερυθρών", "88.1", "µm**3", catalog_id="mcv"),
+              r(2, "Lipoprotein (a)", "9.8", "mg/dL", catalog_id="lpa")],
+             [{"page": 1, "type": "imaging"}, {"page": 2, "type": "lab_results"}])
+    results, _, _ = normalize_document("d12", [ch], cat)
+    got = {x.raw_name: (x.test_id, x.value, x.status) for x in results}
+    assert got["Neck T-score"] == ("bmd_tscore_neck", 0.6, "ok")
+    assert got["Ερυθρα αιμοσφαιρια"] == ("urine_rbc", 1.0, "ok")  # "0-1" per field → at most 1, still urine
+    assert got["Hepatitis Bs Antibody"] == ("anti_hbs", None, "ok")  # the lab's wording, kept as text
+    assert got["Anti-ds DNA"][2] == "ignored"  # nothing to record yet
+    assert got["Ειδικό Βάρος"] == ("urine_sg", 1.015, "ok")
+    assert got["WBC ΑΡΙΘΜΟΣ ΛΕΥΚΩΝ"] == ("wbc", 6.2, "ok")
+    assert got["MCV Μέσος Ογκος Ερυθρών"] == ("mcv", 88.1, "ok")
+    assert got["Lipoprotein (a)"] == ("lpa_mass", 9.8, "ok")

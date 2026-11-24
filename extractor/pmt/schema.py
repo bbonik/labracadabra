@@ -153,6 +153,9 @@ class Result(BaseModel):
     lab: Optional[str] = None
     section: Optional[str] = None
     is_historical: bool = False
+    # set when merge() moved the value to an earlier date: the date the report printed it under (an earlier result
+    # repeated on a later report for comparison, transcribed with the later report's date)
+    date_on_report: Optional[str] = None
     confidence: float = 1.0
     status: Literal["ok", "flagged", "user_corrected", "ignored", "duplicate", "superseded"] = "ok"
     issues: list[str] = Field(default_factory=list)
