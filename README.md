@@ -56,11 +56,12 @@ looks off can be checked in seconds.
 | | |
 |---|---|
 | 🧾 **Any lab, any format** | PDFs, scans and phone photos; English, Greek, Chinese and more. Earlier results printed in cumulative reports are picked up too. |
-| 🧪 **One catalog, real units** | ~200 tests with aliases in [`catalog/tests.yaml`](catalog/tests.yaml). Unit conversion is done **in code** (molar masses, explicit factors), never by the model. Stored in SI, shown in the unit you prefer. |
+| 🧪 **One catalog, real units** | ~250 tests with aliases in [`catalog/tests.yaml`](catalog/tests.yaml). Unit conversion is done **in code** (molar masses, explicit factors), never by the model. Stored in SI, shown in the unit you prefer. |
 | 🔁 **No double counting** | The same value on a summary page and a lab page, or repeated in a later report, becomes one point. Re-uploading a report, even a re-downloaded copy, is recognised and free. |
 | 🔍 **Built-in verification** | A review inbox catches unknown names, odd units, implausible or conflicting values, each next to its highlighted source page. |
 | 📈 **Analysis that respects the data** | Reference bands per lab, trends (Mann–Kendall + Theil–Sen), step changes (Pettitt), robust outliers, velocity and doubling time, panel heatmaps, X-vs-Y correlation. |
 | 👨‍👩‍👧 **For a family** | Private spaces per login, several profiles per login, and **circles** with edit or view-only members, enforced by AWS IAM rather than app code. |
+| 📝 **Context for every number** | Notes for a day, a period or one result (sick, not fasting, new medication…) and the menstrual cycle phase, shown next to results, on charts and in exports. Tests you don't care about can be hidden from the dashboards. |
 | 🩺 **Doctor-ready output** | Print-optimised "Save as PDF" pages and a CSV export (SI or your units, ranges, flags, source page, conversion notes). |
 | 💸 **Costs cents** | About $0–2/month for AWS plus ~$0.02 per page for extraction, paid with your own Claude API key. No database, no servers, no subscription. |
 
