@@ -30,10 +30,13 @@ export interface Result {
   lab?: string;
   section?: string;
   is_historical?: boolean;
+  /** the rebuild moved this value to an earlier date: the date the report printed it under */
+  date_on_report?: string;
   confidence: number;
   status: Status;
   issues?: string[];
-  also_in?: { doc_id: string; page: number; value_raw: string; unit_raw?: string; result_id: string }[];
+  /** other places the same value is printed; date_on_report = a later report repeating it under its own date */
+  also_in?: { doc_id: string; page: number; value_raw: string; unit_raw?: string; result_id: string; date_on_report?: string }[];
 }
 
 export interface Finding {
@@ -184,6 +187,8 @@ export interface Prefs {
   /** chart options shared by every value-over-time chart */
   showTrend?: boolean;
   showRef?: boolean;
+  /** tests left off the dashboards (overview, area pages, imaging, explore); still searchable and exportable */
+  hidden?: string[];
   /** per-test y-axis scaling on charts */
   yScale?: Record<string, YScale>;
 }

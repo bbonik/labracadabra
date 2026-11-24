@@ -9,7 +9,7 @@ import { useApp } from "../lib/state";
 import { PanelIcon } from "../components/icons";
 
 export function Group({ groupId, panelFilter }: { groupId: string; panelFilter?: string }) {
-  const { byTest } = useApp();
+  const { shownByTest: byTest } = useApp();
   const group = PANELS.find((g) => g.id === groupId);
   if (!group) return <div class="card col-12"><Empty>Unknown area.</Empty></div>;
   const ids = [...byTest.keys()].filter((id) => TESTS[id] && groupOf(TESTS[id].panel) === groupId);

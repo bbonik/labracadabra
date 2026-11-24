@@ -7,6 +7,7 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "p
 import { analyze, type SeriesPoint, type SeriesStats } from "../analytics/patterns";
 import type { DataAdapter } from "./adapter";
 import { TESTS, catalogRef, displayUnit, fromDisplay, normName, refFor, toDisplay } from "./catalog";
+import type { Note, NotesFile } from "./notes";
 import type { Corrections, DocCorrection, Doc, Prefs, Profile, RefPref, Result, ResultsFile, UploadStatus } from "./types";
 
 export type Theme = "auto" | "light" | "paper" | "navy" | "graphite";
@@ -36,6 +37,14 @@ interface Ctx {
   addAlias: (rawName: string, testId: string) => void;
   /** document-level decision (remove, use corrected version, keep both); null clears it */
   decideDoc: (docId: string, c: DocCorrection | null) => void;
+  /** personal notes (context for results, cycle phase), newest first is up to the views */
+  notes: Note[];
+  /** add or replace a note (by id) */
+  saveNote: (n: Note) => void;
+  deleteNote: (id: string) => void;
+  /** open the note editor; `draft` pre-fills it (a date, a result) or edits an existing note */
+  editNote: (draft: Partial<Note> | null) => void;
+  noteDraft: Partial<Note> | null;
   /** false for view-only circle members and the demo: hides uploads, corrections and removals */
   canEdit: boolean;
   /** files being uploaded in this session, newest first */
@@ -51,6 +60,8 @@ interface Ctx {
   openSource: (s: SourceTarget | null) => void;
   /** visible results grouped by test (excludes ignored), each list sorted by date */
   byTest: Map<string, Result[]>;
+  /** byTest without the tests the user hid from the dashboards in Settings */
+  shownByTest: Map<string, Result[]>;
   series: (testId: string, unit?: string) => SeriesPoint[];
   stats: (testId: string) => SeriesStats;
   /** effective reference-range choice for a test (per-test pref, else the global default) */
@@ -192,6 +203,8 @@ export function AppProvider(props: { adapter: DataAdapter; user?: string; onLogo
   const [error, setError] = useState<string | null>(null);
   const [prefs, setPrefsState] = useState<Prefs>(EMPTY_PREFS);
   const [corrections, setCorrections] = useState<Corrections>(EMPTY_CORR);
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [noteDraft, editNote] = useState<Partial<Note> | null>(null);
   const [theme, setThemeState] = useState<Theme>((lsGet("pmt.theme") as Theme) || "auto");
   const [systemDark, setSystemDark] = useState(() => matchMedia("(prefers-color-scheme: dark)").matches);
   const [source, openSource] = useState<SourceTarget | null>(null);
@@ -233,12 +246,14 @@ export function AppProvider(props: { adapter: DataAdapter; user?: string; onLogo
       adapter.getJSON<ResultsFile>(profileId, "results.json"),
       adapter.getPrefs(profileId),
       adapter.getJSON<Corrections>(profileId, "corrections.json"),
+      adapter.getJSON<NotesFile>(profileId, "notes.json").catch(() => null),
     ])
-      .then(([r, p, c]) => {
+      .then(([r, p, c, n]) => {
         if (!alive) return;
         setRaw(r ?? { schema: 1, updated_at: "", documents: [], results: [], findings: [] });
         setPrefsState({ ...EMPTY_PREFS, ...(p ?? {}) });
         setCorrections({ ...EMPTY_CORR, ...(c ?? {}) });
+        setNotes(Array.isArray(n?.notes) ? n!.notes : []);
       })
       .catch((e) => alive && setError(String(e)))
       .finally(() => alive && setLoading(false));
@@ -299,6 +314,11 @@ export function AppProvider(props: { adapter: DataAdapter; user?: string; onLogo
     return m;
   }, [data]);
 
+  const shownByTest = useMemo(() => {
+    const hidden = new Set(prefs.hidden ?? []);
+    return hidden.size ? new Map([...byTest].filter(([id]) => !hidden.has(id))) : byTest;
+  }, [byTest, prefs.hidden]);
+
   const series = useCallback(
     (testId: string, unit?: string): SeriesPoint[] => {
       const u = unit ?? displayUnit(testId, prefs);
@@ -343,6 +363,13 @@ export function AppProvider(props: { adapter: DataAdapter; user?: string; onLogo
     setCorrections(c);
     if (profileId) adapter.putJSON(profileId, "corrections.json", c).catch((e) => setError(String(e)));
   };
+
+  const saveNotes = (list: Note[]) => {
+    setNotes(list);
+    if (profileId) adapter.putJSON(profileId, "notes.json", { notes: list } satisfies NotesFile).catch((e) => setError(String(e)));
+  };
+  const saveNote = (n: Note) => saveNotes([...notes.filter((x) => x.id !== n.id), n]);
+  const deleteNote = (id: string) => saveNotes(notes.filter((x) => x.id !== id));
 
   const correct = (resultId: string, c: Corrections["results"][string] | null) => {
     const results = { ...corrections.results };
@@ -444,6 +471,11 @@ export function AppProvider(props: { adapter: DataAdapter; user?: string; onLogo
     correct,
     addAlias,
     decideDoc,
+    notes,
+    saveNote,
+    deleteNote,
+    editNote,
+    noteDraft,
     canEdit: !!profile && !profile.readOnly && !raw?.demo,
     uploads,
     startUploads,
@@ -456,6 +488,7 @@ export function AppProvider(props: { adapter: DataAdapter; user?: string; onLogo
     source,
     openSource,
     byTest,
+    shownByTest,
     series,
     stats,
     refPref: (testId: string) => refPrefFor(testId, prefs),

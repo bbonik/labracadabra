@@ -25,7 +25,7 @@ const PERIODS: { id: Period; label: string }[] = [
  * when empty the "This page" choice is hidden.
  */
 export function ExportDialog({ pageTests, pageLabel, onClose }: { pageTests: string[]; pageLabel: string; onClose: () => void }) {
-  const { byTest, data, corrections, prefs, profile } = useApp();
+  const { byTest, data, corrections, prefs, profile, notes } = useApp();
   const order = useMemo(() => Object.keys(TESTS), []);
   const withData = useMemo(() => order.filter((id) => byTest.has(id)), [byTest, order]);
   const onPage = pageTests.filter((id) => byTest.has(id));
@@ -47,10 +47,10 @@ export function ExportDialog({ pageTests, pageLabel, onClose }: { pageTests: str
 
   const testIds = scope === "page" ? onPage : scope === "all" ? withData : withData.filter((id) => picked.has(id));
   const today = new Date().toISOString().slice(0, 10);
-  const input = { byTest, documents: data?.documents ?? [], corrections, prefs, profile, today };
+  const input = { byTest, documents: data?.documents ?? [], corrections, prefs, profile, today, notes };
   const range = period === "all" ? {} : period === "custom" ? { from: from || undefined, to: to || undefined } : { from: yearsBefore(today, Number(period)) };
   const opts: ExportOptions = { testIds, ...range, units, sort, original, header };
-  const deps = [byTest, data, corrections, prefs, profile, scope, picked, period, from, to, units, sort, original, header];
+  const deps = [byTest, data, corrections, prefs, profile, notes, scope, picked, period, from, to, units, sort, original, header];
   const preview = useMemo(() => buildCsv(input, opts), deps);
   // dates actually covered by the chosen tests and period
   const span = useMemo(() => {

@@ -9,7 +9,7 @@ import { useApp } from "../lib/state";
 import { ModalityIcon, PageIcon } from "../components/icons";
 
 export function Imaging() {
-  const { data, byTest } = useApp();
+  const { data, shownByTest: byTest } = useApp();
   if (!data) return null;
   const findings = [...data.findings].sort((a, b) => ((b.date ?? "") > (a.date ?? "") ? 1 : -1));
   const groups = new Map<string, typeof findings>();

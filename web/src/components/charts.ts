@@ -27,6 +27,16 @@ export interface TrendOpts {
   yScale?: YScale;
   /** vertical zoom slider on the right (single-test detail chart) */
   zoomY?: boolean;
+  /** personal notes drawn on the time axis: a thin line for a day, a light band for a period */
+  marks?: ChartMark[];
+  /** extra tooltip lines for a point (its notes), plain text */
+  pointNotes?: (id: string) => string[];
+}
+
+export interface ChartMark {
+  from: string;
+  to?: string;
+  label: string;
 }
 
 interface RefSegment {
@@ -189,6 +199,26 @@ export function trendOption(t: Tokens, pts: SeriesPoint[], o: TrendOpts): EChart
         : undefined,
     },
   ];
+  const marks = (o.marks ?? []).filter((m) => xMin == null || xMax == null || (toTime(m.to || m.from) >= xMin && toTime(m.from) <= xMax));
+  if (marks.length) {
+    const days = marks.filter((m) => !m.to || m.to === m.from);
+    const spans = marks.filter((m) => m.to && m.to !== m.from);
+    (series as unknown[]).push({
+      type: "line",
+      name: "Notes",
+      data: [],
+      silent: true,
+      tooltip: { show: false },
+      markArea: spans.length
+        ? { silent: true, itemStyle: { color: alpha(t.accent2, 0.08) }, label: { show: false },
+            data: spans.map((m) => [{ xAxis: toTime(m.from) }, { xAxis: toTime(m.to!) }]) as never }
+        : undefined,
+      markLine: days.length
+        ? { silent: true, symbol: "none", lineStyle: { color: alpha(t.accent2, 0.55), type: "dotted", width: 1.5 },
+            label: { show: false }, data: days.map((m) => ({ xAxis: toTime(m.from) })) as never }
+        : undefined,
+    });
+  }
   const fitPts = pts.filter((p) => !p.censored);
   if (o.showTrend && fitPts.length >= 3) {
     const t0 = toTime(fitPts[0].date);
@@ -220,7 +250,10 @@ export function trendOption(t: Tokens, pts: SeriesPoint[], o: TrendOpts): EChart
       trigger: "item",
       formatter: (p: unknown) => {
         const d = (p as { data?: { pt?: SeriesPoint } }).data;
-        return d?.pt ? pointTooltip(o.compact ? o.name : null, d.pt, o.unit, o.decimals) : "";
+        if (!d?.pt) return "";
+        const extra = o.pointNotes?.(d.pt.id) ?? [];
+        return pointTooltip(o.compact ? o.name : null, d.pt, o.unit, o.decimals) +
+          extra.map((x) => `<br/><span style="color:${t.accent2}">✎ ${esc(x)}</span>`).join("");
       },
     },
     xAxis: { ...(timeAxis(t) as object), min: xMin, max: xMax } as never,

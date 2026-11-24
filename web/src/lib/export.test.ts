@@ -121,6 +121,17 @@ describe("CSV export", () => {
     expect(get(0, "Notes")).toBe("value edited by the user (report: 61 mmol/L)");
   });
 
+  it("puts the user's notes first in the Notes cell", () => {
+    const r = base({ id: "r1", value: 5.6, value_raw: "5.6", date: "2024-03-12" });
+    const notes = [
+      { id: "a", from: "2024-03-10", to: "2024-03-14", tags: ["sick" as const], text: "flu", created_at: "" },
+      { id: "b", from: "2024-03-12", period_start: "2024-02-20", created_at: "" },
+      { id: "c", from: "2024-05-01", text: "not this one", created_at: "" },
+    ];
+    const { get } = run([r], {}, { notes });
+    expect(get(0, "Notes")).toBe("note: Luteal · day 22; note: Sick · flu");
+  });
+
   it("filters by test and date, and sorts by date when asked", () => {
     const rs = [
       base({ date: "2024-01-01", value: 5, value_raw: "5" }),

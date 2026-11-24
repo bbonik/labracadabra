@@ -14,10 +14,13 @@ import { href } from "../lib/router";
 import { useApp } from "../lib/state";
 import type { Result } from "../lib/types";
 import { PanelIcon } from "../components/icons";
+import { NoteChips } from "../components/NoteChips";
+import { CYCLE_SENSITIVE, cycleText, noteSummary, notesFor } from "../lib/notes";
 
 export function TestDetail({ testId }: { testId: string }) {
   const app = useApp();
-  const { byTest, series, stats, prefs, setPrefs, data, openSource, correct, profile } = app;
+  const { byTest, series, stats, prefs, setPrefs, data, openSource, correct, profile, notes, editNote } = app;
+  const [showMerged, setShowMerged] = useState(false);
   const [hl, setHl] = useState<string[] | undefined>();
   const valueText = useValueText();
   const t = TESTS[testId];
@@ -32,11 +35,35 @@ export function TestDetail({ testId }: { testId: string }) {
   const pinned = prefs.pinned.includes(testId);
   const latest = results[results.length - 1];
   const uText = unit && unit !== "ratio" ? prettyUnit(unit) : "";
+  const cycleTest = CYCLE_SENSITIVE.has(testId);
+  const notesOf = (r: Result) => notesFor(notes, r);
+  const byId = new Map(results.map((r) => [r.id, r]));
+  // notes on the chart: the ones that touch at least one of this test's results
+  const marks = notes
+    .filter((n) => results.some((r) => notesOf(r).includes(n)))
+    .map((n) => ({ from: n.result_id ? byId.get(n.result_id)?.date ?? n.from : n.from, to: n.result_id ? undefined : n.to, label: noteSummary(n) }));
+  const pointNotes = (id: string) => {
+    const r = byId.get(id);
+    return r ? notesOf(r).map((n) => noteSummary(n, r.date ?? undefined)) : [];
+  };
+  // values the rebuild moved or hid automatically (earlier results repeated on a later report)
+  const merged = [
+    ...results.flatMap((r) => (r.also_in ?? []).filter((a) => a.date_on_report).map((a) => ({ id: a.result_id, shownAs: a.date_on_report!, value: a.value_raw, unit: a.unit_raw, movedTo: r.date, doc: a.doc_id, page: a.page, why: "" }))),
+    ...(data?.results ?? []).filter((r) => r.test_id === testId && r.status === "duplicate" && !!r.date)
+      .map((r) => ({ id: r.id, shownAs: r.date!, value: r.value_raw, unit: r.unit_raw, movedTo: null as string | null, doc: r.doc_id, page: r.page, why: r.issues?.[0] ?? "" })),
+  ];
+  const restore = (id: string) => {
+    correct(id, { action: "confirm" });
+    setTimeout(app.reload, 8000); // the server rebuild puts it back; reload once it has run
+  };
 
   const co = chartOpts(prefs);
   const { showTrend, showRef } = co;
   const yScale = co.yScale(testId);
   const setUnit = (u: string) => setPrefs({ ...prefs, units: { ...prefs.units, [testId]: u } });
+  const hidden = (prefs.hidden ?? []).includes(testId);
+  const toggleHidden = () =>
+    setPrefs({ ...prefs, hidden: hidden ? (prefs.hidden ?? []).filter((x) => x !== testId) : [...(prefs.hidden ?? []), testId] });
   const togglePin = () =>
     setPrefs({ ...prefs, pinned: pinned ? prefs.pinned.filter((x) => x !== testId) : [...prefs.pinned, testId] });
 
@@ -73,6 +100,9 @@ export function TestDetail({ testId }: { testId: string }) {
               </label>
             )}
             <button onClick={togglePin} title="Show on the overview page">{pinned ? "★ Pinned" : "☆ Pin"}</button>
+            <label class="inline noprint dashtoggle" title="Untick to leave this test off the overview, area pages and explore lists (search and exports still show it)">
+              <input type="checkbox" checked={!hidden} onChange={toggleHidden} /> Show on dashboards
+            </label>
             <a class="btn" href={href("explore", undefined, { type: "compare", tests: testId })}>Compare…</a>
           </div>
         </div>
@@ -125,8 +155,8 @@ export function TestDetail({ testId }: { testId: string }) {
               </div>
               <Chart
                 height={320}
-                deps={[pts, showTrend, showRef, yScale, hl, unit]}
-                build={(tk) => trendOption(tk, pts, { name: t.name, unit: uText, decimals: dec, showTrend, showRef, yScale, zoomY: true, logScale: false, highlightIds: hl })}
+                deps={[pts, showTrend, showRef, yScale, hl, unit, notes]}
+                build={(tk) => trendOption(tk, pts, { name: t.name, unit: uText, decimals: dec, showTrend, showRef, yScale, zoomY: true, logScale: false, highlightIds: hl, marks, pointNotes })}
                 onPointClick={(p) => {
                   const id = (p.data as { id?: string })?.id;
                   const r = results.find((x) => x.id === id);
@@ -136,7 +166,7 @@ export function TestDetail({ testId }: { testId: string }) {
               <RangeControl testId={testId} />
               <p class="note">
                 Shaded band = reference range (it steps when labs used different ranges). Amber points are outside their
-                range; hollow points are “&lt;”/“&gt;” values.<span class="noprint"> Drag the slider on the right to zoom the Y axis. Click any
+                range; hollow points are “&lt;”/“&gt;” values.{marks.length > 0 && " Dotted lines and light bands mark your notes."}<span class="noprint"> Drag the slider on the right to zoom the Y axis. Click any
                 point to open the page it came from.</span>
               </p>
             </div>
@@ -168,6 +198,7 @@ export function TestDetail({ testId }: { testId: string }) {
                     <th>Reference</th>
                     <th>Flag</th>
                     <th>Lab</th>
+                    <th>{cycleTest ? "Notes · cycle" : "Notes"}</th>
                     <th>Source</th>
                     <th></th>
                   </tr>
@@ -185,6 +216,12 @@ export function TestDetail({ testId }: { testId: string }) {
                         <FlagPill flag={r.flag} kind={r.kind} />
                       </td>
                       <td class="note">{r.lab ?? ""}</td>
+                      <td class="notecell">
+                        <NoteChips notes={notesOf(r)} date={r.date} />
+                        {cycleTest && !notesOf(r).some((n) => cycleText(n, r.date ?? undefined)) && app.canEdit && profile?.sex !== "M" && (
+                          <button class="linkbtn" title="Where in the menstrual cycle was this sample taken?" onClick={() => editNote({ from: r.date ?? undefined, result_id: r.id })}>+ cycle</button>
+                        )}
+                      </td>
                       <td>
                         <SourceLink r={r} label={docs.get(r.doc_id)?.filename?.slice(0, 18) ?? "doc"} />
                         {r.also_in && r.also_in.length > 0 && <span class="note" title="Same value also printed on other pages"> +{r.also_in.length}</span>}
@@ -192,6 +229,9 @@ export function TestDetail({ testId }: { testId: string }) {
                       <td>
                         {r.status === "flagged" && <span class="pill warn" title={(r.issues ?? []).join("; ")}>check</span>}
                         {r.status === "user_corrected" && <span class="pill idle">edited</span>}
+                        <button class="linkbtn" hidden={!app.canEdit} title="Add context: sick, not fasting, cycle phase…" onClick={() => editNote({ from: r.date ?? undefined, result_id: r.id })}>
+                          note
+                        </button>
                         <button class="linkbtn" hidden={!app.canEdit} title="Hide this value (e.g. a transcription error)" onClick={() => correct(r.id, { action: "ignore" })}>
                           hide
                         </button>
@@ -201,6 +241,24 @@ export function TestDetail({ testId }: { testId: string }) {
                 </tbody>
               </table>
             </div>
+            {merged.length > 0 && (
+              <div class="note noprint">
+                <button class="linkbtn" onClick={() => setShowMerged(!showMerged)}>
+                  {showMerged ? "▾" : "▸"} {merged.length} value{merged.length === 1 ? " was" : "s were"} merged or hidden automatically (earlier results repeated on later reports, summary pages)
+                </button>
+                {showMerged && (
+                  <ul class="merged-list">
+                    {merged.map((m) => (
+                      <li>
+                        {m.value} {m.unit} printed on {docs.get(m.doc)?.filename ?? "a report"} p.{m.page} (dated {fmtDate(m.shownAs)}):{" "}
+                        {m.movedTo ? <>the same as your {fmtDate(m.movedTo)} result, so counted there.</> : <>hidden: {m.why || "it looks like an earlier result printed again"}.</>}{" "}
+                        {app.canEdit && <button class="linkbtn" title={`Show it again as a separate result on ${fmtDate(m.shownAs)}`} onClick={() => restore(m.id)}>it's really from {fmtDate(m.shownAs)}</button>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
           <div class="col-12">
             <Disclaimer />

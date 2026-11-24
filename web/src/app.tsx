@@ -4,6 +4,7 @@
  */
 import { useEffect, useState } from "preact/hooks";
 import { ExportDialog } from "./components/ExportDialog";
+import { NoteDialog } from "./components/NoteDialog";
 import { SourceViewer } from "./components/SourceViewer";
 import { TestSearch } from "./components/TestSearch";
 import { Empty } from "./components/bits";
@@ -16,6 +17,7 @@ import { Explore } from "./views/Explore";
 import { Group } from "./views/Group";
 import { Imaging } from "./views/Imaging";
 import { Inbox } from "./views/Inbox";
+import { Notes } from "./views/Notes";
 import { Overview } from "./views/Overview";
 import { Settings } from "./views/Settings";
 import { TestDetail } from "./views/TestDetail";
@@ -62,6 +64,7 @@ export function App() {
       group: "Data",
       items: [
         { key: "documents", label: "Documents", hash: href("documents"), icon: "documents", match: (v) => v === "documents" },
+        { key: "notes", label: "Notes", hash: href("notes"), icon: "notes", match: (v) => v === "notes" },
         { key: "inbox", label: "Review inbox", hash: href("inbox"), icon: "inbox", match: (v) => v === "inbox", badge: inbox },
         { key: "usage", label: "Usage & cost", hash: href("usage"), icon: "usage", match: (v) => v === "usage" },
         { key: "settings", label: "Settings", hash: href("settings"), icon: "settings", match: (v) => v === "settings" },
@@ -143,6 +146,9 @@ export function App() {
       case "usage":
         view = <Usage />;
         break;
+      case "notes":
+        view = <Notes />;
+        break;
       case "settings":
         view = <Settings />;
         break;
@@ -222,6 +228,7 @@ export function App() {
         <main class="wrap">{view}</main>
       </div>
       <SourceViewer />
+      {app.noteDraft && <NoteDialog key={app.noteDraft.id ?? "new"} draft={app.noteDraft} onClose={() => app.editNote(null)} />}
       {exporting && <ExportDialog pageTests={pageTests} pageLabel={pageLabel} onClose={() => setExporting(false)} />}
     </div>
   );

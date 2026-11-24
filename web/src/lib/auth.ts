@@ -83,6 +83,18 @@ async function tokenRequest(cfg: AwsConfig, body: Record<string, string>): Promi
   };
 }
 
+/**
+ * A valid ID token for later calls, refreshed when the current one has expired (ID tokens last an hour).
+ * Calls made at the same time share one refresh.
+ */
+let refreshing: Promise<string | null> | null = null;
+export function currentIdToken(cfg: AwsConfig): Promise<string | null> {
+  const t = load();
+  if (t && Date.now() < t.expires_at) return Promise.resolve(t.id_token);
+  refreshing ??= getIdToken(cfg).finally(() => (refreshing = null));
+  return refreshing;
+}
+
 /** Returns a valid ID token, completing the OAuth redirect or refreshing as needed; null ⇒ not signed in. */
 export async function getIdToken(cfg: AwsConfig): Promise<string | null> {
   const url = new URL(window.location.href);

@@ -3,6 +3,7 @@
  * notes column explaining anything a reader needs (conversions, detection limits, user edits, unreviewed values).
  * Pure functions: the dialog collects the options, this builds the text.
  */
+import { noteSummary, notesFor, type Note } from "./notes";
 import { TESTS, decimalsFor, displayUnit, panelById, prettyUnit, testName, toDisplay } from "./catalog";
 import type { Corrections, Doc, Prefs, Profile, Result } from "./types";
 
@@ -26,6 +27,8 @@ export interface ExportInput {
   prefs: Prefs;
   profile: Pick<Profile, "name" | "sex" | "birth_year"> | null;
   today: string;
+  /** the profile's personal notes; the ones that apply to a result go first in its Notes cell */
+  notes?: Note[];
 }
 
 const FLAG: Record<string, string> = { H: "High", L: "Low", A: "Abnormal" };
@@ -93,6 +96,7 @@ export function rowFor(r: Result, input: ExportInput, o: ExportOptions, docs: Ma
     if (r.kind === "numeric") notes.push("unit could not be standardised; value as printed");
   }
 
+  for (const n of notesFor(input.notes ?? [], r)) notes.unshift(`note: ${noteSummary(n, r.date ?? undefined)}`);
   if (edited) notes.push(`value edited by the user (report: ${r.value_raw.trim()}${r.unit_raw ? " " + r.unit_raw : ""})`);
   if (r.status === "flagged") notes.push(`not yet reviewed${r.issues?.length ? ": " + r.issues.join("; ") : ""}`);
   if (r.is_historical) notes.push("earlier result printed on a later report");

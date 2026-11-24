@@ -20,11 +20,14 @@ const THEMES: { id: Theme; label: string }[] = [
 export function Settings() {
   const { theme, setTheme, prefs, setPrefs, byTest, profile, profiles, adapter } = useApp();
   const [newName, setNewName] = useState("");
-  const numericTests = [...byTest.keys()]
-    .filter((id) => TESTS[id]?.kind === "numeric")
-    .sort((a, b) => TESTS[a].name.localeCompare(TESTS[b].name));
+  const allTests = [...byTest.keys()].filter((id) => TESTS[id]).sort((a, b) => TESTS[a].name.localeCompare(TESTS[b].name));
   const [filter, setFilter] = useState("");
-  const shown = numericTests.filter((id) => !filter || TESTS[id].name.toLowerCase().includes(filter.toLowerCase()));
+  const shown = allTests.filter((id) => !filter || TESTS[id].name.toLowerCase().includes(filter.toLowerCase()));
+  // tests left off the dashboards (overview, area pages, imaging, explore); still searchable and exportable
+  const hidden = new Set(prefs.hidden ?? []);
+  const setHidden = (ids: Iterable<string>) => setPrefs({ ...prefs, hidden: [...new Set(ids)] });
+  const singles = allTests.filter((id) => byTest.get(id)!.length === 1 && !hidden.has(id));
+  const anyHidden = allTests.some((id) => hidden.has(id));
 
   const [exporting, setExporting] = useState(false);
 
@@ -107,7 +110,7 @@ export function Settings() {
       </div>
       <div class="card col-12">
         <div class="cardhead">
-          <h2>Units &amp; reference ranges</h2>
+          <h2>Tests</h2>
           <input placeholder="Filter tests…" value={filter} onInput={(e) => setFilter((e.target as HTMLInputElement).value)} aria-label="Filter tests" />
         </div>
         <p class="note">
@@ -115,6 +118,8 @@ export function Settings() {
           Reference ranges differ between labs: by default each result is judged against the range printed on its own
           report. You can instead use the most recent report's range, the standard catalog range, or your own — this
           changes the bands, High/Low flags, patterns and exports. The test page shows which ranges each lab printed.
+          Untick “Dashboards” to leave a test off the overview, area pages and explore lists (e.g. one that appeared once
+          in an old report); it keeps its values, and search, its page and exports still show it.
         </p>
         <div class="flex wrapflex" style={{ margin: "8px 0 12px" }}>
           <label class="inline">
@@ -128,6 +133,10 @@ export function Settings() {
             </select>
           </label>
           <button onClick={() => setPrefs({ ...prefs, units: {}, refs: {} })}>Reset all units and ranges</button>
+          <button disabled={!singles.length} onClick={() => setHidden([...hidden, ...singles])} title={singles.map((id) => TESTS[id].name).join(", ")}>
+            Hide tests with one result
+          </button>
+          <button disabled={!anyHidden} onClick={() => setHidden([])}>Show all on dashboards</button>
         </div>
         <div class="tablewrap">
           <table class="settings-table">
@@ -136,6 +145,8 @@ export function Settings() {
               <col class="c-unit" />
               <col class="c-src" />
               <col />
+              <col class="c-n" />
+              <col class="c-dash" />
             </colgroup>
             <thead>
               <tr>
@@ -143,6 +154,8 @@ export function Settings() {
                 <th>Display unit</th>
                 <th>Reference range source</th>
                 <th>Range in use</th>
+                <th>Results</th>
+                <th>Dashboards</th>
               </tr>
             </thead>
             <tbody>
@@ -152,7 +165,7 @@ export function Settings() {
                 return (
                   <>
                     <tr class="grouprow">
-                      <th colSpan={4}>
+                      <th colSpan={6}>
                         <span class="grouptitle">
                           <span>
                             <PanelIcon id={p.id} size={14} /> {g.name} › {p.name}
@@ -163,13 +176,18 @@ export function Settings() {
                     </tr>
                     {ids.map((id) => {
                       const units = Object.keys(TESTS[id].units);
+                      const numeric = TESTS[id].kind === "numeric";
+                      const list = byTest.get(id)!;
+                      const off = hidden.has(id);
                       return (
-                        <tr>
+                        <tr class={off ? "off" : ""}>
                           <td>
                             <a href={`#/test/${encodeURIComponent(id)}`}>{TESTS[id].name}</a>
                           </td>
                           <td>
-                            {units.length > 1 ? (
+                            {!numeric ? (
+                              <span class="note">—</span>
+                            ) : units.length > 1 ? (
                               <select
                                 class="fill"
                                 value={displayUnit(id, prefs)}
@@ -187,7 +205,26 @@ export function Settings() {
                               <span class="note">{prettyUnit(TESTS[id].unit) || "no unit"}</span>
                             )}
                           </td>
-                          <RangeControl testId={id} variant="row" />
+                          {numeric ? (
+                            <RangeControl testId={id} variant="row" />
+                          ) : (
+                            <>
+                              <td><span class="note">—</span></td>
+                              <td><span class="note">—</span></td>
+                            </>
+                          )}
+                          <td class="note">
+                            {list.length} · {fmtMonth(list[list.length - 1].date)}
+                          </td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              class="dashcheck"
+                              checked={!off}
+                              onChange={() => setHidden(off ? [...hidden].filter((x) => x !== id) : [...hidden, id])}
+                              aria-label={`Show ${TESTS[id].name} on the dashboards`}
+                            />
+                          </td>
                         </tr>
                       );
                     })}
@@ -244,4 +281,11 @@ export function Settings() {
       </div>
     </>
   );
+}
+
+
+/** "May 2026" */
+function fmtMonth(iso: string | null): string {
+  if (!iso) return "";
+  return new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
 }

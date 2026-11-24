@@ -126,14 +126,21 @@ export class S3Adapter implements DataAdapter {
   /**
    * Exchange the Cognito ID token for temporary AWS credentials. The token's cognito:roles claim lists the circle
    * roles an admin granted this user (via Cognito groups); we ask the identity pool for each of them.
+   * `freshToken` hands the identity pool a current ID token each time the AWS credentials are renewed: the token
+   * lasts an hour, so passing the sign-in token itself would make every call fail once the tab is open longer.
    */
-  async init(idToken: string): Promise<void> {
+  async init(idToken: string, freshToken: () => Promise<string | null>): Promise<void> {
     const [{ fromCognitoIdentityPool }, mod] = await Promise.all([
       import("@aws-sdk/credential-provider-cognito-identity"),
       import("@aws-sdk/client-s3"),
     ]);
     this.mod = mod;
-    const logins = { [`cognito-idp.${this.cfg.region}.amazonaws.com/${this.cfg.userPoolId}`]: idToken };
+    const token = async () => {
+      const t = await freshToken();
+      if (!t) throw new Error("Your sign-in has expired. Reload the page to sign in again.");
+      return t;
+    };
+    const logins = { [`cognito-idp.${this.cfg.region}.amazonaws.com/${this.cfg.userPoolId}`]: token };
     const base = { clientConfig: { region: this.cfg.region }, identityPoolId: this.cfg.identityPoolId, logins };
     const provider = fromCognitoIdentityPool(base);
     const creds = await provider();
@@ -238,7 +245,8 @@ export class S3Adapter implements DataAdapter {
       const r = await w.s3.send(new this.mod.GetObjectCommand({ Bucket: this.cfg.dataBucket, Key: `${w.prefix}docs/${docId}.${EXT[mediaType] ?? "pdf"}` }));
       const bytes = await r.Body!.transformToByteArray();
       return URL.createObjectURL(new Blob([bytes as BlobPart], { type: mediaType }));
-    } catch {
+    } catch (e) {
+      console.error("could not load the original document", e);
       return null;
     }
   }

@@ -38,13 +38,13 @@ const SERIES_VARS = ["--accent", "--accent2", "--pink", "--orange", "--s5", "--s
 const csv = (s: string | null) => (s || "").split(",").filter(Boolean);
 
 export function Explore({ route }: { route: Route }) {
-  const { byTest, series, prefs, openSource } = useApp();
+  const { byTest, shownByTest, series, prefs, openSource } = useApp();
   const rawType = route.params.get("type");
   const type = rawType === "compare" ? "time" : rawType === "range" ? "multi" : rawType || "time";
   const range = route.params.get("range") || "all";
   const co = chartOpts(prefs);
   const { showTrend, showRef } = co;
-  const available = [...byTest.keys()].filter((id) => TESTS[id]?.kind === "numeric");
+  const available = [...shownByTest.keys()].filter((id) => TESTS[id]?.kind === "numeric");
   const tests = csv(route.params.get("tests")).filter((id) => TESTS[id] && byTest.has(id));
   // panels whose tests are offered as on/off chips: those explicitly kept + those of every selected test
   const panels = [...new Set([...csv(route.params.get("panels")), ...tests.map((id) => TESTS[id].panel)])].filter((p) => panelById[p]);

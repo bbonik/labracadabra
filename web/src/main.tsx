@@ -5,7 +5,7 @@
 import { render } from "preact";
 import { App } from "./app";
 import { LocalAdapter, S3Adapter, type DataAdapter } from "./lib/adapter";
-import { emailFromIdToken, getIdToken, login, logout } from "./lib/auth";
+import { currentIdToken, emailFromIdToken, getIdToken, login, logout } from "./lib/auth";
 import { loadConfig } from "./lib/config";
 import { AppProvider } from "./lib/state";
 import { SignIn } from "./components/SignIn";
@@ -31,7 +31,7 @@ async function boot() {
       return;
     }
     const s3 = new S3Adapter(cfg);
-    await s3.init(token);
+    await s3.init(token, () => currentIdToken(cfg));
     adapter = s3;
     user = emailFromIdToken(token);
     onLogout = () => logout(cfg);

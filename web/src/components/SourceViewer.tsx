@@ -43,7 +43,7 @@ export function SourceViewer() {
     }
     let revoke: string | null = null;
     adapter.docUrl(profile.id, doc.id, doc.media_type).then((u) => {
-      if (!u) return setMsg("The original file is not available.");
+      if (!u) return setMsg("The original file could not be loaded. Reload the page and try again.");
       if (u.startsWith("blob:")) revoke = u;
       setUrl(u);
       setMsg("");

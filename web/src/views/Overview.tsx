@@ -11,7 +11,7 @@ import { useApp } from "../lib/state";
 import { PanelIcon } from "../components/icons";
 
 export function Overview() {
-  const { data, byTest, stats, prefs, profile } = useApp();
+  const { data, shownByTest: byTest, stats, prefs, profile } = useApp();
   const valueText = useValueText();
   if (!data) return null;
   const tested = [...byTest.keys()].filter((id) => TESTS[id]);
