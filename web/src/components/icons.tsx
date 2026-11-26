@@ -7,7 +7,7 @@ import {
   Activity, Atom, Bean, Bone, ChartLine, CircleDollarSign, ClipboardList, Droplet, Droplets, Ear, Eye, FileText,
   FlaskConical, FlaskRound, Flame, Footprints, Gauge, HeartPulse, Inbox, Layers, Link, Microscope, Ruler, Scale,
   ScanHeart, ScanLine, Settings, ShieldCheck, Sun, Target, TestTube, Waves, Wind, Candy, Magnet, Radio, Circle,
-  Scan, LayoutGrid, Fish,
+  Scan, LayoutGrid, Fish, Info, NotebookPen,
 } from "lucide-preact";
 
 type Icon = ComponentType<{ size?: number | string; strokeWidth?: number | string; class?: string; "aria-hidden"?: boolean }>;
@@ -61,6 +61,8 @@ const PAGE: Record<string, Icon> = {
   usage: CircleDollarSign,
   settings: Settings,
   imaging: ScanLine,
+  notes: NotebookPen,
+  about: Info,
 };
 
 const MODALITY: Record<string, Icon> = {

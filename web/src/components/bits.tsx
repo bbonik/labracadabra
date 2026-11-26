@@ -10,19 +10,40 @@ import { useApp } from "../lib/state";
 import type { Flag, Result } from "../lib/types";
 import { DocIcon } from "./icons";
 
+/** The one page-header pattern: icon + title, optional meta/actions on the right, optional one-line description. */
+export function PageHeader(props: { icon: ComponentChildren; title: ComponentChildren; meta?: ComponentChildren; actions?: ComponentChildren; children?: ComponentChildren }) {
+  return (
+    <div class="card col-12 headcard">
+      <div class="headrow">
+        <h1 class="title">
+          <span class="ticon">{props.icon}</span> {props.title}
+        </h1>
+        {(props.meta || props.actions) && (
+          <div class="headactions">
+            {props.meta && <span class="note">{props.meta}</span>}
+            {props.actions}
+          </div>
+        )}
+      </div>
+      {props.children && <div class="headdesc">{props.children}</div>}
+    </div>
+  );
+}
+
 export function FlagPill({ flag, kind }: { flag?: Flag | null; kind?: string }) {
   if (flag === "H") return <span class="pill warn">High</span>;
   if (flag === "L") return <span class="pill warn">Low</span>;
   if (flag === "A") return <span class="pill warn">Abnormal</span>;
-  if (kind === "text") return null;
-  return <span class="pill ok">In range</span>;
+  // in range: no pill, so the few real flags stand out
+  void kind;
+  return null;
 }
 
 export function PatternPills({ patterns, max = 3 }: { patterns: Pattern[]; max?: number }) {
   return (
     <>
       {patterns.slice(0, max).map((p) => (
-        <span class={`pill ${p.severity === "warn" ? "warn" : "info"}`} title={p.detail} key={p.kind}>
+        <span class={`pill ${p.severity === "warn" ? "warn" : "info"}`} title={p.method ? `${p.detail}\n${p.method}` : p.detail} key={p.kind}>
           {p.label}
         </span>
       ))}

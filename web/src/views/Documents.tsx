@@ -5,10 +5,11 @@
 import { useRef, useState } from "preact/hooks";
 import { Empty } from "../components/bits";
 import { fmtDate } from "../lib/format";
-import { href } from "../lib/router";
+import { href, useRoute } from "../lib/router";
 import { useApp, type UploadItem } from "../lib/state";
 import type { Doc } from "../lib/types";
 import { PageIcon } from "../components/icons";
+import { Upload } from "lucide-preact";
 
 const PAGE_TYPE_LABEL: Record<string, string> = {
   lab_results: "lab",
@@ -63,6 +64,8 @@ function uploadLine(u: UploadItem): { pill: string; cls: string; text: string } 
 }
 
 export function Documents() {
+  // arrived from the "+ Add report" button: point at the drop zone
+  const wantUpload = useRoute().params.get("upload") === "1";
   const { data, adapter, profile, openSource, uploads, startUploads, clearUploads, decideDoc, canEdit } = useApp();
   const [msg, setMsg] = useState("");
   const [drag, setDrag] = useState(false);
@@ -114,11 +117,16 @@ export function Documents() {
 
       <div class="card col-12">
         {readOnly ? (
-          <p class="note">
-            {data.demo
-              ? "This is the synthetic demo profile — uploads go to your own profiles."
-              : `You can view ${profile.name}'s reports (view-only access to ${profile.circleName ?? "this circle"}). Ask an editor to upload new ones.`}
-          </p>
+          <div class="dropzone disabled">
+            <span class="dz-ico"><Upload size={22} strokeWidth={1.8} /></span>
+            <div class="rowtitle">Drop lab reports here, or click to choose</div>
+            <div class="note">PDF, JPG or PNG · any lab, unit or language · up to 100 pages · about $0.02 per page</div>
+            <div class="note dz-off">
+              {data.demo
+                ? "This is the synthetic demo profile: uploads go to your own profiles."
+                : `View-only access to ${profile.circleName ?? "this circle"}: ask an editor to upload new reports.`}
+            </div>
+          </div>
         ) : (
           <>
             <div class="flex between wrapflex" style={{ marginBottom: "10px" }}>
@@ -129,7 +137,7 @@ export function Documents() {
               </span>
             </div>
             <div
-              class={`dropzone ${drag ? "drag" : ""}`}
+              class={`dropzone ${drag ? "drag" : ""} ${wantUpload ? "pulse" : ""}`}
               onDragOver={(e) => {
                 e.preventDefault();
                 setDrag(true);
@@ -142,10 +150,9 @@ export function Documents() {
               }}
               onClick={() => fileRef.current?.click()}
             >
-              <div class="dz-icon">⬆</div>
-              <div>
-                <b>Drop lab reports here</b> or tap to choose — PDF or photos (any lab, unit or language)
-              </div>
+              <span class="dz-ico"><Upload size={22} strokeWidth={1.8} /></span>
+              <div class="rowtitle">Drop lab reports here, or click to choose</div>
+              <div class="note">PDF, JPG or PNG · any lab, unit or language · up to 100 pages · about $0.02 per page</div>
               <div class="note">
                 {adapter.mode === "aws"
                   ? "Files go straight to your private storage. Values appear here automatically, usually within 1–3 minutes."
@@ -216,10 +223,10 @@ export function Documents() {
                   <th>Collected</th>
                   <th>File</th>
                   <th>Lab / clinic</th>
-                  <th>Pages</th>
-                  <th>Values</th>
-                  <th>AI cost</th>
-                  <th>Status</th>
+                  <th class="num">Pages</th>
+                  <th class="num">Values</th>
+                  <th class="num">AI cost</th>
+                  <th></th>
                   <th></th>
                 </tr>
               </thead>
@@ -230,7 +237,7 @@ export function Documents() {
                   const repl = d.superseded_by ? byId.get(d.superseded_by) : undefined;
                   return (
                     <tr class={d.duplicate_of || d.superseded_by ? "rowdim" : ""}>
-                      <td>{fmtDate(d.collected_date ?? d.report_date)}</td>
+                      <td class="nowrap">{fmtDate(d.collected_date ?? d.report_date)}</td>
                       <td>
                         <button class="linkbtn" onClick={() => openSource({ doc_id: d.id, page: 1, title: d.filename })}>
                           {d.filename}
@@ -240,18 +247,18 @@ export function Documents() {
                         {d.status === "failed" && d.error && <div class="note">{d.error}</div>}
                       </td>
                       <td class="note">{d.labs.join(", ")}</td>
-                      <td class="note" title={Object.entries(types).map(([k, v]) => `${v} ${PAGE_TYPE_LABEL[k] ?? k}`).join(", ")}>
+                      <td class="num" title={Object.entries(types).map(([k, v]) => `${v} ${PAGE_TYPE_LABEL[k] ?? k}`).join(", ")}>
                         {d.pages}
                       </td>
-                      <td>{counts.get(d.id) ?? 0}</td>
-                      <td class="note">{d.cost_usd != null ? "$" + d.cost_usd.toFixed(2) : "—"}</td>
+                      <td class="num">{counts.get(d.id) ?? 0}</td>
+                      <td class="num">{d.cost_usd != null ? "$" + d.cost_usd.toFixed(2) : "—"}</td>
                       <td>
                         {d.superseded_by ? (
                           <span class="pill idle">replaced</span>
                         ) : d.duplicate_of ? (
                           <span class="pill idle">duplicate</span>
-                        ) : (
-                          <span class={`pill ${d.status === "done" ? "ok" : d.status === "failed" ? "err" : "warn"}`}>{d.status}</span>
+                        ) : d.status === "done" ? null : (
+                          <span class={`pill ${d.status === "failed" ? "err" : "warn"}`}>{d.status}</span>
                         )}
                       </td>
                       <td>

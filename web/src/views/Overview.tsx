@@ -2,17 +2,19 @@
  * Overview dashboard: headline numbers, values outside their reference range, and detected trends and
  * changes.
  */
+import { useState } from "preact/hooks";
 import { TestCard } from "../components/TestCard";
-import { Disclaimer, Empty, FlagPill, PatternPills, useValueText } from "../components/bits";
+import { Disclaimer, Empty, FlagPill, PageHeader, PatternPills, useValueText } from "../components/bits";
 import { PANELS, TESTS, groupOf, panelById } from "../lib/catalog";
 import { ago, fmtDate } from "../lib/format";
 import { href } from "../lib/router";
 import { useApp } from "../lib/state";
-import { PanelIcon } from "../components/icons";
+import { DocIcon, PageIcon, PanelIcon } from "../components/icons";
 
 export function Overview() {
   const { data, shownByTest: byTest, stats, prefs, profile } = useApp();
   const valueText = useValueText();
+  const [allTrends, setAllTrends] = useState(false);
   if (!data) return null;
   const tested = [...byTest.keys()].filter((id) => TESTS[id]);
   const lastDate = data.results.reduce((m, r) => (r.date && r.date > m ? r.date : m), "");
@@ -33,6 +35,8 @@ export function Overview() {
 
   const latestVisit = data.results.filter((r) => r.date === lastDate && r.test_id && r.status !== "ignored");
   const latestFlags = latestVisit.filter((r) => r.flag).length;
+  const latestDocs = data.documents.filter((d) => (d.collected_date ?? d.report_date) === lastDate);
+  const latestLabs = [...new Set(latestDocs.flatMap((d) => d.labs))];
 
   if (!data.results.length) {
     return (
@@ -48,6 +52,24 @@ export function Overview() {
 
   return (
     <>
+      <PageHeader icon={<PageIcon name="overview" />} title={profile ? profile.name : "Overview"} meta={`${tested.length} tests from ${data.documents.length} reports`} />
+      <div class="card col-12 latest-strip">
+        <div class="latest-main">
+          <span class="ticon small"><DocIcon size={16} strokeWidth={1.9} /></span>
+          <div>
+            <div class="note">Latest report · {ago(lastDate)}</div>
+            <div class="rowtitle">
+              {fmtDate(lastDate)}
+              {latestLabs.length ? ` · ${latestLabs.join(", ")}` : ""}
+            </div>
+          </div>
+        </div>
+        <div class="latest-facts">
+          <span><b>{latestVisit.length}</b> values</span>
+          <span class={latestFlags ? "warntext" : ""}><b>{latestFlags}</b> outside range</span>
+          {latestDocs[0] && <a class="btn small" href={href("documents")}>Open report</a>}
+        </div>
+      </div>
       <div class="card col-3 kpi">
         <h2>Tests tracked</h2>
         <div class="stat">{tested.length}</div>
@@ -61,7 +83,7 @@ export function Overview() {
       <div class="card col-3 kpi">
         <h2>Outside range</h2>
         <div class="stat">{attention.length}</div>
-        <div class="note">tests whose latest value (last 18 months) is flagged</div>
+        <div class="note">latest value outside range</div>
       </div>
       <div class="card col-3 kpi">
         <h2>To review</h2>
@@ -71,7 +93,7 @@ export function Overview() {
         </div>
       </div>
 
-      <div class="card col-6">
+      <div class="card col-6 selfstart">
         <h2>Outside the reference range</h2>
         {!attention.length && <p class="note">All recent results are within their reference ranges.</p>}
         {attention.slice(0, 10).map(({ id, latest, s }) => (
@@ -88,10 +110,10 @@ export function Overview() {
         ))}
       </div>
 
-      <div class="card col-6">
+      <div class="card col-6 selfstart">
         <h2>Trends & changes</h2>
         {!trends.length && <p class="note">No consistent trends detected.</p>}
-        {trends.slice(0, 10).map(({ id, p }) => (
+        {trends.slice(0, allTrends ? 99 : 5).map(({ id, p }) => (
           <a class="row rowlink" href={href("test", id)}>
             <div>
               <div class="rowtitle">{TESTS[id].name}</div>
@@ -102,6 +124,11 @@ export function Overview() {
             </div>
           </a>
         ))}
+        {trends.length > 5 && (
+          <button class="linkbtn showall" onClick={() => setAllTrends(!allTrends)}>
+            {allTrends ? "Show fewer" : `Show all ${trends.length}`}
+          </button>
+        )}
       </div>
 
       {prefs.pinned.length > 0 && (
@@ -132,15 +159,15 @@ export function Overview() {
                 <div>
                   <div class="rowtitle">{g.name}</div>
                   <div class="note">
-                    {ids.length ? `${ids.length} tests` : ""}
+                    {ids.length ? `${ids.length} ${ids.length === 1 ? "test" : "tests"}` : ""}
                     {findings ? `${ids.length ? " · " : ""}${findings} findings` : ""}
                     {flagged ? ` · ${flagged} flagged` : ""}
                   </div>
                   <div class="area-panels note">
-                    {(g.children ?? [])
-                      .filter((c) => ids.some((id) => TESTS[id].panel === c.id))
-                      .map((c) => panelById[c.id].name)
-                      .join(" · ")}
+                    {(() => {
+                      const names = (g.children ?? []).filter((c) => ids.some((id) => TESTS[id].panel === c.id)).map((c) => panelById[c.id].name);
+                      return names.slice(0, 3).join(" · ") + (names.length > 3 ? ` · +${names.length - 3} more` : "");
+                    })()}
                   </div>
                 </div>
               </a>

@@ -92,7 +92,7 @@ export function RangeControl({ testId, showLabs = true, variant = "full" }: { te
     return (
       <>
         <td>
-          <select class="fill" value={pref.mode} onChange={(e) => onMode((e.target as HTMLSelectElement).value as RefPref["mode"])} aria-label={`Reference range source for ${t.name}`}>
+          <select class={`fill quietsel ${prefs.refs?.[testId] ? "changed" : ""}`} value={pref.mode} onChange={(e) => onMode((e.target as HTMLSelectElement).value as RefPref["mode"])} aria-label={`Reference range source for ${t.name}`}>
             {MODES.map((m) => (
               <option value={m.id}>{m.label}</option>
             ))}

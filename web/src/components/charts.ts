@@ -27,6 +27,8 @@ export interface TrendOpts {
   yScale?: YScale;
   /** vertical zoom slider on the right (single-test detail chart) */
   zoomY?: boolean;
+  /** time slider under the chart (default on); off = zoom with the mouse wheel / pinch only */
+  slider?: boolean;
   /** personal notes drawn on the time axis: a thin line for a day, a light band for a period */
   marks?: ChartMark[];
   /** extra tooltip lines for a point (its notes), plain text */
@@ -244,7 +246,7 @@ export function trendOption(t: Tokens, pts: SeriesPoint[], o: TrendOpts): EChart
       ? { text: o.name, subtext: o.unit, left: 4, top: 0, itemGap: 2, textStyle: { color: t.text, fontSize: 12, fontWeight: 600 }, subtextStyle: { color: t.muted, fontSize: 10 } }
       : undefined,
     legend: { show: false },
-    grid: o.compact ? { left: 4, right: 14, top: 40, bottom: 4, containLabel: true } : { left: 8, right: o.zoomY ? 36 : 24, top: 16, bottom: 40, containLabel: true },
+    grid: o.compact ? { left: 4, right: 14, top: 40, bottom: 4, containLabel: true } : { left: 8, right: o.zoomY ? 36 : 24, top: 16, bottom: o.slider === false ? 8 : 40, containLabel: true },
     tooltip: {
       ...(baseOption(t).tooltip as object),
       trigger: "item",
@@ -267,7 +269,7 @@ export function trendOption(t: Tokens, pts: SeriesPoint[], o: TrendOpts): EChart
       ? undefined
       : [
           { type: "inside", xAxisIndex: 0, filterMode: "none" },
-          { type: "slider", xAxisIndex: 0, height: 16, bottom: 6, borderColor: t.line, fillerColor: alpha(t.accent, 0.15), textStyle: { color: t.muted, fontSize: 10 }, handleStyle: { color: t.accent } },
+          ...(o.slider === false ? [] : [{ type: "slider" as const, xAxisIndex: 0, height: 16, bottom: 6, borderColor: t.line, fillerColor: alpha(t.accent, 0.15), textStyle: { color: t.muted, fontSize: 10 }, handleStyle: { color: t.accent } }]),
           ...(o.zoomY
             ? [{ type: "slider" as const, yAxisIndex: 0, filterMode: "none" as const, width: 14, right: 4, borderColor: t.line, fillerColor: alpha(t.accent, 0.15), showDetail: false, handleStyle: { color: t.accent } }]
             : []),

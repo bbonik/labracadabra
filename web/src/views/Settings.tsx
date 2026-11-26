@@ -30,6 +30,7 @@ export function Settings() {
   const anyHidden = allTests.some((id) => hidden.has(id));
 
   const [exporting, setExporting] = useState(false);
+  const [tab, setTab] = useState<"general" | "tests" | "costs">("tests");
 
   const spaces = adapter.spaces().filter((x) => x.writable);
   const [space, setSpace] = useState<string>("");
@@ -49,10 +50,20 @@ export function Settings() {
   return (
     <>
       <div class="card col-12 headcard">
-        <h1 class="title">
-          <span class="ticon"><PageIcon name="settings" /></span> Settings
-        </h1>
+        <div class="headrow">
+          <h1 class="title">
+            <span class="ticon"><PageIcon name="settings" /></span> Settings
+          </h1>
+        </div>
+        <div class="tabs" role="tablist">
+          {([["general", "General"], ["tests", "Tests"], ["costs", "Costs & export"]] as const).map(([id, label]) => (
+            <button role="tab" aria-selected={tab === id} class={tab === id ? "active" : ""} onClick={() => setTab(id)}>
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
+      {tab === "general" && <>
       <div class="card col-6">
         <h2>Appearance</h2>
         <label>Theme</label>
@@ -108,7 +119,8 @@ export function Settings() {
           <p class="note">Local mode: each folder in ./local-data is a profile.</p>
         )}
       </div>
-      <div class="card col-12">
+      </>}
+      {tab === "tests" && <div class="card col-12">
         <div class="cardhead">
           <h2>Tests</h2>
           <input placeholder="Filter tests…" value={filter} onInput={(e) => setFilter((e.target as HTMLInputElement).value)} aria-label="Filter tests" />
@@ -214,7 +226,7 @@ export function Settings() {
                             </>
                           )}
                           <td class="note">
-                            {list.length} · {fmtMonth(list[list.length - 1].date)}
+                            {list.length === 1 ? "once" : `${list.length}×`} · {fmtMonth(list[list.length - 1].date)}
                           </td>
                           <td>
                             <input
@@ -236,6 +248,8 @@ export function Settings() {
           {!shown.length && <p class="note">No test matches “{filter}”.</p>}
         </div>
       </div>
+      }
+      {tab === "costs" && <>
       <div class="card col-6">
         <h2>AI extraction budget</h2>
         <p class="note">
@@ -271,14 +285,8 @@ export function Settings() {
         <button onClick={() => setExporting(true)} disabled={!byTest.size}>Export CSV…</button>
         {exporting && <ExportDialog pageTests={[]} pageLabel="" onClose={() => setExporting(false)} />}
       </div>
-      <div class="card col-6">
-        <h2>About</h2>
-        <p class="note">
-          Labracadabra organises values from your own reports. It does not diagnose, and pattern labels
-          (trends, steps, outliers) are statistical descriptions only. Always check surprising values against the source
-          page — the extraction is done by an AI model and can make mistakes.
-        </p>
-      </div>
+      <p class="note col-12">What Labracadabra does with your data, and what the patterns mean: <a href="#/about">About &amp; privacy</a>.</p>
+      </>}
     </>
   );
 }

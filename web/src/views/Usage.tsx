@@ -3,6 +3,7 @@
  * Source: the append-only spend log (results.json → spend), which also keeps failed runs and documents that were
  * later removed. Costs are token counts × the price table in pmt/llm.py — estimates; the Anthropic Console is the bill.
  */
+import { useState } from "preact/hooks";
 import { Chart, baseOption, valueAxis } from "../components/Chart";
 import { Empty } from "../components/bits";
 import { esc, fmtDate } from "../lib/format";
@@ -17,6 +18,7 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const monthLabel = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;
 
 export function Usage() {
+  const [tokens, setTokens] = useState(false);
   const { data, prefs, openSource } = useApp();
   if (!data) return null;
   const docIds = new Set(data.documents.map((d) => d.id));
@@ -119,7 +121,7 @@ export function Usage() {
                 return `${esc(q.name)}<br/><b>$${q.value.toFixed(2)}</b>`;
               } },
               xAxis: { type: "category", data: months.map(monthLabel), axisLabel: { color: t.muted, fontSize: 11 }, axisLine: { lineStyle: { color: t.line } } },
-              yAxis: valueAxis(t, { min: 0, axisLabel: { color: t.muted, fontSize: 11, formatter: (v: number) => `$${v}` } }) as never,
+              yAxis: valueAxis(t, { min: 0, axisLabel: { color: t.muted, fontSize: 11, formatter: (v: number) => `$${v.toFixed(2)}` } }) as never,
               series: [
                 {
                   type: "bar",
@@ -135,20 +137,27 @@ export function Usage() {
       )}
 
       <div class="card col-12">
-        <h2>Per extraction run</h2>
+        <div class="cardhead">
+          <h2>Per extraction run</h2>
+          {rows.length > 0 && (
+            <label class="inline">
+              <input type="checkbox" checked={tokens} onChange={() => setTokens(!tokens)} /> Show token details
+            </label>
+          )}
+        </div>
         {!rows.length && <Empty>Nothing extracted yet.</Empty>}
         {rows.length > 0 && (
           <div class="tablewrap">
-            <table>
+            <table class={tokens ? "" : "notokens"}>
               <thead>
                 <tr>
                   <th>When</th>
                   <th>Document</th>
                   <th class="right">Pages</th>
                   <th>Model</th>
-                  <th class="right">Input tokens</th>
-                  <th class="right">Cached</th>
-                  <th class="right">Output tokens</th>
+                  <th class="right tok">Input tokens</th>
+                  <th class="right tok">Cached</th>
+                  <th class="right tok">Output tokens</th>
                   <th class="right">Cost</th>
                   <th class="right">Per page</th>
                 </tr>
@@ -169,9 +178,9 @@ export function Usage() {
                     </td>
                     <td class="right">{r.pages}</td>
                     <td class="note">{r.model || "—"}</td>
-                    <td class="right note">{ktok(r.usage?.input_tokens)}</td>
-                    <td class="right note">{ktok((r.usage?.cache_read_input_tokens ?? 0) + (r.usage?.cache_creation_input_tokens ?? 0))}</td>
-                    <td class="right note">{ktok(r.usage?.output_tokens)}</td>
+                    <td class="right note tok">{ktok(r.usage?.input_tokens)}</td>
+                    <td class="right note tok">{ktok((r.usage?.cache_read_input_tokens ?? 0) + (r.usage?.cache_creation_input_tokens ?? 0))}</td>
+                    <td class="right note tok">{ktok(r.usage?.output_tokens)}</td>
                     <td class="num right">{usd(r.cost_usd)}</td>
                     <td class="right note">{r.cost_usd != null && r.pages ? usd(r.cost_usd / r.pages, 3) : "—"}</td>
                   </tr>
@@ -181,7 +190,7 @@ export function Usage() {
                 <tr>
                   <th colSpan={2}>Total</th>
                   <th class="right">{runs.reduce((s, r) => s + r.pages, 0)}</th>
-                  <th colSpan={4} />
+                  <th colSpan={tokens ? 4 : 1} />
                   <th class="right">{usd(total)}</th>
                   <th />
                 </tr>

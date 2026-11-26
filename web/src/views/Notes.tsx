@@ -1,6 +1,8 @@
 /** All personal notes for the profile, newest first: add, edit, delete; how many results each one explains. */
 import { NoteChips } from "../components/NoteChips";
-import { Disclaimer, Empty } from "../components/bits";
+import { Disclaimer, PageHeader } from "../components/bits";
+import { PageIcon } from "../components/icons";
+import { NotebookPen } from "lucide-preact";
 import { TESTS } from "../lib/catalog";
 import { fmtDate } from "../lib/format";
 import { noteApplies, sortNotes } from "../lib/notes";
@@ -14,21 +16,33 @@ export function Notes() {
 
   return (
     <>
-      <div class="card col-12">
-        <div class="cardhead">
-          <h2>Notes</h2>
-          {canEdit && <button class="primary" onClick={() => editNote({})}>Add a note</button>}
-        </div>
-        <p class="note">
-          What was going on around a test, e.g. being sick, not fasting, a new medication, or (for women) the phase of the menstrual
-          cycle. Notes show next to the results they explain, on the charts and in exports, so you and your doctor can read
-          the numbers in context.{" "}
-          {canEdit ? "You can also add a note from any result on a test's page." : profile?.readOnly ? "You can view this profile's notes but not change them." : ""}
-        </p>
-      </div>
+      <PageHeader
+        icon={<PageIcon name="notes" />}
+        title="Notes"
+        meta={list.length ? `${list.length} note${list.length === 1 ? "" : "s"}` : undefined}
+        actions={canEdit && list.length > 0 && <button class="primary" onClick={() => editNote({})}>Add a note</button>}
+      >
+        What was going on around a test: being sick, not fasting, a new medication or the phase of the menstrual cycle.
+        Notes appear next to the results they explain, on the charts and in exports.
+        {profile?.readOnly ? " You can view this profile's notes but not change them." : ""}
+      </PageHeader>
 
       <div class="card col-12 note-list">
-        {!list.length && <Empty>No notes yet.</Empty>}
+        {!list.length && (
+          <div class="emptystate">
+            <span class="emptyicon"><NotebookPen size={22} strokeWidth={1.7} /></span>
+            <div class="rowtitle">No notes yet</div>
+            <div class="note">
+              For example: “Flu the week before”, “Not fasting”, “Started vitamin D 2000 IU”. You can also add a note from
+              any result on a test's page.
+            </div>
+            {canEdit ? (
+              <button class="primary" onClick={() => editNote({})}>Add your first note</button>
+            ) : (
+              <span class="note">Only editors of this profile can add notes.</span>
+            )}
+          </div>
+        )}
         {list.map((n) => {
           const covered = results.filter((r) => noteApplies(n, r));
           const one = n.result_id ? data?.results.find((r) => r.id === n.result_id) : undefined;

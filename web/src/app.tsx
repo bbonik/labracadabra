@@ -22,7 +22,8 @@ import { Overview } from "./views/Overview";
 import { Settings } from "./views/Settings";
 import { TestDetail } from "./views/TestDetail";
 import { Usage } from "./views/Usage";
-import { FileSpreadsheet, Menu, Moon, Printer, Sun } from "lucide-preact";
+import { About } from "./views/About";
+import { Ellipsis, FileSpreadsheet, Info, LogOut, Menu, Moon, Plus, Printer, Search, Sun } from "lucide-preact";
 
 interface NavItem {
   key: string;
@@ -39,7 +40,13 @@ export function App() {
   const route = useRoute();
   const [navOpen, setNavOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
-  useEffect(() => setNavOpen(false), [route.view, route.arg]);
+  const [more, setMore] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  useEffect(() => {
+    setNavOpen(false);
+    setMore(false);
+    setSearchOpen(false);
+  }, [route.view, route.arg]);
 
   const inbox = (data?.results.filter((r) => r.status === "flagged").length ?? 0) + (data?.suggestions?.length ?? 0);
   const groupsWithData = new Set([...app.byTest.keys()].map((id) => TESTS[id]?.panel.split(".")[0]));
@@ -66,12 +73,16 @@ export function App() {
         { key: "documents", label: "Documents", hash: href("documents"), icon: "documents", match: (v) => v === "documents" },
         { key: "notes", label: "Notes", hash: href("notes"), icon: "notes", match: (v) => v === "notes" },
         { key: "inbox", label: "Review inbox", hash: href("inbox"), icon: "inbox", match: (v) => v === "inbox", badge: inbox },
-        { key: "usage", label: "Usage & cost", hash: href("usage"), icon: "usage", match: (v) => v === "usage" },
-        { key: "settings", label: "Settings", hash: href("settings"), icon: "settings", match: (v) => v === "settings" },
       ],
     },
   ];
-  const active = nav.flatMap((g) => g.items).find((i) => i.match(route.view, route.arg));
+  // account-level pages live at the bottom of the sidebar, away from the daily pages
+  const footNav: NavItem[] = [
+    { key: "usage", label: "Usage & cost", hash: href("usage"), icon: "usage", match: (v) => v === "usage" },
+    { key: "settings", label: "Settings", hash: href("settings"), icon: "settings", match: (v) => v === "settings" },
+    { key: "about", label: "About & privacy", hash: href("about"), icon: "about", match: (v) => v === "about" },
+  ];
+  const active = [...nav.flatMap((g) => g.items), ...footNav].find((i) => i.match(route.view, route.arg));
   const title = route.view === "test" && route.arg ? TESTS[route.arg]?.name ?? "Test" : active?.label ?? "Overview";
 
   // the document title is what browsers use as the default PDF file name
@@ -149,6 +160,9 @@ export function App() {
       case "notes":
         view = <Notes />;
         break;
+      case "about":
+        view = <About />;
+        break;
       case "settings":
         view = <Settings />;
         break;
@@ -175,15 +189,31 @@ export function App() {
             ))}
           </>
         ))}
-        <div class="navfoot note">{data?.demo ? "Demo data — synthetic values" : data?.updated_at ? `Updated ${fmtDate(data.updated_at.slice(0, 10))}` : ""}</div>
+        <div class="navfoot">
+          {footNav.map((i) => (
+            <a class={`navbtn ${active?.key === i.key ? "active" : ""}`} href={i.hash} data-ic={i.icon}>
+              <span class="navlabel">{i.label}</span>
+            </a>
+          ))}
+          <div class="navmeta note">
+            {data?.demo ? "Demo data · synthetic values" : data?.updated_at ? `Updated ${fmtDate(data.updated_at.slice(0, 10))}` : ""}
+          </div>
+          {onLogout && (
+            <button class="navuser" onClick={onLogout} title="Sign out">
+              <span class="navlabel">{user}</span>
+              <LogOut size={14} strokeWidth={1.9} />
+            </button>
+          )}
+        </div>
       </nav>
       <div class="navscrim" onClick={() => setNavOpen(false)} />
       <div class="main">
-        <header class="topbar">
+        <header class={`topbar ${searchOpen ? "search-open" : ""}`}>
           <button class="iconbtn hamburger" aria-label="Menu" onClick={() => setNavOpen(!navOpen)}><Menu size={18} strokeWidth={1.9} /></button>
-          <h1>{title}</h1>
+          <span class="crumb">{title}</span>
           <span class="spacer" />
-          <TestSearch hotkey placeholder="Search tests…  ( / )" onPick={(id) => go(href("test", id))} className="topsearch" />
+          <TestSearch hotkey placeholder="Search tests…" onPick={(id) => go(href("test", id))} className="topsearch" />
+          <button class="iconbtn show-sm" aria-label="Search tests" onClick={() => setSearchOpen(!searchOpen)}><Search size={17} strokeWidth={1.9} /></button>
           {profiles.length > 1 ? (
             <select class="profilesel" value={profile?.id} onChange={(e) => setProfileId((e.target as HTMLSelectElement).value)} aria-label="Profile">
               {profiles.some((p) => p.circle)
@@ -206,20 +236,34 @@ export function App() {
               view only
             </span>
           )}
-          <button class="iconbtn" title={dark ? "Light theme" : "Dark theme"} aria-label="Toggle theme" onClick={() => setTheme(dark ? "light" : "navy")}>
-            {dark ? <Sun size={16} strokeWidth={1.9} /> : <Moon size={16} strokeWidth={1.9} />}
-          </button>
-          {data && profile && app.byTest.size > 0 && (
-            <button onClick={() => setExporting(true)} title="Download values as a spreadsheet (CSV), e.g. for your doctor">
-              <FileSpreadsheet size={15} strokeWidth={1.9} class="ico" /> <span class="hide-sm">CSV</span>
+          <div class="tools hide-sm">
+            <button class="iconbtn" title={dark ? "Light theme" : "Dark theme"} aria-label="Toggle theme" onClick={() => setTheme(dark ? "light" : "navy")}>
+              {dark ? <Sun size={16} strokeWidth={1.9} /> : <Moon size={16} strokeWidth={1.9} />}
             </button>
+            {data && profile && app.byTest.size > 0 && (
+              <button class="iconbtn" onClick={() => setExporting(true)} title="Download values as a spreadsheet (CSV), e.g. for your doctor" aria-label="Export CSV">
+                <FileSpreadsheet size={16} strokeWidth={1.9} />
+              </button>
+            )}
+            <button class="iconbtn" onClick={print} title="Print or save this page as PDF" aria-label="Print or save as PDF"><Printer size={16} strokeWidth={1.9} /></button>
+          </div>
+          {!profile?.readOnly && (
+            <a class="btn primary addbtn" href={href("documents", undefined, { upload: "1" })} title="Upload a lab report (PDF or photo)">
+              <Plus size={16} strokeWidth={2.2} /> <span class="hide-sm">Add report</span>
+            </a>
           )}
-          <button onClick={print} title="Print or save this page as PDF (e.g. for your doctor)"><Printer size={15} strokeWidth={1.9} class="ico" /> <span class="hide-sm">PDF</span></button>
-          {onLogout && (
-            <button class="hide-sm" onClick={onLogout} title={user}>
-              Sign out
-            </button>
-          )}
+          <div class="morewrap show-sm">
+            <button class="iconbtn" aria-label="More" onClick={() => setMore(!more)}><Ellipsis size={18} strokeWidth={1.9} /></button>
+            {more && (
+              <div class="menu" onClick={() => setMore(false)}>
+                <button onClick={() => setTheme(dark ? "light" : "navy")}>{dark ? <Sun size={15} /> : <Moon size={15} />} {dark ? "Light theme" : "Dark theme"}</button>
+                {data && profile && app.byTest.size > 0 && <button onClick={() => setExporting(true)}><FileSpreadsheet size={15} /> Export CSV</button>}
+                <button onClick={print}><Printer size={15} /> Print / PDF</button>
+                <a class="btn" href={href("about")}><Info size={15} /> About &amp; privacy</a>
+                {onLogout && <button onClick={onLogout}><LogOut size={15} /> Sign out</button>}
+              </div>
+            )}
+          </div>
         </header>
         <div class="print-header">
           <b>{profile?.name}</b> · {title} · printed {fmtDate(new Date().toISOString().slice(0, 10))}

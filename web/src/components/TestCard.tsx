@@ -31,12 +31,14 @@ export function TestCard({ testId }: { testId: string }) {
             {valueText(latest, false)}
             {latest.kind === "numeric" && unit && unit !== "ratio" && <small> {prettyUnit(unit)}</small>}
           </div>
-          <div class="note">
-            {fmtDate(latest.date)}
-            {s.changeAbs != null && t.kind === "numeric" && (
-              <span class={`delta ${s.changeAbs > 0 ? "up" : s.changeAbs < 0 ? "down" : ""}`}> · {fmtSigned(s.changeAbs, dec)}</span>
-            )}
-            {results.length > 1 && <span> · {results.length} results</span>}
+          <div class="note tcard-meta">
+            <div>{fmtDate(latest.date)}</div>
+            <div>
+              {results.length > 1 ? `${results.length} results` : "1 result"}
+              {s.changeAbs != null && t.kind === "numeric" && (
+                <span class={`delta ${s.changeAbs > 0 ? "up" : s.changeAbs < 0 ? "down" : ""}`}> · {fmtSigned(s.changeAbs, dec)} since last</span>
+              )}
+            </div>
           </div>
         </div>
         {t.kind === "numeric" && <Sparkline pts={pts} />}

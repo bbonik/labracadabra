@@ -21,6 +21,8 @@ export interface Pattern {
   kind: PatternKind;
   label: string;
   detail: string;
+  /** the statistical method behind it, for a tooltip (kept out of the main text) */
+  method?: string;
   severity: "info" | "warn";
   pointIds?: string[];
 }
@@ -46,6 +48,11 @@ export interface PatternOptions {
   trendP?: number;
   minTrendPoints?: number;
 }
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthYear = (iso: string) => `${MONTHS[+iso.slice(5, 7) - 1]} ${iso.slice(0, 4)}`;
+const dayMonthYear = (iso: string) => `${+iso.slice(8, 10)} ${monthYear(iso)}`;
+const fmtP = (p: number) => (p < 0.001 ? "p < 0.001" : `p = ${p.toFixed(3)}`);
 
 const oor = (p: SeriesPoint) => (p.low != null && p.value < p.low) || (p.high != null && p.value > p.high);
 
@@ -116,7 +123,8 @@ export function analyze(points: SeriesPoint[], opts: PatternOptions = {}): Serie
       out.patterns.push({
         kind: up ? "rising" : "falling",
         label: up ? "↗ Rising trend" : "↘ Falling trend",
-        detail: `Consistent ${up ? "upward" : "downward"} direction across ${xy.length} results (Mann–Kendall p=${mk.p.toFixed(3)}).`,
+        detail: `Going ${up ? "up" : "down"} steadily over ${xy.length} results.`,
+        method: `Mann–Kendall trend test, ${fmtP(mk.p)}`,
         severity: "info",
       });
     }
@@ -145,7 +153,8 @@ export function analyze(points: SeriesPoint[], opts: PatternOptions = {}): Serie
         out.patterns.push({
           kind: up ? "step_up" : "step_down",
           label: up ? "⤴ Step up" : "⤵ Step down",
-          detail: `Level shifted around ${uncensored[pt.index + 1].date} (median ${before.toPrecision(3)} → ${after.toPrecision(3)}).`,
+          detail: `Moved to a new level around ${monthYear(uncensored[pt.index + 1].date)}: typically ${+before.toPrecision(3)} before, ${+after.toPrecision(3)} after.`,
+          method: "Pettitt change-point test, confirmed with Mann–Whitney (p < 0.05)",
           severity: "info",
           pointIds: [uncensored[pt.index + 1].id],
         });
@@ -166,7 +175,8 @@ export function analyze(points: SeriesPoint[], opts: PatternOptions = {}): Serie
         out.patterns.push({
           kind: "spike",
           label: spikes.length > 1 ? `✶ ${spikes.length} outliers` : "✶ Outlier",
-          detail: `${spikes.map((p) => p.date).join(", ")} ${spikes.length > 1 ? "differ" : "differs"} markedly from the usual level — worth checking against the source page.`,
+          detail: `${spikes.map((p) => dayMonthYear(p.date)).join(", ")}: clearly different from the usual level. Worth checking against the report.`,
+          method: "Robust outlier rule: more than 3.5 × MAD from the median",
           severity: "info",
           pointIds: spikes.map((p) => p.id),
         });

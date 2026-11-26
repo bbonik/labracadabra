@@ -93,7 +93,34 @@ export function Explore({ route }: { route: Route }) {
   const units = [...new Set(tests.map((id) => displayUnit(id, prefs)))];
   const showMulti = type === "multi" || (type === "time" && units.length > 2);
   let body: preact.JSX.Element;
-  if (!tests.length) body = <Empty>Pick one or more tests above to draw a chart.</Empty>;
+  if (!tests.length) {
+    const has = (ids: string[]) => ids.filter((id) => shownByTest.has(id));
+    const outOfRange = available.filter((id) => {
+      const l = byTest.get(id)!;
+      return l[l.length - 1].flag;
+    });
+    const ideas = [
+      { title: "Lipid panel over time", text: "Total, LDL and HDL cholesterol, triglycerides", type: "time", tests: has(["cholesterol_total", "ldl", "hdl", "triglycerides"]) },
+      { title: "Tests outside range", text: "Every test whose latest value is flagged", type: "multi", tests: outOfRange.slice(0, 6) },
+      { title: "Testosterone vs SHBG", text: "Two related hormones on one chart", type: "time", tests: has(["testosterone_total", "shbg"]) },
+      { title: "Blood sugar", text: "Fasting glucose and HbA1c", type: "time", tests: has(["glucose_fasting", "hba1c"]) },
+      { title: "Pinned tests", text: "The tests you pinned to the overview", type: "multi", tests: has(prefs.pinned) },
+      { title: "Kidney function", text: "Creatinine, eGFR and urea", type: "multi", tests: has(["creatinine", "egfr", "urea"]) },
+    ].filter((x) => x.tests.length > 0);
+    body = (
+      <div class="ideas">
+        <div class="note">Pick tests above, or start from one of these:</div>
+        <div class="ideagrid">
+          {ideas.map((x) => (
+            <a class="idea" href={href("explore", undefined, { type: x.type, range, tests: x.tests })}>
+              <div class="rowtitle">{x.title}</div>
+              <div class="note">{x.text}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    );
+  }
   else if (pair && tests.length < 2) body = <Empty>Pick a second test for the Y axis.</Empty>;
   else if (showMulti) {
     body = (
